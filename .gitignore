@@ -1,0 +1,11 @@
+# Compiled Python
+__pycache__/
+
+
+# Project Specific Excluded Files & Folders
+design/
+prototypes/
+scratchpad/
+
+# MacOS Generated Files & Folders
+.DS_Store

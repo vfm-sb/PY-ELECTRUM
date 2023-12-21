@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools >= 69.0.2"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "electrum"
+version = "0.1.0"
+requires-python = ">=3.11.6"
+dependencies = []
+authors = [{ name = "vfm-sb", email = "vfm-sb@proton.me" }]
+description = "Py-Electrum Module to Work with Money, Coin, Note/Banknote, Cash, Currency, Exchange Classes and More..."
+readme = "README.md"
+license = { file = "LICENCE" }
+keywords = ["money", "coin", "note", "banknote", "cash", "currency", "exchange"]
+classifiers = [
+    "Development Status :: 1 - Planning",
+    "Development Status :: 2 - Pre-Alpha",
+    "Intended Audience :: Developers",
+    "Topic :: Software Development",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Office/Business :: Financial",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3.11",
+]

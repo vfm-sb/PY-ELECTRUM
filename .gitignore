@@ -1,10 +1,13 @@
 # Compiled Python
 __pycache__/
 
+# Virtual Environment
+venv/
 
 # Project Specific Excluded Files & Folders
 design/
 prototypes/
+research/
 scratchpad/
 
 # MacOS Generated Files & Folders

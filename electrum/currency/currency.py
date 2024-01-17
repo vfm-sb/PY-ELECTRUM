@@ -1,6 +1,10 @@
 # Local Modules
 from electrum.currency import CurrencyLoader
 
+# Custom Exceptions
+from electrum.exceptions import ObjectMismatchError
+
+
 class Currency:
 
     def __init__(self, code: str | int) -> None:
@@ -26,3 +30,14 @@ class Currency:
         self.banknotes = currency_data["banknotes"]
         self.coins = currency_data["coins"]
         self.users = currency_data["users"]
+
+    def __hash__(self) -> int:
+        return hash((self.alphabetic_code, self.numeric_code))
+
+    def __eq__(self, other: 'Currency') -> bool:
+        if not isinstance(other, Currency):
+            raise ObjectMismatchError("Currency Object Mismatch", self, other)
+        return self.alphabetic_code == other.alphabetic_code
+
+    def __ne__(self, other: 'Currency') -> bool:
+        return not self == other

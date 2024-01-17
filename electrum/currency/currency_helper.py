@@ -17,10 +17,23 @@ class CurrencyHelper:
     def load_currencies(self) -> dict:
         return get_json_file(filename=AVAILABLE_CURRENCIES, path=PATH)
 
+    def save_currencies(self) -> None:
+        self.currencies = dict(sorted(self.currencies.items()))
+        save_json_file(filename=AVAILABLE_CURRENCIES, path=PATH, data=self.currencies)
+
     def retrieve_currency_data(self, code: str | int) -> dict:
         currency_id = self.get_currency_id(code)
         filename = currency_id + ".json"
         return get_json_file(filename, path=PATH)
+
+    def load_currency_data(self, currency_id: str) -> dict:
+        if not self.currency_exists(currency_id):
+            return CurrencyHelper.empty_dataset()
+        return self.retrieve_currency_data(currency_id)
+
+    def save_currency_data(self, currency_id: str, currency_data: dict) -> None:
+        filename = currency_id + ".json"
+        save_json_file(filename, PATH, data=currency_data)
 
     def get_currency_id(self, code: str | int) -> str | None:
         code = str(code).upper()
@@ -37,6 +50,32 @@ class CurrencyHelper:
     def assert_currency(self, code: str | int) -> None:
         if not self.currency_exists(code):
             raise CurrencyNotFoundError
+
+    @staticmethod
+    def empty_dataset() -> dict:
+        return {
+            "iso-alphabetic": None,
+            "iso-numeric": None,
+            "name": None,
+            "base": None,
+            "denominator": None,
+            "precision": None,
+            "unit-name": None,
+            "unit-plural": None,
+            "unit-symbol": None,
+            "unit-symbol-format": None,
+            "unit-abbreviation": None,
+            "unit-abbreviation-format": None,
+            "subunit-name": None,
+            "subunit-plural": None,
+            "subunit-symbol": None,
+            "subunit-symbol-format": None,
+            "subunit-abbreviation": None,
+            "subunit-abbreviation-format": None,
+            "banknotes": None,
+            "coins": None,
+            "users": None,
+        }
 
 
 # Testing

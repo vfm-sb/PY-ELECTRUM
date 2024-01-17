@@ -2,6 +2,7 @@
 from electrum.utils import get_json_file, save_json_file
 
 # Custom Exceptions
+from electrum.exceptions import InvalidCurrencyCodeError
 from electrum.exceptions import CurrencyNotFoundError
 
 # Constants
@@ -50,6 +51,33 @@ class CurrencyHelper:
     def assert_currency(self, code: str | int) -> None:
         if not self.currency_exists(code):
             raise CurrencyNotFoundError
+
+    @staticmethod
+    def valid_currency_code(code: str | int) -> bool:
+        return CurrencyHelper.valid_alphabetic_code(code) or CurrencyHelper.valid_numeric_code(code)
+
+    @staticmethod
+    def valid_alphabetic_code(code: str) -> bool:
+        return isinstance(code, str) and code.isalpha() and len(code) == 3
+
+    @staticmethod
+    def valid_numeric_code(code: int | str) -> bool:
+        return str(code).isdigit() and len(str(code)) == 3
+
+    @staticmethod
+    def assert_currency_code(code: str | int) -> None:
+        if not CurrencyHelper.valid_currency_code(code):
+            raise InvalidCurrencyCodeError(code=code)
+
+    @staticmethod
+    def assert_alphabetic_code(code: str) -> None:
+        if not CurrencyHelper.valid_alphabetic_code(code):
+            raise InvalidCurrencyCodeError("Invalid Alphabetic Currency Code", code=code)
+
+    @staticmethod
+    def assert_numeric_code(code: int | str) -> None:
+        if not CurrencyHelper.valid_numeric_code(code):
+            raise InvalidCurrencyCodeError("Invalid Numeric Currency Code", code=code)
 
     @staticmethod
     def empty_dataset() -> dict:

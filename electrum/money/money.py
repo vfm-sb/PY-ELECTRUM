@@ -61,6 +61,15 @@ class Money:
     def base_amount(self, base_amount: int) -> None:
         self._base_amount = base_amount
 
+    def __hash__(self) -> int:
+        return hash((self.amount, self.currency.alphabetic_code))
+
+    def __repr__(self) -> str:
+        return f'Money({self.amount:.{self.currency.precision}}, "{self.currency.alphabetic_code}")'
+
+    def __str__(self) -> str:
+        pass
+
     def __add__(self, other: Union['Money', 'Coin', 'Note', 'Banknote', 'Cash']) -> 'Money':
         self.assert_instance(other)
         self.assert_currency(other)

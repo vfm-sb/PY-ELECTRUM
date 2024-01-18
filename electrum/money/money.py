@@ -141,6 +141,34 @@ class Money:
         amount = self.amount % other
         return Money(amount, self.currency.alphabetic_code)
 
+    def __eq__(self, other: Union['Money', 'Coin', 'Note', 'Banknote', 'Cash']) -> bool:
+        self.assert_currency(other)
+        self.assert_instance(other)
+        return self.amount == other.amount
+
+    def __ne__(self, other: Union['Money', 'Coin', 'Note', 'Banknote', 'Cash']) -> bool:
+        return not self == other
+
+    def __lt__(self, other: Union['Money', 'Coin', 'Note', 'Banknote', 'Cash']) -> bool:
+        self.assert_currency(other)
+        self.assert_instance(other)
+        return self.amount < other.amount
+
+    def __le__(self, other: Union['Money', 'Coin', 'Note', 'Banknote', 'Cash']) -> bool:
+        self.assert_currency(other)
+        self.assert_instance(other)
+        return self.amount <= other.amount
+
+    def __gt__(self, other: Union['Money', 'Coin', 'Note', 'Banknote', 'Cash']) -> bool:
+        self.assert_currency(other)
+        self.assert_instance(other)
+        return self.amount > other.amount
+
+    def __ge__(self, other: Union['Money', 'Coin', 'Note', 'Banknote', 'Cash']) -> bool:
+        self.assert_currency(other)
+        self.assert_instance(other)
+        return self.amount >= other.amount
+
     def amount_to_base(self, amount: int | float) -> int:
         return amount * self.currency.denominator
 

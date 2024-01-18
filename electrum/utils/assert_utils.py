@@ -2,7 +2,7 @@
 from typing import Any
 
 # Exceptions
-from electrum.exceptions import MissingInputError
+from electrum.exceptions.input_exceptions import MissingInputError
 
 
 def assert_input(user_input: Any) -> None:

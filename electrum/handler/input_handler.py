@@ -2,15 +2,15 @@
 import string
 
 # Local Modules
-from electrum.currency import CurrencyHelper
+from electrum.currency.currency_helper import CurrencyHelper
 
 # Utilities
-from electrum.utils import assert_input
-from electrum.utils import get_numeric_value, get_integer_value
-from electrum.utils import split_by_comma
+from electrum.utils.assert_utils import assert_input
+from electrum.utils.input_utils import get_numeric_value, get_integer_value
+from electrum.utils.input_utils import split_by_comma
 
 # Exceptions
-from electrum.exceptions import InvalidInputTypeError
+from electrum.exceptions.input_exceptions import InvalidInputTypeError
 
 
 class InputHandler:

@@ -1,5 +1,5 @@
 # Local Modules
-from electrum.currency import CurrencyHelper
+from electrum.currency.currency_helper import CurrencyHelper
 
 
 class CurrencyLoader(CurrencyHelper):

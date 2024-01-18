@@ -1,8 +1,8 @@
 # Local Modules
-from electrum.currency import CurrencyLoader
+from electrum.currency.currency_loader import CurrencyLoader
 
 # Custom Exceptions
-from electrum.exceptions import ObjectMismatchError
+from electrum.exceptions.generic_exceptions import ObjectMismatchError
 
 
 class Currency:

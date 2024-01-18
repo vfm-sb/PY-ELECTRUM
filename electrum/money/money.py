@@ -141,6 +141,15 @@ class Money:
         amount = self.amount % other
         return Money(amount, self.currency.alphabetic_code)
 
+    def __pos__(self) -> 'Money':
+        return Money(+self.amount, self.currency.alphabetic_code)
+
+    def __neg__(self) -> 'Money':
+        return Money(-self.amount, self.currency.alphabetic_code)
+
+    def __abs__(self) -> 'Money':
+        return Money(abs(self.amount), self.currency.alphabetic_code)
+
     def __eq__(self, other: Union['Money', 'Coin', 'Note', 'Banknote', 'Cash']) -> bool:
         self.assert_currency(other)
         self.assert_instance(other)

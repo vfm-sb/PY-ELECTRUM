@@ -1,0 +1,32 @@
+{
+    "BGN": {
+        "iso-alphabetic": "BGN",
+        "iso-numeric": "975",
+        "update-date": "2024/01"
+    },
+    "EUR": {
+        "iso-alphabetic": "EUR",
+        "iso-numeric": "978",
+        "update-date": "2024/01"
+    },
+    "GBP": {
+        "iso-alphabetic": "GBP",
+        "iso-numeric": "826",
+        "update-date": "2024/01"
+    },
+    "JPY": {
+        "iso-alphabetic": "JPY",
+        "iso-numeric": "392",
+        "update-date": "2024/01"
+    },
+    "TRY": {
+        "iso-alphabetic": "TRY",
+        "iso-numeric": "949",
+        "update-date": "2024/01"
+    },
+    "USD": {
+        "iso-alphabetic": "USD",
+        "iso-numeric": "840",
+        "update-date": "2024/01"
+    }
+}

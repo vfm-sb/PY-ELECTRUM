@@ -1,0 +1,38 @@
+{
+    "iso-alphabetic": "TRY",
+    "iso-numeric": "949",
+    "name": "turkish lira",
+    "base": 0.01,
+    "denominator": 100,
+    "precision": 2,
+    "unit-name": "lira",
+    "unit-plural": null,
+    "unit-symbol": "\u20ba",
+    "unit-symbol-format": "\u20bavalue",
+    "unit-abbreviation": "tl",
+    "unit-abbreviation-format": "value tl",
+    "subunit-name": "kuru\u015f",
+    "subunit-plural": null,
+    "subunit-symbol": null,
+    "subunit-symbol-format": null,
+    "subunit-abbreviation": "kr",
+    "subunit-abbreviation-format": "valuekr",
+    "banknotes": [
+        "10",
+        "100",
+        "20",
+        "200",
+        "5",
+        "50"
+    ],
+    "coins": [
+        "0.1",
+        "0.25",
+        "0.5",
+        "1"
+    ],
+    "users": [
+        "northern cyprus",
+        "turkiye"
+    ]
+}

@@ -1,0 +1,37 @@
+{
+    "iso-alphabetic": "JPY",
+    "iso-numeric": "392",
+    "name": "japanese yen",
+    "base": 1,
+    "denominator": 1,
+    "precision": 0,
+    "unit-name": "yen",
+    "unit-plural": null,
+    "unit-symbol": "\u00a5",
+    "unit-symbol-format": "\u00a5value",
+    "unit-abbreviation": null,
+    "unit-abbreviation-format": null,
+    "subunit-name": "",
+    "subunit-plural": null,
+    "subunit-symbol": null,
+    "subunit-symbol-format": null,
+    "subunit-abbreviation": null,
+    "subunit-abbreviation-format": null,
+    "banknotes": [
+        "1000",
+        "10000",
+        "2000",
+        "5000"
+    ],
+    "coins": [
+        "1",
+        "10",
+        "100",
+        "5",
+        "50",
+        "500"
+    ],
+    "users": [
+        "japan"
+    ]
+}

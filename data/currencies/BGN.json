@@ -1,0 +1,40 @@
+{
+    "iso-alphabetic": "BGN",
+    "iso-numeric": "975",
+    "name": "bulgarian lev",
+    "base": 0.01,
+    "denominator": 100,
+    "precision": 2,
+    "unit-name": "lev",
+    "unit-plural": "leva",
+    "unit-symbol": "\u043b\u0432",
+    "unit-symbol-format": "value\u043b\u0432",
+    "unit-abbreviation": "lv",
+    "unit-abbreviation-format": "valuelv",
+    "subunit-name": "stotinka",
+    "subunit-plural": "stotinki",
+    "subunit-symbol": "\u0441\u0442",
+    "subunit-symbol-format": "value\u0441\u0442",
+    "subunit-abbreviation": "st",
+    "subunit-abbreviation-format": "valuest",
+    "banknotes": [
+        "10",
+        "100",
+        "20",
+        "5",
+        "50"
+    ],
+    "coins": [
+        "0.01",
+        "0.02",
+        "0.05",
+        "0.1",
+        "0.2",
+        "0.5",
+        "1",
+        "2"
+    ],
+    "users": [
+        "bulgaria"
+    ]
+}

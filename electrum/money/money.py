@@ -1,12 +1,10 @@
 # Built-in Module
-from typing import Union
+from __future__ import annotations
+from typing import Union, TYPE_CHECKING
 from decimal import Decimal
 
 # Local Modules
 from electrum.currency.currency import Currency
-from electrum.money.coin import Coin
-from electrum.money.note import Note, Banknote
-from electrum.money.cash import Cash
 
 # Utilities
 from electrum.utils.parser_utils import parse_numeric_value
@@ -17,6 +15,11 @@ from electrum.exceptions.currency_exceptions import InvalidCurrencyError
 from electrum.exceptions.money_exceptions import InvalidAmountError
 from electrum.exceptions.generic_exceptions import InvalidOperandError
 from electrum.exceptions.currency_exceptions import CurrencyMismatchError
+
+if TYPE_CHECKING:
+    from electrum.money.coin import Coin
+    from electrum.money.note import Note, Banknote
+    from electrum.money.cash import Cash
 
 
 class Money:
@@ -215,6 +218,9 @@ class Money:
             raise ZeroDivisionError
 
     def valid_instance(self, other: Union['Money', 'Coin', 'Note', 'Banknote', 'Cash']) -> bool:
+        from electrum.money.coin import Coin
+        from electrum.money.note import Note, Banknote
+        from electrum.money.cash import Cash
         return any(isinstance(other, instance) for instance in (Money, Coin, Note, Banknote, Cash))
 
 

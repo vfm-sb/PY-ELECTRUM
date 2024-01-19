@@ -68,7 +68,7 @@ class Money:
         return hash((self.amount, self.currency.alphabetic_code))
 
     def __repr__(self) -> str:
-        return f'Money({self.amount:.{self.currency.precision}}, "{self.currency.alphabetic_code}")'
+        return f'Money({self.amount}, "{self.currency.alphabetic_code}")'
 
     def __str__(self) -> str:
         pass
@@ -191,7 +191,7 @@ class Money:
         return self.amount >= other.amount
 
     def amount_to_base(self, amount: int | float) -> int:
-        return amount * self.currency.denominator
+        return int(amount * self.currency.denominator)
 
     def base_to_amount(self, base_value: int) -> float | int:
         return self.mround(base_value * self.currency.base)

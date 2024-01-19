@@ -4,6 +4,9 @@ __pycache__/
 # Virtual Environment
 venv/
 
+# Packaging Files & Folders
+electrum.egg-info/
+
 # Project Specific Excluded Files & Folders
 design/
 prototypes/

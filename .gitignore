@@ -13,5 +13,8 @@ prototypes/
 research/
 scratchpad/
 
+# VSCode Generated Files & Folders
+.vscode/
+
 # MacOS Generated Files & Folders
 .DS_Store

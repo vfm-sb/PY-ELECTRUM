@@ -30,6 +30,6 @@ class CurrencyMismatchError(ValueError):
         expected: str | None = None, received: str | None = None
     ) -> None:
         self.message = message
-        if expected & received:
-            self.message += f" >> {expected} != {received}"
+        if expected and received:
+            self.message += f" >> Expected: {expected}, Received: {received}"
         super().__init__(self.message)

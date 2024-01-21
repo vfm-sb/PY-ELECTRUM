@@ -1,8 +1,9 @@
 # Compiled Python
 __pycache__/
+.pytest_cache/
 
 # Virtual Environment
-venv/
+.venv/
 
 # Packaging Files & Folders
 electrum.egg-info/

@@ -17,8 +17,6 @@ def parse_numeric_value(value: int | float | str | Decimal) -> int | float:
 
 
 def parse_decimal_value(value: Decimal) -> int | float:
-    if isinstance(value, Decimal):
-        raise ValueError(f"Invalid Decimal Value >> {value}")
     if value % 1 == 0:
         return int(value)
     return float(value)

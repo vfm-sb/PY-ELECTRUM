@@ -7,14 +7,14 @@ from decimal import Decimal
 from electrum.currency.currency import Currency
 
 # Utilities
-from electrum.utils.parser_utils import parse_numeric_value
-from electrum.utils.validator_utils import valid_numeric
+from electrum.utils import parse_numeric_value
+from electrum.utils import valid_numeric
 
 # Custom Exceptions
-from electrum.exceptions.currency_exceptions import InvalidCurrencyError
-from electrum.exceptions.money_exceptions import InvalidAmountError
-from electrum.exceptions.generic_exceptions import InvalidOperandError
-from electrum.exceptions.currency_exceptions import CurrencyMismatchError
+from electrum.exceptions import InvalidCurrencyError
+from electrum.exceptions import InvalidAmountError
+from electrum.exceptions import InvalidOperandError
+from electrum.exceptions import CurrencyMismatchError
 
 if TYPE_CHECKING:
     from electrum.money.coin import Coin
@@ -73,24 +73,24 @@ class Money:
     def __str__(self) -> str:
         pass
 
-    def __add__(self, other: Union['Money', 'Coin', 'Note', 'Banknote', 'Cash']) -> 'Money':
+    def __add__(self, other: Union[Money, Coin, Note, Banknote, Cash]) -> Money:
         self.assert_instance(other)
         self.assert_currency(other)
         base_result = self.base_amount + other.base_amount
         amount = self.base_to_amount(base_result)
         return Money(amount, self.currency.alphabetic_code)
 
-    def __radd__(self, other: Union['Money', 'Coin', 'Note', 'Banknote', 'Cash']) -> 'Money':
+    def __radd__(self, other: Union[Money, Coin, Note, Banknote, Cash]) -> Money:
         return self.__add__(other)
 
-    def __sub__(self, other: Union['Money', 'Coin', 'Note', 'Banknote', 'Cash']) -> 'Money':
+    def __sub__(self, other: Union[Money, Coin, Note, Banknote, Cash]) -> Money:
         self.assert_instance(other)
         self.assert_currency(other)
         base_result = self.base_amount - other.base_amount
         amount = self.base_to_amount(base_result)
         return Money(amount, self.currency.alphabetic_code)
 
-    def __rsub__(self, other: Union['Money', 'Coin', 'Note', 'Banknote', 'Cash']) -> 'Money':
+    def __rsub__(self, other: Union[Money, Coin, Note, Banknote, Cash]) -> Money:
         self.__sub__(other)
 
     def __mul__(self, multiplier: Union[int, float, str, Decimal]) -> 'Money':
@@ -106,8 +106,8 @@ class Money:
 
     def __truediv__(
         self,
-        other: Union[int, float, str, Decimal, 'Money', 'Coin', 'Note', 'Cash']
-    ) -> Union['Money', float]:
+        other: Union[int, float, str, Decimal, Money, Coin, Note, Banknote, Cash]
+    ) -> Union[Money, float]:
         if self.valid_instance(other):
             self.assert_currency(other)
             self.assert_division(other.amount)
@@ -121,14 +121,14 @@ class Money:
 
     def __div__(
         self,
-        other: Union[int, float, str, Decimal, 'Money', 'Coin', 'Note', 'Cash']
+        other: Union[int, float, str, Decimal, Money, Coin, Note, Banknote, Cash]
     ) -> Union['Money', float]:
         return self.__truediv__(other)
 
     def __floordiv__(
         self,
-        other: Union[int, float, str, Decimal, 'Money', 'Coin', 'Note', 'Cash']
-    ) -> Union['Money', float]:
+        other: Union[int, float, str, Decimal, Money, Coin, Note, Banknote, Cash]
+    ) -> Union[Money, float]:
         if self.valid_instance(other):
             self.assert_currency(other)
             self.assert_division(other.amount)
@@ -141,8 +141,8 @@ class Money:
 
     def __mod__(
         self,
-        other: Union[int, float, str, Decimal, 'Money', 'Coin', 'Note', 'Cash']
-    ) -> Union['Money', float]:
+        other: Union[int, float, str, Decimal, Money, Coin, Note, Banknote, Cash]
+    ) -> Union[Money, float]:
         if self.valid_instance(other):
             self.assert_currency(other)
             self.assert_division(other.amount)
@@ -153,39 +153,39 @@ class Money:
         amount = self.amount % other
         return Money(amount, self.currency.alphabetic_code)
 
-    def __pos__(self) -> 'Money':
+    def __pos__(self) -> Money:
         return Money(+self.amount, self.currency.alphabetic_code)
 
-    def __neg__(self) -> 'Money':
+    def __neg__(self) -> Money:
         return Money(-self.amount, self.currency.alphabetic_code)
 
-    def __abs__(self) -> 'Money':
+    def __abs__(self) -> Money:
         return Money(abs(self.amount), self.currency.alphabetic_code)
 
-    def __eq__(self, other: Union['Money', 'Coin', 'Note', 'Banknote', 'Cash']) -> bool:
+    def __eq__(self, other: Union[Money, Coin, Note, Banknote, Cash]) -> bool:
         self.assert_currency(other)
         self.assert_instance(other)
         return self.amount == other.amount
 
-    def __ne__(self, other: Union['Money', 'Coin', 'Note', 'Banknote', 'Cash']) -> bool:
+    def __ne__(self, other: Union[Money, Coin, Note, Banknote, Cash]) -> bool:
         return not self == other
 
-    def __lt__(self, other: Union['Money', 'Coin', 'Note', 'Banknote', 'Cash']) -> bool:
+    def __lt__(self, other: Union[Money, Coin, Note, Banknote, Cash]) -> bool:
         self.assert_currency(other)
         self.assert_instance(other)
         return self.amount < other.amount
 
-    def __le__(self, other: Union['Money', 'Coin', 'Note', 'Banknote', 'Cash']) -> bool:
+    def __le__(self, other: Union[Money, Coin, Note, Banknote, Cash]) -> bool:
         self.assert_currency(other)
         self.assert_instance(other)
         return self.amount <= other.amount
 
-    def __gt__(self, other: Union['Money', 'Coin', 'Note', 'Banknote', 'Cash']) -> bool:
+    def __gt__(self, other: Union[Money, Coin, Note, Banknote, Cash]) -> bool:
         self.assert_currency(other)
         self.assert_instance(other)
         return self.amount > other.amount
 
-    def __ge__(self, other: Union['Money', 'Coin', 'Note', 'Banknote', 'Cash']) -> bool:
+    def __ge__(self, other: Union[Money, Coin, Note, Banknote, Cash]) -> bool:
         self.assert_currency(other)
         self.assert_instance(other)
         return self.amount >= other.amount
@@ -202,11 +202,11 @@ class Money:
         """
         return round(value, self.currency.precision)
 
-    def assert_instance(self, other: Union['Money', 'Coin', 'Note', 'Banknote', 'Cash']) -> None:
+    def assert_instance(self, other: Union[Money, Coin, Note, Banknote, Cash]) -> None:
         if not self.valid_instance(other):
             raise InvalidOperandError
 
-    def assert_currency(self, other: Union['Money', 'Coin', 'Note', 'Banknote', 'Cash']) -> None:
+    def assert_currency(self, other: Union[Money, Coin, Note, Banknote, Cash]) -> None:
         if self.currency != other.currency:
             raise CurrencyMismatchError(
                 expected = self.currency.alphabetic_code,
@@ -217,7 +217,7 @@ class Money:
         if divisor == 0:
             raise ZeroDivisionError
 
-    def valid_instance(self, other: Union['Money', 'Coin', 'Note', 'Banknote', 'Cash']) -> bool:
+    def valid_instance(self, other: Union[Money, Coin, Note, Banknote, Cash]) -> bool:
         from electrum.money.coin import Coin
         from electrum.money.note import Note, Banknote
         from electrum.money.cash import Cash

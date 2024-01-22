@@ -2,7 +2,7 @@
 from electrum.currency.currency_loader import CurrencyLoader
 
 # Custom Exceptions
-from electrum.exceptions.generic_exceptions import ObjectMismatchError
+from electrum.exceptions import ObjectMismatchError
 
 
 class Currency:

@@ -1,9 +1,9 @@
 # Utilities
-from electrum.utils.file_utils import get_json_file, save_json_file
+from electrum.utils import get_json_file, save_json_file
 
 # Custom Exceptions
-from electrum.exceptions.currency_exceptions import InvalidCurrencyCodeError
-from electrum.exceptions.currency_exceptions import CurrencyNotFoundError
+from electrum.exceptions import InvalidCurrencyCodeError
+from electrum.exceptions import CurrencyNotFoundError
 
 # Constants
 PATH = "data/currencies"

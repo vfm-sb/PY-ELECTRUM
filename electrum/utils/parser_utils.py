@@ -2,8 +2,8 @@
 from decimal import Decimal
 
 # Custom Exceptions
-from electrum.exceptions.utilities_exceptions import InvalidNumericValueError
-from electrum.exceptions.utilities_exceptions import InvalidNumericStringError
+from electrum.exceptions import InvalidNumericValueError
+from electrum.exceptions import InvalidNumericStringError
 
 
 def parse_numeric_value(value: int | float | str | Decimal) -> int | float:

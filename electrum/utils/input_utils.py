@@ -1,5 +1,5 @@
 # Exceptions
-from electrum.exceptions.input_exceptions import InvalidNumericInputError
+from electrum.exceptions import InvalidNumericInputError
 
 
 def get_numeric_value(input_string: str) -> int | float:

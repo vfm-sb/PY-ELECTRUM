@@ -6,7 +6,7 @@ from electrum.money.money import Money
 from electrum.currency.currency import Currency
 
 # Custom Exceptions
-from electrum.exceptions.money_exceptions import InvalidBanknoteValueError
+from electrum.exceptions import InvalidBanknoteValueError
 
 
 class Note(Money):
@@ -18,6 +18,4 @@ class Note(Money):
 
 
 class Banknote(Note):
-
-    def __init__(self, amount: int | float | str | Decimal, currency: str | int | Currency) -> None:
-        super().__init__(amount, currency)
+    pass

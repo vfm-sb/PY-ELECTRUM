@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "electrum"
-version = "0.1.0"
+version = "0.1.1"
 requires-python = ">=3.11.6,<3.12"
 dependencies = []
 authors = [{ name = "vfm-sb", email = "vfm-sb@proton.me" }]
@@ -16,6 +16,8 @@ classifiers = [
     "Development Status :: 1 - Planning",
     "Development Status :: 2 - Pre-Alpha",
     "Intended Audience :: Developers",
+    "Intended Audience :: Information Technology",
+    "Intended Audience :: Financial and Insurance Industry",
     "Topic :: Software Development",
     "Topic :: Software Development :: Libraries :: Python Modules",
     "Topic :: Office/Business :: Financial",

@@ -3,7 +3,7 @@ from electrum.currency.currency_helper import CurrencyHelper
 from electrum.handler.input_handler import InputHandler
 
 # Utilities
-from electrum.utils.datetime_utils import get_timestamp
+from electrum.utils import get_timestamp
 
 
 class CurrencyBuilderCLI(CurrencyHelper):

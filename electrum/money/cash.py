@@ -6,7 +6,7 @@ from electrum.money.money import Money
 from electrum.currency.currency import Currency
 
 # Custom Exceptions
-from electrum.exceptions.money_exceptions import InvalidCashValueError
+from electrum.exceptions import InvalidCashValueError
 
 
 class Cash(Money):

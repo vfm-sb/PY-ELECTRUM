@@ -1,8 +1,13 @@
 # Built-in Modules
 from decimal import Decimal
+import pytest
 
 # Local Modules
 from electrum import Money, Currency
+from electrum.exceptions import (
+    CurrencyNotFoundError,
+    InvalidAmountError, ExcessAmountError,
+)
 
 
 class TestMoneyInit:
@@ -74,3 +79,41 @@ class TestMoneyInit:
     def test_init_no_currency_with_decimal_string_amount(self):
         money = Money(Decimal("4"))
         assert money.amount == 4
+
+    def test_init_with_currency_not_found(self):
+        with pytest.raises(CurrencyNotFoundError):
+            Money(200, "DEM")
+        with pytest.raises(CurrencyNotFoundError):
+            Money(1000, "BGL")
+        with pytest.raises(CurrencyNotFoundError):
+            Money(1_350_000, "TRL")
+        with pytest.raises(CurrencyNotFoundError):
+            Money(200, "276")
+        with pytest.raises(CurrencyNotFoundError):
+            Money(1000, "100")
+        with pytest.raises(CurrencyNotFoundError):
+            Money(1_350_000, "792")
+        with pytest.raises(CurrencyNotFoundError):
+            Money(200, Currency("DEM"))
+        with pytest.raises(CurrencyNotFoundError):
+            Money(1000, Currency("BGL"))
+        with pytest.raises(CurrencyNotFoundError):
+            Money(1_350_000, Currency("TRL"))
+
+    def test_init_with_invalid_amount(self):
+        with pytest.raises(InvalidAmountError):
+            Money("x", "EUR")
+        with pytest.raises(InvalidAmountError):
+            Money("53K", "BGN")
+        with pytest.raises(InvalidAmountError):
+            Money("100B", "TRY")
+
+    def test_init_with_excess_amount(self):
+        with pytest.raises(ExcessAmountError):
+            Money(1.992, "EUR")
+        with pytest.raises(ExcessAmountError):
+            Money(1.999, "BGN")
+        with pytest.raises(ExcessAmountError):
+            Money(2.005, "TRY")
+        with pytest.raises(ExcessAmountError):
+            Money(2024.1, "JPY")

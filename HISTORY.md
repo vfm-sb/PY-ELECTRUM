@@ -2,6 +2,10 @@
 
 
 
+## 0.1.2 (2024/01/23)
+
+- Bugfix: `InvalidAmountError` Not Raised.
+
 ## 0.1.1 (2024/01/22)
 
 - Initial Running Version.

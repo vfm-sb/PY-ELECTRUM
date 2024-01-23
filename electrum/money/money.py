@@ -11,7 +11,6 @@ from electrum.utils import parse_numeric_value
 from electrum.utils import valid_numeric
 
 # Custom Exceptions
-from electrum.exceptions import InvalidCurrencyError
 from electrum.exceptions import InvalidAmountError
 from electrum.exceptions import ExcessAmountError
 from electrum.exceptions import InvalidOperandError
@@ -44,8 +43,6 @@ class Money:
             self._currency = Currency(currency)
         elif isinstance(currency, Currency):
             self._currency = currency
-        else:
-            raise InvalidCurrencyError
 
     @property
     def amount(self) -> int | float:
@@ -53,9 +50,10 @@ class Money:
 
     @amount.setter
     def amount(self, amount: Union[int, float, str, Decimal]) -> None:
-        if not isinstance(amount, (int, float, str, Decimal)):
-            raise InvalidAmountError(value=amount)
-        amount = parse_numeric_value(amount)
+        try:
+            amount = parse_numeric_value(amount)
+        except ValueError as exception:
+            raise InvalidAmountError(value=amount) from exception
         self.assert_amount(amount)
         self._amount = amount
 

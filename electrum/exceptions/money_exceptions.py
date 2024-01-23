@@ -12,6 +12,21 @@ class InvalidAmountError(ValueError):
         super().__init__(self.message)
 
 
+class ExcessAmountError(ValueError):
+    def __init__(
+        self,
+        message: str = "Excess Amount",
+        value: float | None = None,
+        limit: int | None = None
+    ) -> None:
+        self.message = message
+        if value:
+            self.message += f" >> {value % 1}"
+        if limit:
+            self.message += f" Value Cannot Exceed {limit - 1}"
+        super().__init__(self.message)
+
+
 class InvalidCoinValueError(InvalidAmountError):
     def __init__(self, message: str = "Invalid Coin Amount", value: Any | None = None) -> None:
         self.message = message

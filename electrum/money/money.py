@@ -13,6 +13,7 @@ from electrum.utils import valid_numeric
 # Custom Exceptions
 from electrum.exceptions import InvalidCurrencyError
 from electrum.exceptions import InvalidAmountError
+from electrum.exceptions import ExcessAmountError
 from electrum.exceptions import InvalidOperandError
 from electrum.exceptions import CurrencyMismatchError
 
@@ -54,7 +55,9 @@ class Money:
     def amount(self, amount: Union[int, float, str, Decimal]) -> None:
         if not isinstance(amount, (int, float, str, Decimal)):
             raise InvalidAmountError(value=amount)
-        self._amount = parse_numeric_value(amount)
+        amount = parse_numeric_value(amount)
+        self.assert_amount(amount)
+        self._amount = amount
 
     @property
     def base_amount(self) -> int:
@@ -93,7 +96,7 @@ class Money:
     def __rsub__(self, other: Union[Money, Coin, Note, Banknote, Cash]) -> Money:
         self.__sub__(other)
 
-    def __mul__(self, multiplier: Union[int, float, str, Decimal]) -> 'Money':
+    def __mul__(self, multiplier: Union[int, float, str, Decimal]) -> Money:
         if not valid_numeric(multiplier):
             raise InvalidOperandError
         multiplier = parse_numeric_value(multiplier)
@@ -101,7 +104,7 @@ class Money:
         amount = self.base_to_amount(base_result)
         return Money(amount, self.currency.alphabetic_code)
 
-    def __rmul__(self, multiplier: Union[int, float, str, Decimal]) -> 'Money':
+    def __rmul__(self, multiplier: Union[int, float, str, Decimal]) -> Money:
         return self.__mul__(multiplier)
 
     def __truediv__(
@@ -122,7 +125,7 @@ class Money:
     def __div__(
         self,
         other: Union[int, float, str, Decimal, Money, Coin, Note, Banknote, Cash]
-    ) -> Union['Money', float]:
+    ) -> Union[Money, float]:
         return self.__truediv__(other)
 
     def __floordiv__(
@@ -213,14 +216,19 @@ class Money:
                 received = other.currency.alphabetic_code
             )
 
+    def assert_amount(self, value: int | float) -> None:
+        decimal_value = Decimal(str(value))
+        if decimal_value % 1 != 0 and decimal_value.as_tuple().exponent < -self.currency.precision:
+            raise ExcessAmountError(value=value, limit=self.currency.denominator)
+
     def assert_division(self, divisor: int | float) -> None:
         if divisor == 0:
             raise ZeroDivisionError
 
     def valid_instance(self, other: Union[Money, Coin, Note, Banknote, Cash]) -> bool:
-        from electrum.money.coin import Coin
-        from electrum.money.note import Note, Banknote
-        from electrum.money.cash import Cash
+        from electrum.money.coin import Coin # pylint: disable=import-outside-toplevel
+        from electrum.money.note import Note, Banknote # pylint: disable=import-outside-toplevel
+        from electrum.money.cash import Cash # pylint: disable=import-outside-toplevel
         return any(isinstance(other, instance) for instance in (Money, Coin, Note, Banknote, Cash))
 
 

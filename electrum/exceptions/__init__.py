@@ -7,6 +7,7 @@ from .generic_exceptions import (
 
 from .money_exceptions import (
     InvalidAmountError,
+    ExcessAmountError,
     InvalidCoinValueError,
     InvalidBanknoteValueError,
     InvalidCashValueError,

@@ -10,11 +10,7 @@ The `amount` represents the amount of a money instance.
 - `amount` value can be a *Numeric String* value.
 - `amount` value can be a valid *Decimal* value.
 
-The `currency` argument is **optional**.
-
-If `currency` argument is not provided, a `Money` instance can only interact with other `Money` instances that are without the `currency` argument.
-
-If `currency` argument is given:
+The `currency` represents the `Currency` of a money instance.
 - `currency` value can be a *String* value.
     - ISO Alphabetic Code
     - ISO Numeric Code
@@ -22,49 +18,8 @@ If `currency` argument is given:
     - ISO Numeric Code (Excepts ISO Numeric Codes Start with *0* or *00*)
 - `currency` value can be a `Currency` instance.
 
+
 ## Money Object Varieties
-
-### `Money(amount)`
-
-```python
->>> Money(1)
-```
-
-```python
->>> Money(9.99)
-```
-
-```python
->>> Money(1_000)
-```
-
-```python
->>> Money("1")
-```
-
-```python
->>> Money("9.99")
-```
-
-```python
->>> Money("1000")
-```
-
-```python
->>> Money(Decimal(1))
-```
-
-```python
->>> Money(Decimal(9.99))
-```
-
-```python
->>> Money(Decimal("1"))
-```
-
-```python
->>> Money(Decimal("9.99"))
-```
 
 
 ### `Money(amount, currency_object)`
@@ -167,11 +122,8 @@ If Currency's ISO Numeric Code Starts with *0* or *00*, The Argument Must Be `st
 
 ## Money `amount` Value Varieties
 
-### Integer
 
-```python
->>> Money(1)
-```
+### Integer
 
 ```python
 >>> Money(1, "EUR")
@@ -189,10 +141,6 @@ If Currency's ISO Numeric Code Starts with *0* or *00*, The Argument Must Be `st
 ### Float
 
 ```python
->>> Money(11.11)
-```
-
-```python
 >>> Money(19.92, "EUR")
 ```
 
@@ -208,10 +156,6 @@ If Currency's ISO Numeric Code Starts with *0* or *00*, The Argument Must Be `st
 ### String
 
 ```python
->>> Money("1")
-```
-
-```python
 >>> Money("1", "EUR")
 ```
 
@@ -221,10 +165,6 @@ If Currency's ISO Numeric Code Starts with *0* or *00*, The Argument Must Be `st
 
 ```python
 >>> Money("100", "TRY")
-```
-
-```python
->>> Money("11.11")
 ```
 
 ```python
@@ -241,22 +181,6 @@ If Currency's ISO Numeric Code Starts with *0* or *00*, The Argument Must Be `st
 
 
 ### Decimal
-
-```python
->>> Money(Decimal(1))
-```
-
-```python
->>> Money(Decimal("1"))
-```
-
-```python
->>> Money(Decimal(11.11))
-```
-
-```python
->>> Money(Decimal("11.11"))
-```
 
 ```python
 >>> Money(Decimal(1), "EUR")

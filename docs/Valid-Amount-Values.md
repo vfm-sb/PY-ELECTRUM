@@ -7,51 +7,55 @@ The `amount` represents the amount of a money instance.
 - `amount` value can be a valid *Decimal* value.
 
 ```python
->>> Money(1)
+>>> Money(1, "EUR")
 ```
 
 ```python
->>> Money(9.99)
+>>> Money(9.99, "BGN")
 ```
 
 ```python
->>> Money(1_000)
+>>> Money(1_000, "TRY")
 ```
 
 ```python
->>> Money("1")
+>>> Money("1", "EUR")
 ```
 
 ```python
->>> Money("9.99")
+>>> Money("9.99", "BGN")
 ```
 
 ```python
->>> Money("1000")
+>>> Money("1000", "TRY")
 ```
 
 ```python
->>> Money(Decimal(1))
+>>> Money(Decimal(1), "EUR")
 ```
 
 ```python
->>> Money(Decimal(9.99))
+>>> Money(Decimal(9.99), "BGN")
 ```
 
 ```python
->>> Money(Decimal("1"))
+>>> Money(Decimal("1"), "EUR")
 ```
 
 ```python
->>> Money(Decimal("9.99"))
+>>> Money(Decimal("9.99"), "BGN")
+```
+
+```python
+>>> Money(Decimal(1_000), "TRY")
+```
+
+```python
+>>> Money(Decimal("1000"), "TRY")
 ```
 
 
 ## Integer
-
-```python
->>> Money(1)
-```
 
 ```python
 >>> Money(1, "EUR")
@@ -69,10 +73,6 @@ The `amount` represents the amount of a money instance.
 ## Float
 
 ```python
->>> Money(11.11)
-```
-
-```python
 >>> Money(19.92, "EUR")
 ```
 
@@ -88,10 +88,6 @@ The `amount` represents the amount of a money instance.
 ## String
 
 ```python
->>> Money("1")
-```
-
-```python
 >>> Money("1", "EUR")
 ```
 
@@ -101,10 +97,6 @@ The `amount` represents the amount of a money instance.
 
 ```python
 >>> Money("100", "TRY")
-```
-
-```python
->>> Money("11.11")
 ```
 
 ```python
@@ -121,22 +113,6 @@ The `amount` represents the amount of a money instance.
 
 
 ## Decimal
-
-```python
->>> Money(Decimal(1))
-```
-
-```python
->>> Money(Decimal("1"))
-```
-
-```python
->>> Money(Decimal(11.11))
-```
-
-```python
->>> Money(Decimal("11.11"))
-```
 
 ```python
 >>> Money(Decimal(1), "EUR")

@@ -1,8 +1,5 @@
 # Valid Currency Values
 
-The `currency` argument is **optional**.
-
-If `currency` argument is given:
 - `currency` value can be a *String* value.
     - ISO Alphabetic Code
     - ISO Numeric Code

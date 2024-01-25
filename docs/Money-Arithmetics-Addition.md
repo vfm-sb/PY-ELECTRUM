@@ -1,13 +1,10 @@
-# Money Arithmetics: Addition
+# Addition
 
 | Object 1 | Operator | Object 2 | Result | Validity |
 | :--: | :--: | :--: | :--: | :--: |
-| Money | + | Money | Money | Valid |
 | Money(XYZ) | + | Money(XYZ) | Money(XYZ) | Valid |
 | Money(XYZ) | + | Money(ABC) | CurrencyMismatchError | Invalid |
 | Money(ABC) | + | Money(XYZ) | CurrencyMismatchError | Invalid |
-| Money(XYZ) | + | Money | CurrencyMismatchError | Invalid |
-| Money | + | Money(XYZ) | CurrencyMismatchError | Invalid |
 | Money(XYZ) | + | Int or Float | InvalidOperandError | Invalid |
 | Int or Float  | + | Money(XYZ) | InvalidOperandError | Invalid |
 | Money(XYZ) | + | Numeric String | InvalidOperandError | Invalid |
@@ -18,134 +15,7 @@
 | Other Object | + | Money(XYZ) | InvalidOperandError | Invalid |
 
 
-## `Money(value=x) + Money(value=y)`
-
-Two or More `Money` objects without any `currency` arguments can be added together.
-
-The result of a Valid Addition Operation will be a `Money` instance without `Currency`.
-
-**Note**: Money object's `amount`argument must be a valid value! (See VALID AMOUNT VALUES)
-
-A `Money` object accepts either an `int`, `float`, a valid numeric `str`, or a valid `Decimal` value as the `amount` argument.
-
-A `Money` object cannot perform addition with a *Non-Money Type* object.
-
-### Valid Examples
-
-```python
->>> Money(value=2) + Money(value=2)
->>> Money(4.0)
-```
-
-```python
->>> Money(2) + Money(2)
->>> Money(4.0)
-```
-
-```python
->>> Money(2) + Money(2.2)
->>> Money(4.2)
-```
-
-```python
->>> Money(2.2) + Money(2.2)
->>> Money(4.4)
-```
-
-```python
->>> Money(2) + Money("2")
->>> Money(4.0)
-```
-
-```python
->>> Money("2") + Money(2)
->>> Money(4.0)
-```
-
-```python
->>> Money("2") + Money("2")
->>> Money(4.0)
-```
-
-```python
->>> Money(1.1) + Money(2.2) + Money(4.4)
->>> Money(7.7)
-```
-
-### Invalid Examples
-
-```python
->>> Money(2) + 2
->>> InvalidOperandError
-```
-
-```python
->>> 2 + Money(2)
->>> InvalidOperandError
-```
-
-```python
->>> Money(2) + 2.2
->>> InvalidOperandError
-```
-
-```python
->>> 2.2 + Money(2)
->>> InvalidOperandError
-```
-
-```python
->>> Money(2.2) + 2.2
->>> InvalidOperandError
-```
-
-```python
->>> 2.2 + Money(2.2)
->>> InvalidOperandError
-```
-
-```python
->>> Money(2) + "2"
->>> InvalidOperandError
-```
-
-```python
->>> "2" + Money(2)
->>> InvalidOperandError
-```
-
-```python
->>> Money("2") + "2"
->>> InvalidOperandError
-```
-
-```python
->>> "2" + Money("2")
->>> InvalidOperandError
-```
-
-```python
->>> Money(2) + Decimal("2")
->>> InvalidOperandError
-```
-
-```python
->>> Decimal("2") + Money(2)
->>> InvalidOperandError
-```
-
-```python
->>> Money(2) + Other("2")
->>> InvalidOperandError
-```
-
-```python
->>> Other("2") + Money(2)
->>> InvalidOperandError
-```
-
-
-## `Money(value=x, currency="XYZ") + Money(value=y, currency="XYZ")`
+## `Money(amount=x, currency="XYZ") + Money(amount=y, currency="XYZ")`
 
 Two or more `Money` objects of same `Currency` can be added together.
 
@@ -164,7 +34,7 @@ A `Money` object cannot perform addition with a *Non-Money Type* object.
 ### Valid Examples
 
 ```python
->>> Money(value=2, currency="EUR") + Money(value=2, currency="EUR")
+>>> Money(amount=2, currency="EUR") + Money(amount=2, currency="EUR")
 >>> Money(4.0, "EUR")
 ```
 
@@ -299,3 +169,4 @@ A `Money` object cannot perform addition with a *Non-Money Type* object.
 >>> Other("2") + Money(2, "EUR")
 >>> InvalidOperandError
 ```
+

@@ -1,3 +1,8 @@
+"""
+Tests for Money Additions
+"""
+# pylint: disable=expression-not-assigned
+
 # Built-in Modules
 from decimal import Decimal
 
@@ -22,7 +27,7 @@ class TestMoneyAddition:
         money = Money(2, "EUR") + Money(2.2, "EUR")
         assert money.amount == 4.2
 
-    def test_addition_with_float_and_float_basic(self):
+    def test_addition_with_two_floats_values(self):
         money = Money(2.2, "EUR") + Money(2.2, "EUR")
         assert money.amount == 4.4
 
@@ -77,14 +82,18 @@ class TestMoneyAddition:
         assert money.amount == 7.77
         money = Money(9.99, "BGN") + Money(10.01, "BGN")
         assert money.amount == 20.0
+        money = Money(20.20, "EUR") + Money(25.25, "EUR")
+        assert money.amount == 45.45
         money = Money(58.50, "GBP") + Money(163.33, "GBP")
         assert money.amount == 221.83
         money = Money(1923, "TRY") + Money(100, "TRY")
         assert money.amount == 2023
         money = Money(13320, "JPY") + Money(1775, "JPY")
         assert money.amount == 15095
+        money = Money(125_950.01, "USD") + Money(180_005.01, "USD")
+        assert money.amount == 305_955.02
 
-    def test_addition_with_invalid_operand(self):
+    def test_additions_with_invalid_operand(self):
         with pytest.raises(InvalidOperandError):
             Money(2, "EUR") + 2
         with pytest.raises(InvalidOperandError):
@@ -102,7 +111,7 @@ class TestMoneyAddition:
         with pytest.raises(InvalidOperandError):
             Currency("EUR") + Money(2, "EUR")
 
-    def test_addition_with_currency_mismatch(self):
+    def test_additions_with_currency_mismatch(self):
         with pytest.raises(CurrencyMismatchError):
             Money(2, "EUR") + Money(2, "BGN")
         with pytest.raises(CurrencyMismatchError):

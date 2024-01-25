@@ -1,3 +1,7 @@
+"""
+Tests for Money Initializations
+"""
+
 # Built-in Modules
 from decimal import Decimal
 

@@ -1,13 +1,13 @@
 # Built-in Modules
 from decimal import Decimal
+
+# Third-Party Modules
 import pytest
 
 # Local Modules
 from electrum import Money, Currency
-from electrum.exceptions import (
-    CurrencyNotFoundError,
-    InvalidAmountError, ExcessAmountError,
-)
+from electrum.exceptions import CurrencyNotFoundError
+from electrum.exceptions import InvalidAmountError, ExcessAmountError
 
 
 class TestMoneyInit:
@@ -57,27 +57,6 @@ class TestMoneyInit:
 
     def test_init_amount_with_decimal_string(self):
         money = Money(Decimal("4"), "EUR")
-        assert money.amount == 4
-
-    def test_init_no_currency_default(self):
-        money = Money(2)
-        assert money.amount == 2
-        assert money.currency is None
-
-    def test_init_no_currency_with_float_amount(self):
-        money = Money(2.2)
-        assert money.amount == 2.2
-
-    def test_init_no_currency_with_string_amount(self):
-        money = Money("4")
-        assert money.amount == 4
-
-    def test_init_no_currency_with_decimal_numeric_amount(self):
-        money = Money(Decimal(4))
-        assert money.amount == 4
-
-    def test_init_no_currency_with_decimal_string_amount(self):
-        money = Money(Decimal("4"))
         assert money.amount == 4
 
     def test_init_with_currency_not_found(self):

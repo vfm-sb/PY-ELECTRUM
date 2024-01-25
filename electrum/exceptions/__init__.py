@@ -14,6 +14,7 @@ from .money_exceptions import (
 )
 
 from .currency_exceptions import (
+    InvalidCurrencyError,
     InvalidCurrencyCodeError,
     CurrencyNotFoundError,
     CurrencyMismatchError,

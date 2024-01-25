@@ -8,13 +8,16 @@ from electrum.currency.currency import Currency
 
 # Utilities
 from electrum.utils import parse_numeric_value
+from electrum.utils import convert_decimal
 from electrum.utils import valid_numeric
 
 # Custom Exceptions
+from electrum.exceptions import InvalidCurrencyError
 from electrum.exceptions import InvalidAmountError
 from electrum.exceptions import ExcessAmountError
 from electrum.exceptions import InvalidOperandError
 from electrum.exceptions import CurrencyMismatchError
+from electrum.exceptions import ObjectMismatchError
 
 if TYPE_CHECKING:
     from electrum.money.coin import Coin
@@ -27,22 +30,27 @@ class Money:
     def __init__(
         self,
         amount: Union[int, float, str, Decimal],
-        currency: Union[str, int, Currency]
+        currency: Union[str, int, Currency, None] = None
     ) -> None:
         self.currency = currency
         self.amount = amount
-        self.base_amount = self.amount_to_base(self.amount)
+        if self.currency is not None:
+            self.base_amount = self.amount_to_base(self.amount)
 
     @property
     def currency(self) -> Currency:
         return self._currency
 
     @currency.setter
-    def currency(self, currency: Union[str, int, Currency]) -> None:
-        if isinstance(currency, (str, int)):
+    def currency(self, currency: Union[str, int, Currency, None] = None) -> None:
+        if currency is None:
+            self._currency = None
+        elif isinstance(currency, (str, int)):
             self._currency = Currency(currency)
         elif isinstance(currency, Currency):
             self._currency = currency
+        else:
+            raise InvalidCurrencyError
 
     @property
     def amount(self) -> int | float:
@@ -54,7 +62,8 @@ class Money:
             amount = parse_numeric_value(amount)
         except ValueError as exception:
             raise InvalidAmountError(value=amount) from exception
-        self.assert_amount(amount)
+        if self.currency is not None:
+            self.assert_amount(amount)
         self._amount = amount
 
     @property
@@ -66,9 +75,13 @@ class Money:
         self._base_amount = base_amount
 
     def __hash__(self) -> int:
+        if self.currency is None:
+            return hash((self.amount))
         return hash((self.amount, self.currency.alphabetic_code))
 
     def __repr__(self) -> str:
+        if self.currency is None:
+            return f"Money({self.amount})"
         return f'Money({self.amount}, "{self.currency.alphabetic_code}")'
 
     def __str__(self) -> str:
@@ -77,6 +90,10 @@ class Money:
     def __add__(self, other: Union[Money, Coin, Note, Banknote, Cash]) -> Money:
         self.assert_instance(other)
         self.assert_currency(other)
+        if self.currency is None:
+            result = Decimal(str(self.amount)) + Decimal(str(other.amount))
+            amount = convert_decimal(result)
+            return Money(amount)
         base_result = self.base_amount + other.base_amount
         amount = self.base_to_amount(base_result)
         return Money(amount, self.currency.alphabetic_code)
@@ -87,6 +104,10 @@ class Money:
     def __sub__(self, other: Union[Money, Coin, Note, Banknote, Cash]) -> Money:
         self.assert_instance(other)
         self.assert_currency(other)
+        if self.currency is None:
+            result = Decimal(str(self.amount)) - Decimal(str(other.amount))
+            amount = convert_decimal(result)
+            return Money(amount)
         base_result = self.base_amount - other.base_amount
         amount = self.base_to_amount(base_result)
         return Money(amount, self.currency.alphabetic_code)
@@ -98,6 +119,10 @@ class Money:
         if not valid_numeric(multiplier):
             raise InvalidOperandError
         multiplier = parse_numeric_value(multiplier)
+        if self.currency is None:
+            result = Decimal(str(self.amount)) * Decimal(str(multiplier))
+            amount = convert_decimal(result)
+            return Money(amount)
         base_result = self.base_amount * multiplier
         amount = self.base_to_amount(base_result)
         return Money(amount, self.currency.alphabetic_code)
@@ -112,10 +137,17 @@ class Money:
         if self.valid_instance(other):
             self.assert_currency(other)
             self.assert_division(other.amount)
+            if self.currency is None:
+                result = Decimal(str(self.amount)) / Decimal(str(other.amount))
+                return convert_decimal(result)
             return self.base_amount / other.base_amount
         if not valid_numeric(other):
             raise InvalidOperandError
         other = parse_numeric_value(other)
+        if self.currency is None:
+            result = Decimal(str(self.amount)) / Decimal(str(other))
+            amount = convert_decimal(result)
+            return Money(amount)
         base_result = self.base_amount / other
         amount = self.base_to_amount(base_result)
         return Money(amount, self.currency.alphabetic_code)
@@ -133,10 +165,17 @@ class Money:
         if self.valid_instance(other):
             self.assert_currency(other)
             self.assert_division(other.amount)
+            if self.currency is None:
+                result = Decimal(str(self.amount)) // Decimal(str(other.amount))
+                return convert_decimal(result)
             return self.amount // other.amount
         if not valid_numeric(other):
             raise InvalidOperandError
         other = parse_numeric_value(other)
+        if self.currency is None:
+            result = Decimal(str(self.amount)) // Decimal(str(other))
+            amount = convert_decimal(result)
+            return Money(amount)
         amount = self.amount // other
         return Money(amount, self.currency.alphabetic_code)
 
@@ -147,20 +186,33 @@ class Money:
         if self.valid_instance(other):
             self.assert_currency(other)
             self.assert_division(other.amount)
-            return self.base_amount % other.base_amount
+            if self.currency is None:
+                result = Decimal(str(self.amount)) % Decimal(str(other.amount))
+                return convert_decimal(result)
+            return self.amount % other.amount
         if not valid_numeric(other):
             raise InvalidOperandError
         other = parse_numeric_value(other)
+        if self.currency is None:
+            result = Decimal(str(self.amount)) % Decimal(str(other))
+            amount = convert_decimal(result)
+            return Money(amount)
         amount = self.amount % other
         return Money(amount, self.currency.alphabetic_code)
 
     def __pos__(self) -> Money:
+        if self.currency is None:
+            return Money(+self.amount)
         return Money(+self.amount, self.currency.alphabetic_code)
 
     def __neg__(self) -> Money:
+        if self.currency is None:
+            return Money(-self.amount)
         return Money(-self.amount, self.currency.alphabetic_code)
 
     def __abs__(self) -> Money:
+        if self.currency is None:
+            return Money(abs(self.amount))
         return Money(abs(self.amount), self.currency.alphabetic_code)
 
     def __eq__(self, other: Union[Money, Coin, Note, Banknote, Cash]) -> bool:
@@ -208,11 +260,14 @@ class Money:
             raise InvalidOperandError
 
     def assert_currency(self, other: Union[Money, Coin, Note, Banknote, Cash]) -> None:
-        if self.currency != other.currency:
-            raise CurrencyMismatchError(
-                expected = self.currency.alphabetic_code,
-                received = other.currency.alphabetic_code
-            )
+        try:
+            if self.currency != other.currency:
+                raise CurrencyMismatchError(
+                    expected = self.currency.alphabetic_code,
+                    received = other.currency.alphabetic_code
+                )
+        except ObjectMismatchError as exception:
+            raise CurrencyMismatchError from exception
 
     def assert_amount(self, value: int | float) -> None:
         decimal_value = Decimal(str(value))

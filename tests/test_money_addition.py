@@ -27,7 +27,7 @@ class TestMoneyAddition:
         money = Money(2, "EUR") + Money(2.2, "EUR")
         assert money.amount == 4.2
 
-    def test_addition_with_two_floats_values(self):
+    def test_addition_with_two_floats(self):
         money = Money(2.2, "EUR") + Money(2.2, "EUR")
         assert money.amount == 4.4
 

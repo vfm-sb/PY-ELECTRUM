@@ -32,7 +32,7 @@ class TestMoneySubtraction:
         money = Money(4, "EUR") - Money(2.2, "EUR")
         assert money.amount == 1.8
 
-    def test_subtraction_with_two_float_values(self):
+    def test_subtraction_with_two_floats(self):
         money = Money(4.4, "EUR") - Money(2.2, "EUR")
         assert money.amount == 2.2
 

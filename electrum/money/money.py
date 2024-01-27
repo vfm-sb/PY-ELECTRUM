@@ -7,7 +7,9 @@ from decimal import Decimal
 from electrum.currency.currency import Currency
 
 # Utilities
+from electrum.utils import round_up, round_down
 from electrum.utils import parse_numeric_value
+from electrum.utils import convert_decimal
 from electrum.utils import valid_numeric
 
 # Custom Exceptions
@@ -54,7 +56,7 @@ class Money:
             amount = parse_numeric_value(amount)
         except ValueError as exception:
             raise InvalidAmountError(value=amount) from exception
-        self.assert_amount(amount)
+        self.assert_amount_precision(amount)
         self._amount = amount
 
     @property
@@ -112,12 +114,12 @@ class Money:
         if self.valid_instance(other):
             self.assert_currency(other)
             self.assert_division(other.amount)
-            return self.base_amount / other.base_amount
+            result = Decimal(str(self.amount)) / Decimal(str(other.amount))
+            return convert_decimal(result)
         if not valid_numeric(other):
             raise InvalidOperandError
         other = parse_numeric_value(other)
-        base_result = self.base_amount / other
-        amount = self.base_to_amount(base_result)
+        amount = self.mround(self.amount / other, mode="down")
         return Money(amount, self.currency.alphabetic_code)
 
     def __div__(
@@ -197,10 +199,14 @@ class Money:
     def base_to_amount(self, base_value: int) -> float | int:
         return self.mround(base_value * self.currency.base)
 
-    def mround(self, value: int | float) -> int | float:
+    def mround(self, value: int | float, mode: str | None = None) -> int | float:
         """
         Rounds Monetary Value to the Precision of the Currency.
         """
+        if mode == "down":
+            return round_down(value, self.currency.precision)
+        if mode == "up":
+            return round_up(value, self.currency.precision)
         return round(value, self.currency.precision)
 
     def assert_instance(self, other: Union[Money, Coin, Note, Banknote, Cash]) -> None:
@@ -214,7 +220,7 @@ class Money:
                 received = other.currency.alphabetic_code
             )
 
-    def assert_amount(self, value: int | float) -> None:
+    def assert_amount_precision(self, value: int | float) -> None:
         decimal_value = Decimal(str(value))
         if decimal_value % 1 != 0 and decimal_value.as_tuple().exponent < -self.currency.precision:
             raise ExcessAmountError(value=value, limit=self.currency.denominator)

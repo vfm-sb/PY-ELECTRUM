@@ -142,16 +142,6 @@ A `Money` object **cannot** perform floor division with any value other than an 
 ```
 
 ```python
->>> Money(2, "EUR") // Money(2)
->>> CurrencyMismatchError
-```
-
-```python
->>> Money(2) // Money(2, "EUR")
->>> CurrencyMismatchError
-```
-
-```python
 >>> 2 // Money(2, "EUR")
 >>> NotImplementedError
 ```

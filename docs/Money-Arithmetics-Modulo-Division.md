@@ -61,27 +61,27 @@ A `Money` object **cannot** perform modulo operation with any value other than a
 ### Invalid Examples
 
 ```python
->>> 2 % Money(2)
+>>> 2 % Money(2, "EUR")
 >>> NotImplementedError
 ```
 
 ```python
->>> 2.2 % Money(2)
+>>> 2.2 % Money(2, "EUR")
 >>> NotImplementedError
 ```
 
 ```python
->>> "4" % Money(2)
+>>> "4" % Money(2, "EUR")
 >>> NotImplementedError
 ```
 
 ```python
->>> Money(2) % Other("2")
+>>> Money(2, "EUR") % Other("2")
 >>> InvalidOperandError
 ```
 
 ```python
->>> Other("2") % Money(2)
+>>> Other("2") % Money(2, "EUR")
 >>> NotImplementedError
 ```
 
@@ -137,16 +137,6 @@ A `Money` object **cannot** perform floor division with any value other than an 
 
 ```python
 >>> Money(2, "BGN") % Money(2, "EUR")
->>> CurrencyMismatchError
-```
-
-```python
->>> Money(2, "EUR") % Money(2)
->>> CurrencyMismatchError
-```
-
-```python
->>> Money(2) % Money(2, "EUR")
 >>> CurrencyMismatchError
 ```
 

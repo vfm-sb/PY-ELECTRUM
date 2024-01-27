@@ -71,16 +71,6 @@ A `Money` object **cannot** perform division with any value other than an object
 ```
 
 ```python
->>> Money(2, "EUR") / Money(2)
->>> CurrencyMismatchError
-```
-
-```python
->>> Money(2) / Money(2, "EUR")
->>> CurrencyMismatchError
-```
-
-```python
 >>> 2 / Money(2, "EUR")
 >>> NotImplementedError
 ```
@@ -158,16 +148,6 @@ A `Money` object **cannot** perform division with any value other than an object
 
 ```python
 >>> Money(2, "BGN") / Money(2, "EUR")
->>> CurrencyMismatchError
-```
-
-```python
->>> Money(2, "EUR") / Money(2)
->>> CurrencyMismatchError
-```
-
-```python
->>> Money(2) / Money(2, "EUR")
 >>> CurrencyMismatchError
 ```
 

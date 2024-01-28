@@ -488,15 +488,11 @@ A `Money` object **cannot** perform multiplication with a *Non-Numeric Type* obj
 | :--: | :--: | :--: | :--: | :--: |
 | Money(XYZ) | / | Money(XYZ) | Int or Float | Valid |
 | Money(XYZ) | / | Int or Float | Money(XYZ) | Valid |
-| Int or Float  | / | Money(XYZ) | NotImplementedError | Invalid |
 | Money(XYZ) | / | Numeric String | Money(XYZ) | Valid |
-| Numeric String  | / | Money(XYZ) | NotImplementedError | Invalid |
 | Money(XYZ) | / | Decimal | Money(XYZ) | Valid |
-| Decimal  | / | Money(XYZ) | NotImplementedError | Invalid |
 | Money(XYZ) | / | Money(ABC) | CurrencyMismatchError | Invalid |
 | Money(ABC) | / | Money(XYZ) | CurrencyMismatchError | Invalid |
 | Money(XYZ) | / | Other Object | InvalidOperandError | Invalid |
-| Other Object | / | Money(XYZ) | NotImplementedError | Invalid |
 
 
 ### `Money(amount=x, currency="XYZ) / Money(amount=y, currency="XYZ)`
@@ -565,28 +561,8 @@ A `Money` object **cannot** perform division with any value other than an object
 ```
 
 ```python
->>> 2 / Money(2, "EUR")
->>> NotImplementedError
-```
-
-```python
->>> 2.2 / Money(2, "EUR")
->>> NotImplementedError
-```
-
-```python
->>> "4" / Money(2, "EUR")
->>> NotImplementedError
-```
-
-```python
 >>> Money(2, "EUR") / Other("2")
 >>> InvalidOperandError
-```
-
-```python
->>> Other("2") / Money(2, "EUR")
->>> NotImplementedError
 ```
 
 
@@ -656,28 +632,8 @@ A `Money` object **cannot** perform division with any value other than an object
 ```
 
 ```python
->>> 2 / Money(2, "EUR")
->>> NotImplementedError
-```
-
-```python
->>> 2.2 / Money(2, "EUR")
->>> NotImplementedError
-```
-
-```python
->>> "4" / Money(2, "EUR")
->>> NotImplementedError
-```
-
-```python
 >>> Money(2, "EUR") / Other("2")
 >>> InvalidOperandError
-```
-
-```python
->>> Other("2") / Money(2, "EUR")
->>> NotImplementedError
 ```
 
 <br>
@@ -690,15 +646,11 @@ A `Money` object **cannot** perform division with any value other than an object
 | :--: | :--: | :--: | :--: | :--: |
 | Money(XYZ) | // | Money(XYZ) | Int | Valid |
 | Money(XYZ) | // | Int or Float | Money(XYZ) | Valid |
-| Int or Float  | // | Money(XYZ) | NotImplementedError | Invalid |
 | Money(XYZ) | // | Numeric String | Money(XYZ) | Valid |
-| Numeric String  | // | Money(XYZ) | NotImplementedError | Invalid |
 | Money(XYZ) | // | Decimal | Money(XYZ) | Valid |
-| Decimal  | // | Money(XYZ) | NotImplementedError | Invalid |
 | Money(XYZ) | // | Money(ABC) | CurrencyMismatchError | Invalid |
 | Money(ABC) | // | Money(XYZ) | CurrencyMismatchError | Invalid |
 | Money(XYZ) | // | Other Object | InvalidOperandError | Invalid |
-| Other Object | // | Money(XYZ) | NotImplementedError | Invalid |
 
 
 ### `Money(amount=x, currency="XYZ) // Money(amount=y, currency="XYZ)`
@@ -747,28 +699,8 @@ A `Money` object **cannot** perform floor division with any value other than an 
 #### Invalid Examples
 
 ```python
->>> 2 // Money(2, "EUR")
->>> NotImplementedError
-```
-
-```python
->>> 2.2 // Money(2, "EUR")
->>> NotImplementedError
-```
-
-```python
->>> "4" // Money(2, "EUR")
->>> NotImplementedError
-```
-
-```python
 >>> Money(2, "EUR") // Other("2")
 >>> InvalidOperandError
-```
-
-```python
->>> Other("2") // Money(2, "EUR")
->>> NotImplementedError
 ```
 
 
@@ -838,28 +770,8 @@ A `Money` object **cannot** perform floor division with any value other than an 
 ```
 
 ```python
->>> 2 // Money(2, "EUR")
->>> NotImplementedError
-```
-
-```python
->>> 2.2 // Money(2, "EUR")
->>> NotImplementedError
-```
-
-```python
->>> "4" // Money(2, "EUR")
->>> NotImplementedError
-```
-
-```python
 >>> Money(2, "EUR") // Other("2")
 >>> InvalidOperandError
-```
-
-```python
->>> Other("2") // Money(2, "EUR")
->>> NotImplementedError
 ```
 
 <br>
@@ -871,16 +783,11 @@ A `Money` object **cannot** perform floor division with any value other than an 
 | Object 1 | Operator | Object 2 | Result | Validity |
 | :--: | :--: | :--: | :--: | :--: |
 | Money(XYZ) | % | Money(XYZ) | Int or Float | Valid |
-| Money(XYZ) | % | Int or Float | Money(XYZ) | Valid |
-| Int or Float  | % | Money(XYZ) | NotImplementedError | Invalid |
 | Money(XYZ) | % | Numeric String | Money(XYZ) | Valid |
-| Numeric String  | % | Money(XYZ) | NotImplementedError | Invalid |
 | Money(XYZ) | % | Decimal | Money(XYZ) | Valid |
-| Decimal  | % | Money(XYZ) | NotImplementedError | Invalid |
 | Money(XYZ) | % | Money(ABC) | CurrencyMismatchError | Invalid |
 | Money(ABC) | % | Money(XYZ) | CurrencyMismatchError | Invalid |
 | Money(XYZ) | % | Other Object | InvalidOperandError | Invalid |
-| Other Object | % | Money(XYZ) | NotImplementedError | Invalid |
 
 
 ### `Money(amount=x, currency="XYZ) % Money(amount=y, currency="XYZ)`
@@ -929,28 +836,8 @@ A `Money` object **cannot** perform modulo operation with any value other than a
 #### Invalid Examples
 
 ```python
->>> 2 % Money(2)
->>> NotImplementedError
-```
-
-```python
->>> 2.2 % Money(2)
->>> NotImplementedError
-```
-
-```python
->>> "4" % Money(2)
->>> NotImplementedError
-```
-
-```python
 >>> Money(2) % Other("2")
 >>> InvalidOperandError
-```
-
-```python
->>> Other("2") % Money(2)
->>> NotImplementedError
 ```
 
 
@@ -1019,27 +906,7 @@ A `Money` object **cannot** perform floor division with any value other than an 
 ```
 
 ```python
->>> 2 % Money(2, "EUR")
->>> NotImplementedError
-```
-
-```python
->>> 2.2 % Money(2, "EUR")
->>> NotImplementedError
-```
-
-```python
->>> "4" % Money(2, "EUR")
->>> NotImplementedError
-```
-
-```python
 >>> Money(2, "EUR") % Other("2")
 >>> InvalidOperandError
-```
-
-```python
->>> Other("2") % Money(2, "EUR")
->>> NotImplementedError
 ```
 

@@ -131,29 +131,30 @@ class Money:
     def __floordiv__(
         self,
         other: Union[int, float, str, Decimal, Money, Coin, Note, Banknote, Cash]
-    ) -> Union[Money, float]:
+    ) -> Union[Money, int]:
         if self.valid_instance(other):
             self.assert_currency(other)
             self.assert_division(other.amount)
-            return self.amount // other.amount
+            return int(Decimal(str(self.amount)) // Decimal(str(other.amount)))
         if not valid_numeric(other):
             raise InvalidOperandError
         other = parse_numeric_value(other)
-        amount = self.amount // other
+        amount = self.mround(self.amount // other, mode="down")
         return Money(amount, self.currency.alphabetic_code)
 
     def __mod__(
         self,
         other: Union[int, float, str, Decimal, Money, Coin, Note, Banknote, Cash]
-    ) -> Union[Money, float]:
+    ) -> Union[Money, int, float]:
         if self.valid_instance(other):
             self.assert_currency(other)
             self.assert_division(other.amount)
-            return self.base_amount % other.base_amount
+            result = Decimal(str(self.amount)) % Decimal(str(other.amount))
+            return convert_decimal(result)
         if not valid_numeric(other):
             raise InvalidOperandError
         other = parse_numeric_value(other)
-        amount = self.amount % other
+        amount = self.mround(self.amount % other, mode="down")
         return Money(amount, self.currency.alphabetic_code)
 
     def __pos__(self) -> Money:

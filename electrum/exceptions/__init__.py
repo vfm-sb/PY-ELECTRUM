@@ -24,8 +24,3 @@ from .input_exceptions import (
     InvalidInputTypeError,
     InvalidNumericInputError,
 )
-
-from .utilities_exceptions import (
-    InvalidNumericValueError,
-    InvalidNumericStringError,
-)

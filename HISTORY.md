@@ -2,6 +2,10 @@
 
 
 
+## 0.2.0 (2024/01/28)
+
+- All Arithmetic Calculations are now Made Using `Decimal` module.
+
 ## 0.1.2 (2024/01/23)
 
 - Bugfix: `InvalidAmountError` Not Raised.

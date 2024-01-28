@@ -6,3 +6,8 @@
 - [ ] `FMoney` Class for More Advanced Financial Money Operations.
 - [ ] `Exchange` Class for Currency Exchange Operations.
 
+
+## Internal Changes
+
+- [ ] Use `pathlib` Module instead of String-Based Paths
+- [ ] Move `data/currencies` into `electrum` Folder

@@ -5,15 +5,13 @@ Custom Math Utilities
 import decimal
 
 
-def round_down(value: int | float, decimals: int):
+def round_down(value: decimal.Decimal, decimals: int) -> decimal.Decimal:
     with decimal.localcontext() as ctx:
-        decimal_value = decimal.Decimal(value)
         ctx.rounding = decimal.ROUND_DOWN
-        return round(decimal_value, decimals)
+        return round(value, decimals)
 
 
-def round_up(value: int | float, decimals: int):
+def round_up(value: decimal.Decimal, decimals: int) -> decimal.Decimal:
     with decimal.localcontext() as ctx:
-        decimal_value = decimal.Decimal(value)
         ctx.rounding = decimal.ROUND_UP
-        return round(decimal_value, decimals)
+        return round(value, decimals)

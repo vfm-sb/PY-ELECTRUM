@@ -4,6 +4,11 @@
         "iso-numeric": "975",
         "update-date": "2024/01"
     },
+    "CHF": {
+        "iso-alphabetic": "CHF",
+        "iso-numeric": "756",
+        "update-date": "2024/01"
+    },
     "EUR": {
         "iso-alphabetic": "EUR",
         "iso-numeric": "978",
@@ -17,6 +22,16 @@
     "JPY": {
         "iso-alphabetic": "JPY",
         "iso-numeric": "392",
+        "update-date": "2024/01"
+    },
+    "KRW": {
+        "iso-alphabetic": "KRW",
+        "iso-numeric": "410",
+        "update-date": "2024/01"
+    },
+    "RON": {
+        "iso-alphabetic": "RON",
+        "iso-numeric": "946",
         "update-date": "2024/01"
     },
     "TRY": {

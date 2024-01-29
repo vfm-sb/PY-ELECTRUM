@@ -1,14 +1,14 @@
 {
-    "iso-alphabetic": "JPY",
-    "iso-numeric": "392",
-    "name": "japanese yen",
+    "iso-alphabetic": "KRW",
+    "iso-numeric": "410",
+    "name": "south korean won",
     "base": 1,
     "denominator": 1,
     "precision": 0,
-    "unit-name": "yen",
+    "unit-name": "won",
     "unit-plural": null,
-    "unit-symbol": "\u00a5",
-    "unit-symbol-format": "\u00a5value",
+    "unit-symbol": "\u20a9",
+    "unit-symbol-format": "\u20a9value",
     "unit-abbreviation": null,
     "unit-abbreviation-format": null,
     "subunit-name": "",
@@ -21,7 +21,9 @@
         1000,
         2000,
         5000,
-        10000
+        10000,
+        20000,
+        50000
     ],
     "coins": [
         1,
@@ -32,6 +34,6 @@
         500
     ],
     "users": [
-        "japan"
+        "south korea"
     ]
 }

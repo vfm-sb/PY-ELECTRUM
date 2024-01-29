@@ -18,21 +18,21 @@
     "subunit-abbreviation": null,
     "subunit-abbreviation-format": null,
     "banknotes": [
-        "1",
-        "10",
-        "100",
-        "2",
-        "20",
-        "5",
-        "50"
+        1,
+        2,
+        5,
+        10,
+        20,
+        50,
+        100
     ],
     "coins": [
-        "0.01",
-        "0.05",
-        "0.1",
-        "0.25",
-        "0.50",
-        "1"
+        0.01,
+        0.05,
+        0.1,
+        0.25,
+        0.50,
+        1
     ],
     "users": [
         "united states"

@@ -135,9 +135,10 @@ class InputHandler:
                 break
             if "," in user_input:
                 input_values = split_by_comma(user_input)
-                numeric_values.extend(input_values)
+                for value in input_values:
+                    numeric_values.append(get_numeric_value(value))
             else:
-                numeric_values.append(user_input)
+                numeric_values.append(get_numeric_value(user_input))
         if not duplicates:
             numeric_values = list(set(numeric_values))
         return numeric_values

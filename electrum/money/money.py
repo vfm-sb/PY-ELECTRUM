@@ -62,7 +62,7 @@ class Money:
         return hash((self.amount, self.currency.alphabetic_code))
 
     def __repr__(self) -> str:
-        return f'Money({self.amount}, "{self.currency.alphabetic_code}")'
+        return f'{self.__class__.__name__}({self.amount}, "{self.currency.alphabetic_code}")'
 
     def __str__(self) -> str:
         pass

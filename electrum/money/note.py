@@ -14,7 +14,7 @@ class Note(Money):
     def __init__(self, amount: int | float | str | Decimal, currency: str | int | Currency) -> None:
         super().__init__(amount, currency)
         if amount not in self.currency.banknotes:
-            raise InvalidBanknoteValueError
+            raise InvalidBanknoteValueError(value=amount)
 
 
 class Banknote(Note):

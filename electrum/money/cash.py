@@ -15,4 +15,4 @@ class Cash(Money):
         super().__init__(amount, currency)
         valid_cash_values = self.currency.coins + self.currency.banknotes
         if amount not in valid_cash_values:
-            raise InvalidCashValueError
+            raise InvalidCashValueError(value=amount)

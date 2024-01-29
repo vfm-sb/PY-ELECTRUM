@@ -2,6 +2,12 @@
 
 
 
+## 0.2.1 (2024/01/29)
+
+- Bugfix: `Coin`, `Note/Banknote`, `Cash` Objects are Now Functional.
+    - A `CurrencyBuilderCLI` Bug Caused Banknote and Coin Values To Be Stored in Strings.
+- `Money` Object and its Subclasses are Now Represented Correctly.
+
 ## 0.2.0 (2024/01/28)
 
 - All Arithmetic Calculations are now Made Using `Decimal` module.

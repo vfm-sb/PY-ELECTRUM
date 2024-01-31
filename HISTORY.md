@@ -2,6 +2,10 @@
 
 
 
+## 0.2.2 (2024/01/31)
+
+- Electrum is now using `pathlib.Path` instead of Strings.
+
 ## 0.2.1 (2024/01/29)
 
 - Bugfix: `Coin`, `Note/Banknote`, `Cash` Objects are Now Functional.

@@ -9,5 +9,5 @@
 
 ## Internal Changes
 
-- [ ] Use `pathlib` Module instead of String-Based Paths
+- [x] Use `pathlib` Module instead of String-Based Paths
 - [ ] Move `data/currencies` into `electrum` Folder

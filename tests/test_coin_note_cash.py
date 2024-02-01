@@ -318,3 +318,33 @@ class TestCoinNoteCashSubtraction:
         with pytest.raises(CurrencyMismatchError):
             Cash(2, "BGN") - Cash(2, "EUR")
             Cash(5, "BGN") - Cash(5, "EUR")
+
+
+class TestCoinNoteCashMultiplication:
+
+    def test_coin_multiplication_default(self):
+        money = Coin(0.01, "EUR") * 5
+        assert money.__class__.__name__ == 'Money'
+        assert money.amount == 0.05
+        assert money.currency == Currency("EUR")
+
+    def test_note_multiplication_default(self):
+        money = Note(10, "EUR") * 10
+        assert money.__class__.__name__ == 'Money'
+        assert money.amount == 100.0
+        assert money.currency == Currency("EUR")
+
+    def test_cash_multiplication_default(self):
+        money = Cash(50, "EUR") * 20
+        assert money.__class__.__name__ == 'Money'
+        assert money.amount == 1000.0
+        assert money.currency == Currency("EUR")
+
+    def test_coin_note_cash_multiplication_with_invalid_operand(self):
+        with pytest.raises(InvalidOperandError):
+            Coin(1, "EUR") * Coin(1, "EUR")
+        with pytest.raises(InvalidOperandError):
+            Note(5, "EUR") * Note(5, "EUR")
+        with pytest.raises(InvalidOperandError):
+            Cash(1, "EUR") * Cash(1, "EUR")
+            Cash(5, "EUR") * Cash(5, "EUR")

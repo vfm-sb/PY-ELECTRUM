@@ -1,9 +1,31 @@
 """
 Tests for Coin, Note/Banknote, Cash Classes
 """
+# pylint: disable=expression-not-assigned
+
+# Built-in Modules
+from decimal import Decimal
+
+# Third-Party Modules
+import pytest
 
 # Local Modules
-from electrum import Money, Coin, Note, Banknote, Cash, Currency
+from electrum import (
+    Money,
+    Coin, Note, Banknote, Cash,
+    Currency
+)
+from electrum.exceptions import (
+    CurrencyNotFoundError,
+    CurrencyMismatchError,
+    InvalidOperandError,
+)
+from electrum.exceptions import (
+    InvalidAmountError,
+    InvalidCoinValueError,
+    InvalidBanknoteValueError,
+    InvalidCashValueError
+)
 
 
 class TestCoinNoteCashInit:
@@ -70,6 +92,70 @@ class TestCoinNoteCashInit:
         note = Note(20, Currency("TRY"))
         assert note.currency.alphabetic_code == "TRY"
         assert note.currency.numeric_code == "949"
+
+    def test_coin_note_cash_with_numeric_string_amount(self):
+        coin = Coin("0.01", "EUR")
+        assert coin.amount == 0.01
+        note = Note("5", "EUR")
+        assert note.amount == 5.0
+        cash = Cash("0.01", "EUR")
+        assert cash.amount == 0.01
+        cash = Cash("20", "EUR")
+
+    def test_coin_note_cash_with_decimal_amount(self):
+        coin = Coin(Decimal("0.01"), "EUR")
+        assert coin.amount == 0.01
+        note = Note(Decimal("5"), "EUR")
+        assert note.amount == 5.0
+        cash = Cash(Decimal("0.01"), "EUR")
+        assert cash.amount == 0.01
+        cash = Cash(Decimal("20"), "EUR")
+
+    def test_coin_note_cash_init_with_currency_not_found(self):
+        with pytest.raises(CurrencyNotFoundError):
+            Coin(0.5, "DEM")
+        with pytest.raises(CurrencyNotFoundError):
+            Note(1000, "BGL")
+        with pytest.raises(CurrencyNotFoundError):
+            Cash(1_000_000, "TRL")
+
+    def test_coin_note_cash_init_with_invalid_amount(self):
+        with pytest.raises(InvalidAmountError):
+            Coin("x", "EUR")
+        with pytest.raises(InvalidAmountError):
+            Note("53K", "BGN")
+        with pytest.raises(InvalidAmountError):
+            Cash("100B", "TRY")
+
+    def test_coin_init_with_invalid_amount(self):
+        with pytest.raises(InvalidCoinValueError):
+            Coin(0.25, "EUR")
+        with pytest.raises(InvalidCoinValueError):
+            Coin(0.99, "BGN")
+        with pytest.raises(InvalidCoinValueError):
+            Coin(1.01, "TRY")
+        with pytest.raises(InvalidCoinValueError):
+            Coin(2.5, "GBP")
+
+    def test_note_init_with_invalid_amount(self):
+        with pytest.raises(InvalidBanknoteValueError):
+            Note(1, "EUR")
+        with pytest.raises(InvalidBanknoteValueError):
+            Note(2, "BGN")
+        with pytest.raises(InvalidBanknoteValueError):
+            Banknote(99, "TRY")
+        with pytest.raises(InvalidBanknoteValueError):
+            Banknote(100, "GBP")
+
+    def test_cash_init_with_invalid_amount(self):
+        with pytest.raises(InvalidCashValueError):
+            Cash(0.25, "EUR")
+        with pytest.raises(InvalidCashValueError):
+            Cash(2.5, "BGN")
+        with pytest.raises(InvalidCashValueError):
+            Cash(25, "TRY")
+        with pytest.raises(InvalidCashValueError):
+            Cash(100, "GBP")
 
 
 class TestCoinNoteCashAddition:

@@ -227,15 +227,11 @@ class TestCoinNoteCashAddition:
         with pytest.raises(CurrencyMismatchError):
             Coin(2, "EUR") + Coin(2, "BGN")
         with pytest.raises(CurrencyMismatchError):
-            Coin(2, "BGN") + Coin(2, "EUR")
+            Note(5, "EUR") + Note(5, "BGN")
         with pytest.raises(CurrencyMismatchError):
-            Note(2, "EUR") + Note(2, "BGN")
+            Cash(2, "EUR") + Cash(2, "BGN")
         with pytest.raises(CurrencyMismatchError):
-            Note(2, "BGN") + Note(2, "EUR")
-        with pytest.raises(CurrencyMismatchError):
-            Money(2, "EUR") + Money(2, "BGN")
-        with pytest.raises(CurrencyMismatchError):
-            Money(2, "BGN") + Money(2, "EUR")
+            Cash(5, "BGN") + Cash(5, "EUR")
 
 
 class TestCoinNoteCashSubtraction:
@@ -348,3 +344,150 @@ class TestCoinNoteCashMultiplication:
         with pytest.raises(InvalidOperandError):
             Cash(1, "EUR") * Cash(1, "EUR")
             Cash(5, "EUR") * Cash(5, "EUR")
+
+
+class TestCoinNoteCashDivision:
+
+    def test_dividing_coin_by_coin_default(self):
+        result = Coin(2, "EUR") / Coin(1, "EUR")
+        assert result == 2.0
+
+    def test_dividing_coin_by_numeric_default(self):
+        money = Coin(2, "EUR") / 1
+        assert money.__class__.__name__ == 'Money'
+        assert money.amount == 2.0
+        assert money.currency == Currency("EUR")
+
+    def test_dividing_banknote_by_banknote_default(self):
+        result = Note(20, "EUR") / Note(10, "EUR")
+        assert result == 2.0
+
+    def test_dividing_banknote_by_numeric_default(self):
+        money = Note(20, "EUR") / 10
+        assert money.__class__.__name__ == 'Money'
+        assert money.amount == 2.0
+        assert money.currency == Currency("EUR")
+
+    def test_dividing_cash_by_cash_default(self):
+        result = Cash(2, "EUR") / Cash(1, "EUR")
+        assert result == 2.0
+        result = Cash(20, "EUR") / Cash(10, "EUR")
+        assert result == 2.0
+
+    def test_dividing_cash_by_numeric_default(self):
+        money = Cash(2, "EUR") / 1
+        assert money.__class__.__name__ == 'Money'
+        assert money.amount == 2.0
+        assert money.currency == Currency("EUR")
+        money = Cash(20, "EUR") / 10
+        assert money.__class__.__name__ == 'Money'
+        assert money.amount == 2.0
+        assert money.currency == Currency("EUR")
+
+    def test_dividing_coin_note_cash_by_money_default(self):
+        result = Coin(1, "EUR") / Money(0.25, "EUR")
+        assert result == 4.0
+        result = Note(10, "EUR") / Money(2.5, "EUR")
+        assert result == 4.0
+        result = Cash(1, "EUR") / Money(0.25, "EUR")
+        assert result == 4.0
+        result = Cash(10, "EUR") / Money(2.5, "EUR")
+        assert result == 4.0
+
+
+class TestCoinNoteCashFloorDivision:
+
+    def test_coin_by_coin_floor_division_default(self):
+        result = Coin(2, "EUR") // Coin(1, "EUR")
+        assert result == 2.0
+
+    def test_coin_by_numeric_floor_division_default(self):
+        money = Coin(2, "EUR") // 1
+        assert money.__class__.__name__ == 'Money'
+        assert money.amount == 2.0
+        assert money.currency == Currency("EUR")
+
+    def test_banknote_by_banknote_floor_division_default(self):
+        result = Note(20, "EUR") // Note(10, "EUR")
+        assert result == 2.0
+
+    def test_banknote_by_numeric_floor_division_default(self):
+        money = Note(20, "EUR") // 10
+        assert money.__class__.__name__ == 'Money'
+        assert money.amount == 2.0
+        assert money.currency == Currency("EUR")
+
+    def test_cash_by_cash_floor_division_default(self):
+        result = Cash(2, "EUR") // Cash(1, "EUR")
+        assert result == 2.0
+        result = Cash(20, "EUR") // Cash(10, "EUR")
+        assert result == 2.0
+
+    def test_cash_by_numeric_floor_division_default(self):
+        money = Cash(2, "EUR") // 1
+        assert money.__class__.__name__ == 'Money'
+        assert money.amount == 2.0
+        assert money.currency == Currency("EUR")
+        money = Cash(20, "EUR") // 10
+        assert money.__class__.__name__ == 'Money'
+        assert money.amount == 2.0
+        assert money.currency == Currency("EUR")
+
+    def test_coin_note_cash_by_money_floor_division_default(self):
+        result = Coin(1, "EUR") // Money(0.25, "EUR")
+        assert result == 4.0
+        result = Note(10, "EUR") // Money(2.5, "EUR")
+        assert result == 4.0
+        result = Cash(1, "EUR") // Money(0.25, "EUR")
+        assert result == 4.0
+        result = Cash(10, "EUR") // Money(2.5, "EUR")
+        assert result == 4.0
+
+
+class TestCoinNoteCashModuloDivision:
+
+    def test_coin_by_coin_default(self):
+        result = Coin(2, "EUR") % Coin(1, "EUR")
+        assert result == 0
+
+    def test_coin_by_numeric_default(self):
+        money = Coin(2, "EUR") % 1
+        assert money.__class__.__name__ == 'Money'
+        assert money.amount == 0
+        assert money.currency == Currency("EUR")
+
+    def test_banknote_by_banknote_default(self):
+        result = Note(20, "EUR") % Note(10, "EUR")
+        assert result == 0
+
+    def test_banknote_by_numeric_default(self):
+        money = Note(20, "EUR") % 10
+        assert money.__class__.__name__ == 'Money'
+        assert money.amount == 0
+        assert money.currency == Currency("EUR")
+
+    def test_cash_by_cash_default(self):
+        result = Cash(2, "EUR") % Cash(1, "EUR")
+        assert result == 0
+        result = Cash(20, "EUR") % Cash(10, "EUR")
+        assert result == 0
+
+    def test_cash_by_numeric_default(self):
+        money = Cash(2, "EUR") % 1
+        assert money.__class__.__name__ == 'Money'
+        assert money.amount == 0
+        assert money.currency == Currency("EUR")
+        money = Cash(20, "EUR") % 10
+        assert money.__class__.__name__ == 'Money'
+        assert money.amount == 0
+        assert money.currency == Currency("EUR")
+
+    def test_coin_note_cash_by_money_default(self):
+        result = Coin(1, "EUR") % Money(0.3, "EUR")
+        assert result == 0.1
+        result = Note(10, "EUR") % Money(3, "EUR")
+        assert result == 1.0
+        result = Cash(1, "EUR") % Money(0.3, "EUR")
+        assert result == 0.1
+        result = Cash(10, "EUR") % Money(3, "EUR")
+        assert result == 1.0

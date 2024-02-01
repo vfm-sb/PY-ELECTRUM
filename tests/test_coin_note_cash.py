@@ -206,3 +206,33 @@ class TestCoinNoteCashAddition:
         assert money.__class__.__name__ == 'Money'
         assert money.amount == 20.0
         assert money.currency == Currency("EUR")
+
+    def test_coin_note_cash_addition_with_invalid_operand(self):
+        with pytest.raises(InvalidOperandError):
+            Coin(1, "EUR") + 1
+        with pytest.raises(InvalidOperandError):
+            1 + Coin(1, "EUR")
+        with pytest.raises(InvalidOperandError):
+            Note(5, "EUR") + 5
+        with pytest.raises(InvalidOperandError):
+            5 + Note(5, "EUR")
+        with pytest.raises(InvalidOperandError):
+            Cash(1, "EUR") + 1
+            Cash(5, "EUR") + 5
+        with pytest.raises(InvalidOperandError):
+            1 + Cash(1, "EUR")
+            5 + Cash(5, "EUR")
+
+    def test_coin_note_cash_addition_with_currency_mismatch(self):
+        with pytest.raises(CurrencyMismatchError):
+            Coin(2, "EUR") + Coin(2, "BGN")
+        with pytest.raises(CurrencyMismatchError):
+            Coin(2, "BGN") + Coin(2, "EUR")
+        with pytest.raises(CurrencyMismatchError):
+            Note(2, "EUR") + Note(2, "BGN")
+        with pytest.raises(CurrencyMismatchError):
+            Note(2, "BGN") + Note(2, "EUR")
+        with pytest.raises(CurrencyMismatchError):
+            Money(2, "EUR") + Money(2, "BGN")
+        with pytest.raises(CurrencyMismatchError):
+            Money(2, "BGN") + Money(2, "EUR")

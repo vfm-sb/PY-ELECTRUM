@@ -115,9 +115,9 @@ class TestMoneyDivision:
         money = Money(50, "EUR") / 7
         assert money.amount == 7.14
         money = Money(225, "GBP") / 35
-        assert money.amount == 6.42
+        assert money.amount == 6.43
         money = Money(30_200, "TRY") / 30
-        assert money.amount == 1006.66
+        assert money.amount == 1006.67
 
     def test_money_by_money_divisions_with_currency_mismatch(self):
         with pytest.raises(CurrencyMismatchError):

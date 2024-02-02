@@ -106,7 +106,7 @@ class Money:
         if not valid_numeric(other):
             raise InvalidOperandError
         other = parse_numeric_value(other)
-        result = self.mround(self._amount / Decimal(str(other)), "down")
+        result = self.mround(self._amount / Decimal(str(other)))
         return Money.construct(amount=result, currency=self.currency)
 
     def __div__(
@@ -126,7 +126,7 @@ class Money:
         if not valid_numeric(other):
             raise InvalidOperandError
         other = parse_numeric_value(other)
-        result = self.mround(self._amount // Decimal(str(other)), mode="down")
+        result = self.mround(self._amount // Decimal(str(other)))
         return Money.construct(amount=result, currency=self.currency)
 
     def __mod__(
@@ -140,7 +140,7 @@ class Money:
         if not valid_numeric(other):
             raise InvalidOperandError
         other = parse_numeric_value(other)
-        result = self.mround(self._amount % Decimal(str(other)), mode="down")
+        result = self.mround(self._amount % Decimal(str(other)))
         return Money.construct(amount=result, currency=self.currency)
 
     def __pos__(self) -> Money:

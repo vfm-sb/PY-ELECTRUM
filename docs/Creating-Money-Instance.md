@@ -1,6 +1,6 @@
 # Creating Money Instance
 
-The `Money` Class can be initialised in various ways.
+The `Money` Class can be instantiated in various ways.
 
 (In Version 1) `Money` Class accepts two arguments; `amount` and `currency`.
 
@@ -18,15 +18,14 @@ The `currency` represents the `Currency` of a money instance.
     - ISO Numeric Code (Excepts ISO Numeric Codes Start with *0* or *00*)
 - `currency` value can be a `Currency` instance.
 
+## Rules
+
+- The `amount` value should adhere to the appropriate **decimal precision** specified for the given currency.
+
 
 ## Money Object Varieties
 
-
 ### `Money(amount, currency_object)`
-
-```python
->>> money = Money(1, Currency.EUR)
-```
 
 ```python
 >>> eur = Currency("EUR")
@@ -43,6 +42,9 @@ The `currency` represents the `Currency` of a money instance.
 >>> money = Money(1, eur)
 ```
 
+```python
+>>> money = Money(1, Currency.EUR)
+```
 
 ### `Money(amount, iso_alphabetic_code)`
 

@@ -182,7 +182,7 @@ class CurrencyBuilderCLI(CurrencyHelper):
         print("Enter Unit Symbol Format:")
         if current_format:
             print(f'Current Unit Symbol Format is "{current_format}"')
-        choices = [f"{symbol}value", f"value{symbol}", f"{symbol} value", f"value {symbol}"]
+        choices = [f"{symbol}value", f"{symbol} value", f"value{symbol}", f"value {symbol}"]
         CurrencyBuilderCLI.print_format_choices(choices)
         try:
             unit_symbol_format = InputHandler(input_type="choice", choices=choices).output
@@ -209,7 +209,7 @@ class CurrencyBuilderCLI(CurrencyHelper):
         print("Unit Abbreviation Format:")
         if current_format:
             print(f'Current Unit Abbreviation Format is "{current_format}"')
-        choices = [f"{abbr}value", f"value{abbr}", f"{abbr} value", f"value {abbr}"]
+        choices = [f"{abbr}value", f"{abbr} value", f"value{abbr}", f"value {abbr}"]
         CurrencyBuilderCLI.print_format_choices(choices)
         try:
             unit_abbreviation_format = InputHandler(input_type="choice", choices=choices).output
@@ -257,7 +257,7 @@ class CurrencyBuilderCLI(CurrencyHelper):
         print("Enter Subunit Symbol Format:")
         if current_format:
             print(f'Current Subunit Symbol Format is "{current_format}"')
-        choices = [f"{symbol}value", f"value{symbol}", f"{symbol} value", f"value {symbol}"]
+        choices = [f"{symbol}value", f"{symbol} value", f"value{symbol}", f"value {symbol}"]
         CurrencyBuilderCLI.print_format_choices(choices)
         try:
             subunit_symbol_format = InputHandler(input_type="choice", choices=choices).output
@@ -284,7 +284,7 @@ class CurrencyBuilderCLI(CurrencyHelper):
         print("Enter Subunit Abbreviation Format:")
         if current_format:
             print(f'Current Subunit Abbreviation Format is "{current_format}"')
-        choices = [f"{abbr}value", f"value{abbr}", f"{abbr} value", f"value {abbr}"]
+        choices = [f"{abbr}value", f"{abbr} value", f"value{abbr}", f"value {abbr}"]
         CurrencyBuilderCLI.print_format_choices(choices)
         try:
             subunit_abbreviation_format = InputHandler(input_type="choice", choices=choices).output

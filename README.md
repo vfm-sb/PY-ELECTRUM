@@ -61,9 +61,9 @@ from electrum import Money, Coin, Note, Cash
 
 [Detailed Version Money Instance Creation](https://github.com/vfm-sb/PY-ELECTRUM/blob/main/docs/Creating-Money-Instance.md)
 
-A Money instance can be instantiated in various ways. 
+A Money instance can be instantiated in various ways.
 
-`Money` Class accepts two arguments; `amount` and `currency`. 
+`Money` Class accepts two arguments; `amount` and `currency`.
 
 The `amount` value can be either an Integer, Float, Numeric String or Decimal value. The `amount` value should also adhere to the appropriate **decimal precision** limit for the given currency.
 

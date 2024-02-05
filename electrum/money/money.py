@@ -83,7 +83,7 @@ class Money:
         return Money.construct(amount=result, currency=self.currency)
 
     def __rsub__(self, other: Union[Money, Coin, Note, Banknote, Cash]) -> Money:
-        self.__sub__(other)
+        return self.__sub__(other)
 
     def __mul__(self, multiplier: Union[int, float, str, Decimal]) -> Money:
         if not valid_numeric(multiplier):
@@ -180,7 +180,7 @@ class Money:
         self.assert_instance_match(other)
         return self.amount >= other.amount
 
-    def mround(self, value: Decimal, mode: str | None = None) -> Decimal:
+    def mround(self, value: Decimal, mode: str | None = None) -> int | float:
         """
         Rounds Monetary Value to the Precision of the Currency.
         """

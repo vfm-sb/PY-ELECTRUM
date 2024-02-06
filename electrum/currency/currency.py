@@ -27,6 +27,7 @@ class Currency:
         self.subunit_symbol_format = currency_data["subunit-symbol-format"]
         self.subunit_abbr = currency_data["subunit-abbreviation"]
         self.subunit_abbr_format = currency_data["subunit-abbreviation-format"]
+        self.default_format = currency_data["default-format"]
         self.banknotes = currency_data["banknotes"]
         self.coins = currency_data["coins"]
         self.users = currency_data["users"]

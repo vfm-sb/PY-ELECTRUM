@@ -67,6 +67,7 @@ class CurrencyBuilderCLI(CurrencyHelper):
             "subunit-symbol-format": self.ask_subunit_symbol_format,
             "subunit-abbreviation": self.ask_subunit_abbreviation,
             "subunit-abbreviation-format": self.ask_subunit_abbreviation_format,
+            "default-format": self.ask_default_format,
             "banknotes": self.ask_banknotes,
             "coins": self.ask_coins,
             "users": self.ask_users,
@@ -229,9 +230,15 @@ class CurrencyBuilderCLI(CurrencyHelper):
             print(error_message)
             print()
             return self.ask_currency_name(current_name)
+        if subunit_name == "":
+            return None
         return subunit_name
 
     def ask_subunit_plural(self, current_plural: str | None = None) -> str | None:
+        name = self.currency_data["subunit-name"]
+        if name is None:
+            print(f"Subunit Plural:\n> {None}")
+            return None
         print(f"{'Enter' if not current_plural else 'Change'} Subunit Plural:")
         if current_plural:
             print(f'Current Subunit Plural is "{current_plural}"')
@@ -293,6 +300,20 @@ class CurrencyBuilderCLI(CurrencyHelper):
             print()
             return self.ask_subunit_abbreviation_format(current_format)
         return subunit_abbreviation_format
+
+    def ask_default_format(self, current_default: str | None = None) -> str:
+        print("Enter Default Format:")
+        if current_default:
+            print(f'Currency Default Format is "{current_default}"')
+        choices = ["code", "name", "symbol", "abbr"]
+        CurrencyBuilderCLI.print_format_choices(choices)
+        try:
+            default_format = InputHandler(input_type="choice", choices=choices).output
+        except ValueError as error_message:
+            print(error_message)
+            print()
+            return self.ask_default_format(current_default)
+        return default_format
 
     def ask_banknotes(self, current_banknotes: list | None = None) -> list:
         print(f"{'Enter' if not current_banknotes else 'Change'} Banknotes:")

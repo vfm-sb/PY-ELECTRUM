@@ -100,6 +100,7 @@ class CurrencyHelper:
             "subunit-symbol-format": None,
             "subunit-abbreviation": None,
             "subunit-abbreviation-format": None,
+            "default-format": None,
             "banknotes": None,
             "coins": None,
             "users": None,

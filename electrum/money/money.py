@@ -5,6 +5,7 @@ from decimal import Decimal
 
 # Local Modules
 from electrum.currency.currency import Currency
+from electrum.currency.currency_formatter import CurrencyFormatter
 
 # Utilities
 from electrum.utils import round_up, round_down
@@ -33,6 +34,7 @@ class Money:
     ) -> None:
         self.currency = currency
         self.amount = amount
+        self.formatter = CurrencyFormatter(self.amount, self.currency)
 
     @property
     def currency(self) -> Currency:
@@ -62,10 +64,13 @@ class Money:
         return hash((self.amount, self.currency.alphabetic_code))
 
     def __repr__(self) -> str:
-        return f'{self.__class__.__name__}({self.amount}, "{self.currency.alphabetic_code}")'
+        return (
+            f'{self.__class__.__name__}'
+            f'({self.amount:.{self.currency.precision}}, "{self.currency.alphabetic_code}")'
+        )
 
     def __str__(self) -> str:
-        pass
+        return self.formatter.default_format()
 
     def __add__(self, other: Union[Money, Coin, Note, Banknote, Cash]) -> Money:
         self.assert_instance_match(other)

@@ -1,6 +1,15 @@
 # PY-ELECTRUM Development History
 
+<br>
 
+## 0.2.5 (2024/02/07)
+
+- Added Formatted Output Support to Money Objects.
+    - Default Money Representation Support
+    - Code-Based Formatting: `financialize()` Method
+    - Name-Based Formatting: `name_format()` Method
+    - Symbol-Based Formatting: `symbolize` Property
+    - Abbreviation-Based Formatting: `abbreviate` Property
 
 ## 0.2.2 (2024/01/31)
 

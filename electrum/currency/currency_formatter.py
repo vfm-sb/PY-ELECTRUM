@@ -13,6 +13,15 @@ class CurrencyFormatter:
         self.amount = amount
         self.base_amount = int(self.amount * self.currency.denominator)
 
+    def default_format(self):
+        if self.currency.default_format == "code":
+            return self.financial_ltr()
+        if self.currency.default_format == "symbol":
+            return self.symbol_format()
+        if self.currency.default_format == "abbr":
+            return self.abbr_format()
+        return self.name_format()
+
     def financial_ltr(self) -> str:
         return f"{self.currency.alphabetic_code} {self.amount}"
 

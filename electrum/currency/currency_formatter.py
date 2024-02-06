@@ -37,3 +37,19 @@ class CurrencyFormatter:
             return f"{base_amount} {self.currency.subunit_name.capitalize()}"
         return self.unit_name_format()
 
+    def symbol_format(self) -> str:
+        if self.currency.unit_symbol is None:
+            return self.abbr_format()
+        if self.amount >= 1:
+            return self.unit_symbol_format()
+        if self.currency.subunit_abbr and self.currency.subunit_symbol is None:
+            return self.abbr_format()
+        return self.subunit_symbol_format()
+
+    def unit_symbol_format(self) -> str:
+        return f'{self.currency.unit_symbol_format.replace("value", str(self.amount))}'
+
+    def subunit_symbol_format(self) -> str:
+        if self.currency.subunit_symbol:
+            return f'{self.currency.subunit_symbol_format.replace("value", str(self.base_amount))}'
+        return self.unit_symbol_format()

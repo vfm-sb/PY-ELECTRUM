@@ -221,6 +221,24 @@ class Money:
         from electrum.money.cash import Cash # pylint: disable=import-outside-toplevel
         return any(isinstance(other, instance) for instance in (Money, Coin, Note, Banknote, Cash))
 
+    def name_format(self) -> str:
+        return self.formatter.name_format()
+
+    def financialize(self, direction: str = "ltr") -> str:
+        if direction == "ltr":
+            return self.formatter.financial_ltr()
+        if direction == "rtl":
+            return self.formatter.financial_rtl()
+        raise ValueError("Invalid Direction Argument")
+
+    @property
+    def symbolize(self) -> str:
+        return self.formatter.symbol_format()
+
+    @property
+    def abbreviate(self) -> str:
+        return self.formatter.abbr_format()
+
     @classmethod
     def construct(
         cls,

@@ -4,10 +4,20 @@
         "iso-numeric": "975",
         "update-date": "2024/01"
     },
+    "CAD": {
+        "iso-alphabetic": "CAD",
+        "iso-numeric": "124",
+        "update-date": "2024/02"
+    },
     "CHF": {
         "iso-alphabetic": "CHF",
         "iso-numeric": "756",
         "update-date": "2024/01"
+    },
+    "CNY": {
+        "iso-alphabetic": "CNY",
+        "iso-numeric": "156",
+        "update-date": "2024/02"
     },
     "EUR": {
         "iso-alphabetic": "EUR",

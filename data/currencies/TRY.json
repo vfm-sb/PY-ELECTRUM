@@ -17,6 +17,7 @@
     "subunit-symbol-format": null,
     "subunit-abbreviation": "kr.",
     "subunit-abbreviation-format": "valuekr.",
+	"default-format": "abbr",
     "banknotes": [
         5,
         10,

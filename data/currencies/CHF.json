@@ -5,7 +5,7 @@
     "base": 0.01,
     "denominator": 100,
     "precision": 2,
-    "unit-name": "frank",
+    "unit-name": "franc",
     "unit-plural": "francs",
     "unit-symbol": null,
     "unit-symbol-format": null,
@@ -17,6 +17,7 @@
     "subunit-symbol-format": null,
     "subunit-abbreviation": "c",
     "subunit-abbreviation-format": "valuec",
+	"default-format": "name",
     "banknotes": [
         10,
         20,

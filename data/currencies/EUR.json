@@ -17,6 +17,7 @@
     "subunit-symbol-format": null,
     "subunit-abbreviation": "c",
     "subunit-abbreviation-format": "valuec",
+	"default-format": "symbol",
     "banknotes": [
         5,
         10,

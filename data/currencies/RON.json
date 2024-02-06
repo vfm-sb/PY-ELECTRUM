@@ -17,6 +17,7 @@
     "subunit-symbol-format": null,
     "subunit-abbreviation": null,
     "subunit-abbreviation-format": null,
+	"default-format": "name",
     "banknotes": [
         1,
         5,

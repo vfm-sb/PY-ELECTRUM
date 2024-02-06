@@ -17,6 +17,7 @@
     "subunit-symbol-format": null,
     "subunit-abbreviation": "p",
     "subunit-abbreviation-format": "valuep",
+	"default-format": "symbol",
     "banknotes": [
         5,
         10,

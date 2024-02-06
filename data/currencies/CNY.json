@@ -1,0 +1,40 @@
+{
+    "iso-alphabetic": "CNY",
+    "iso-numeric": "156",
+    "name": "renminbi",
+    "base": 0.01,
+    "denominator": 100,
+    "precision": 2,
+    "unit-name": "yuan",
+    "unit-plural": null,
+    "unit-symbol": "\u00a5",
+    "unit-symbol-format": "\u00a5value",
+    "unit-abbreviation": "RMB",
+    "unit-abbreviation-format": "value RMB",
+    "subunit-name": null,
+    "subunit-plural": null,
+    "subunit-symbol": null,
+    "subunit-symbol-format": null,
+    "subunit-abbreviation": null,
+    "subunit-abbreviation-format": null,
+    "default-format": "symbol",
+    "banknotes": [
+        1,
+        5,
+        10,
+        20,
+        50,
+        100
+    ],
+    "coins": [
+        0.01,
+        0.02,
+        0.05,
+        0.1,
+        0.5,
+        1
+    ],
+    "users": [
+        "china"
+    ]
+}

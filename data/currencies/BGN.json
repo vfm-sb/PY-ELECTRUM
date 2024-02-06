@@ -17,6 +17,7 @@
     "subunit-symbol-format": "value\u0441\u0442.",
     "subunit-abbreviation": "st.",
     "subunit-abbreviation-format": "valuest.",
+	"default-format": "name",
     "banknotes": [
         5,
         10,

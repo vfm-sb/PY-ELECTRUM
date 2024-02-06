@@ -53,3 +53,18 @@ class CurrencyFormatter:
         if self.currency.subunit_symbol:
             return f'{self.currency.subunit_symbol_format.replace("value", str(self.base_amount))}'
         return self.unit_symbol_format()
+
+    def abbr_format(self) -> str:
+        if self.currency.unit_abbr is None and self.currency.subunit_abbr is None:
+            return self.name_format()
+        if self.amount >= 1:
+            return self.unit_abbr_format()
+        return self.subunit_abbr_format()
+
+    def unit_abbr_format(self) -> str:
+        return f'{self.currency.unit_abbr_format.replace("value", str(self.amount))}'
+
+    def subunit_abbr_format(self) -> str:
+        if self.currency.subunit_abbr:
+            return f'{self.currency.subunit_abbr_format.replace("value", str(self.base_amount))}'
+        return self.unit_abbr_format()

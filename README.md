@@ -6,14 +6,15 @@ The **Py-Electrum** is a Monetary Operations Library for Python Users and Develo
 
 ## About
 
-The **Py-Electrum** represents `Money`, `Coin`, `Note`/`Banknote` and `Cash` objects as they are in the real world.
+In the **Py-Electrum**, `Money`, `Coin`, `Note`/`Banknote`, `Cash` and `Currency` are represented true to their real-world standards, accounting for both real-world limitations and limitations of the real-world.
+
 
 ## Getting Started
 
 ### Prerequisites
 
 - **pip**
-    [How to Install pip](https://pip.pypa.io/en/stable/installation/)
+    > [How to Install pip](https://pip.pypa.io/en/stable/installation/)
 
 ### Installation
 
@@ -75,6 +76,8 @@ The `currency` value can be either a valid currency identifier code or a valid `
 money = Money(2, "EUR")
 ```
 
+
+## Documentation
 
 ## Roadmap
 

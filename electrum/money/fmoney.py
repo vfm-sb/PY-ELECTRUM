@@ -1,5 +1,5 @@
 """
-Electrum FMoney/FinancialMoney Module for More Precise Monetary Calculations
+Electrum FMoney (F for Finance) Module for Precise Monetary Operations
 """
 
 # Built-in Module
@@ -23,6 +23,9 @@ from electrum.exceptions import CurrencyMismatchError
 
 
 class FMoney:
+
+    rounding: str = None
+    precision: int = 6
 
     def __init__(
         self,
@@ -169,16 +172,13 @@ class FMoney:
         self.assert_instance_match(other)
         return self.amount >= other.amount
 
-    def mround(self, value: Decimal, mode: str | None = None) -> Decimal:
-        """
-        Rounds Monetary Value to the Precision of the Currency.
-        """
-        if mode == "normal":
-            return round(value, self.currency.precision)
-        if mode == "down":
-            return round_down(value, self.currency.precision)
-        if mode == "up":
-            return round_up(value, self.currency.precision)
+    def mround(self, value: Decimal) -> Decimal:
+        if self.rounding == "default":
+            return round(value, self.precision)
+        if self.rounding == "down":
+            return round_down(value, self.precision)
+        if self.rounding == "up":
+            return round_up(value, self.precision)
         return value
 
     def assert_instance_match(self, other: 'FMoney') -> None:

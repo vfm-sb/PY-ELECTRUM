@@ -1,3 +1,7 @@
+"""
+Electrum Money Module
+"""
+
 # Built-in Module
 from __future__ import annotations
 from typing import Union, TYPE_CHECKING

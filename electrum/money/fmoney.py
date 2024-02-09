@@ -4,6 +4,7 @@ Electrum FMoney (F for Finance) Module for Precise Monetary Operations
 
 # Built-in Module
 from decimal import Decimal
+from typing import Union, Self
 
 # Local Modules
 from electrum.currency.currency import Currency
@@ -69,35 +70,35 @@ class FMoney:
     def __str__(self) -> str:
         return CurrencyFormatter(self.amount, self.currency).financial_ltr()
 
-    def __add__(self, other):
+    def __add__(self, other) -> Self:
         self.assert_instance_match(other)
         self.assert_currency_match(other)
         result = self._amount + other._amount
         return self.construct(amount=result, currency=self.currency)
 
-    def __radd__(self, other):
+    def __radd__(self, other) -> Self:
         return self.__add__(other)
 
-    def __sub__(self, other):
+    def __sub__(self, other) -> Self:
         self.assert_instance_match(other)
         self.assert_currency_match(other)
         result = self._amount - other._amount
         return self.construct(amount=result, currency=self.currency)
 
-    def __rsub__(self, other):
+    def __rsub__(self, other) -> Self:
         return self.__sub__(other)
 
-    def __mul__(self, multiplier: int | float | str | Decimal):
+    def __mul__(self, multiplier: int | float | str | Decimal) -> Self:
         if not valid_numeric(multiplier):
             raise InvalidOperandError
         multiplier = parse_numeric_value(multiplier)
         result = self.mround(self._amount * Decimal(str(multiplier)))
         return self.construct(amount=result, currency=self.currency)
 
-    def __rmul__(self, multiplier: int | float | str | Decimal):
+    def __rmul__(self, multiplier: int | float | str | Decimal) -> Self:
         return self.__mul__(multiplier)
 
-    def __truediv__(self, other):
+    def __truediv__(self, other: Union[int, float, str, Decimal, Self]) -> Union[Self, float, int]:
         if self.valid_instance(other):
             self.assert_currency_match(other)
             self.assert_division(other.amount)
@@ -108,10 +109,10 @@ class FMoney:
         result = self.mround(self._amount / Decimal(str(other)))
         return self.construct(amount=result, currency=self.currency)
 
-    def __div__(self, other):
+    def __div__(self, other: Union[int, float, str, Decimal, Self]) -> Union[Self, float, int]:
         return self.__truediv__(other)
 
-    def __floordiv__(self, other):
+    def __floordiv__(self, other: Union[int, float, str, Decimal, Self]) -> Union[Self, int]:
         if self.valid_instance(other):
             self.assert_currency_match(other)
             self.assert_division(other.amount)
@@ -122,7 +123,7 @@ class FMoney:
         result = self.mround(self._amount // Decimal(str(other)))
         return self.construct(amount=result, currency=self.currency)
 
-    def __mod__(self, other):
+    def __mod__(self, other: Union[int, float, str, Decimal, Self]) -> Union[Self, float, int]:
         if self.valid_instance(other):
             self.assert_currency_match(other)
             self.assert_division(other.amount)
@@ -133,39 +134,39 @@ class FMoney:
         result = self.mround(self._amount % Decimal(str(other)))
         return self.construct(amount=result, currency=self.currency)
 
-    def __pos__(self):
+    def __pos__(self) -> Self:
         return FMoney(+self.amount, self.currency.alphabetic_code)
 
-    def __neg__(self):
+    def __neg__(self) -> Self:
         return FMoney(-self.amount, self.currency.alphabetic_code)
 
-    def __abs__(self):
+    def __abs__(self) -> Self:
         return FMoney(abs(self.amount), self.currency.alphabetic_code)
 
-    def __eq__(self, other) -> bool:
+    def __eq__(self, other: Self) -> bool:
         self.assert_currency_match(other)
         self.assert_instance_match(other)
         return self.amount == other.amount
 
-    def __ne__(self, other) -> bool:
+    def __ne__(self, other: Self) -> bool:
         return not self == other
 
-    def __lt__(self, other) -> bool:
+    def __lt__(self, other: Self) -> bool:
         self.assert_currency_match(other)
         self.assert_instance_match(other)
         return self.amount < other.amount
 
-    def __le__(self, other) -> bool:
+    def __le__(self, other: Self) -> bool:
         self.assert_currency_match(other)
         self.assert_instance_match(other)
         return self.amount <= other.amount
 
-    def __gt__(self, other) -> bool:
+    def __gt__(self, other: Self) -> bool:
         self.assert_currency_match(other)
         self.assert_instance_match(other)
         return self.amount > other.amount
 
-    def __ge__(self, other) -> bool:
+    def __ge__(self, other: Self) -> bool:
         self.assert_currency_match(other)
         self.assert_instance_match(other)
         return self.amount >= other.amount
@@ -179,11 +180,11 @@ class FMoney:
             return round_up(value, self.precision)
         return value
 
-    def assert_instance_match(self, other) -> None:
+    def assert_instance_match(self, other: Self) -> None:
         if not self.valid_instance(other):
             raise InvalidOperandError
 
-    def assert_currency_match(self, other) -> None:
+    def assert_currency_match(self, other: Self) -> None:
         if self.currency != other.currency:
             raise CurrencyMismatchError(
                 expected = self.currency.alphabetic_code,
@@ -194,7 +195,7 @@ class FMoney:
         if divisor == 0:
             raise ZeroDivisionError
 
-    def valid_instance(self, other) -> bool:
+    def valid_instance(self, other: Self) -> bool:
         return isinstance(other, FMoney)
 
     @classmethod

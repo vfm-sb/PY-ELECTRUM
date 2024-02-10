@@ -73,7 +73,7 @@ class FMoney:
     def __add__(self, other) -> Self:
         self.assert_instance_match(other)
         self.assert_currency_match(other)
-        result = self._amount + other._amount
+        result = self.mround(self._amount + other._amount)
         return self.construct(amount=result, currency=self.currency)
 
     def __radd__(self, other) -> Self:
@@ -82,7 +82,7 @@ class FMoney:
     def __sub__(self, other) -> Self:
         self.assert_instance_match(other)
         self.assert_currency_match(other)
-        result = self._amount - other._amount
+        result = self.mround(self._amount - other._amount)
         return self.construct(amount=result, currency=self.currency)
 
     def __rsub__(self, other) -> Self:

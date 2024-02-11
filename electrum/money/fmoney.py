@@ -4,7 +4,7 @@ Electrum FMoney (F for Finance) Module for Precise Monetary Operations
 
 # Built-in Module
 from decimal import Decimal
-from typing import Union, Self
+from typing import Self
 
 # Local Modules
 from electrum.currency.currency import Currency
@@ -24,7 +24,7 @@ from electrum.exceptions import CurrencyMismatchError
 
 class FMoney:
 
-    rounding: str = None
+    rounding: str | None = None
     precision: int = 6
 
     def __init__(
@@ -98,7 +98,7 @@ class FMoney:
     def __rmul__(self, multiplier: int | float | str | Decimal) -> Self:
         return self.__mul__(multiplier)
 
-    def __truediv__(self, other: Union[int, float, str, Decimal, Self]) -> Union[Self, float, int]:
+    def __truediv__(self, other: int | float | str | Decimal | Self) -> Self | float | int:
         if self.valid_instance(other):
             self.assert_currency_match(other)
             self.assert_division(other.amount)
@@ -109,10 +109,10 @@ class FMoney:
         result = self.mround(self._amount / Decimal(str(other)))
         return self.construct(amount=result, currency=self.currency)
 
-    def __div__(self, other: Union[int, float, str, Decimal, Self]) -> Union[Self, float, int]:
+    def __div__(self, other: int | float | str | Decimal | Self) -> Self | float | int:
         return self.__truediv__(other)
 
-    def __floordiv__(self, other: Union[int, float, str, Decimal, Self]) -> Union[Self, int]:
+    def __floordiv__(self, other: int | float | str | Decimal | Self) -> Self | int:
         if self.valid_instance(other):
             self.assert_currency_match(other)
             self.assert_division(other.amount)
@@ -123,7 +123,7 @@ class FMoney:
         result = self.mround(self._amount // Decimal(str(other)))
         return self.construct(amount=result, currency=self.currency)
 
-    def __mod__(self, other: Union[int, float, str, Decimal, Self]) -> Union[Self, float, int]:
+    def __mod__(self, other: int | float | str | Decimal | Self) -> Self | float | int:
         if self.valid_instance(other):
             self.assert_currency_match(other)
             self.assert_division(other.amount)
@@ -203,5 +203,5 @@ class FMoney:
         cls,
         amount: int | float | str | Decimal,
         currency: str | int | Currency
-    ):
+    ) -> Self:
         return cls(amount, currency)

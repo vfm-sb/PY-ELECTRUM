@@ -31,6 +31,8 @@ if TYPE_CHECKING:
 
 class Money:
 
+    rounding: str | None = None
+
     def __init__(
         self,
         amount: Union[int, float, str, Decimal],
@@ -79,7 +81,7 @@ class Money:
     def __add__(self, other: Union[Money, Coin, Note, Banknote, Cash]) -> Money:
         self.assert_instance_match(other)
         self.assert_currency_match(other)
-        result = self._amount + other._amount
+        result = self.mround(self._amount + other._amount)
         return Money.construct(amount=result, currency=self.currency)
 
     def __radd__(self, other: Union[Money, Coin, Note, Banknote, Cash]) -> Money:
@@ -88,7 +90,7 @@ class Money:
     def __sub__(self, other: Union[Money, Coin, Note, Banknote, Cash]) -> Money:
         self.assert_instance_match(other)
         self.assert_currency_match(other)
-        result = self._amount - other._amount
+        result = self.mround(self._amount - other._amount)
         return Money.construct(amount=result, currency=self.currency)
 
     def __rsub__(self, other: Union[Money, Coin, Note, Banknote, Cash]) -> Money:
@@ -189,13 +191,13 @@ class Money:
         self.assert_currency_match(other)
         return self.amount >= other.amount
 
-    def mround(self, value: Decimal, mode: str | None = None) -> int | float:
+    def mround(self, value: Decimal) -> Decimal:
         """
         Rounds Monetary Value to the Precision of the Currency.
         """
-        if mode == "down":
+        if self.rounding == "down":
             return round_down(value, self.currency.precision)
-        if mode == "up":
+        if self.rounding == "up":
             return round_up(value, self.currency.precision)
         return round(value, self.currency.precision)
 

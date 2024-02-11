@@ -170,23 +170,23 @@ class Money:
         return not self == other
 
     def __lt__(self, other: Union[Money, Coin, Note, Banknote, Cash]) -> bool:
-        self.assert_currency_match(other)
         self.assert_instance_match(other)
+        self.assert_currency_match(other)
         return self.amount < other.amount
 
     def __le__(self, other: Union[Money, Coin, Note, Banknote, Cash]) -> bool:
-        self.assert_currency_match(other)
         self.assert_instance_match(other)
+        self.assert_currency_match(other)
         return self.amount <= other.amount
 
     def __gt__(self, other: Union[Money, Coin, Note, Banknote, Cash]) -> bool:
-        self.assert_currency_match(other)
         self.assert_instance_match(other)
+        self.assert_currency_match(other)
         return self.amount > other.amount
 
     def __ge__(self, other: Union[Money, Coin, Note, Banknote, Cash]) -> bool:
-        self.assert_currency_match(other)
         self.assert_instance_match(other)
+        self.assert_currency_match(other)
         return self.amount >= other.amount
 
     def mround(self, value: Decimal, mode: str | None = None) -> int | float:

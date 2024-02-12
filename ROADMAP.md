@@ -5,10 +5,10 @@
     - Plain Money Objects Functionality May Never Be Implemented!
 - [ ] Currencies as Classes (For Example: `EUR` Class, `USD` Class, `GBP` Class as Alternative to `Money` with `Currency`)
 - [ ] Currency Scraper -- Automatic Currency Builder & Maintainer
-- [ ] `FMoney` Class for More Advanced Financial Monetary Calculations & Operations.
+- [x] `FMoney` Class for More Advanced Financial Monetary Calculations & Operations.
 - [ ] `Exchange` Class for Currency Exchange Operations.
-- [ ] Flexible **Round-Up** & **Round-Down** Models (Suitable for Different Use Cases)
-- [ ] Custom **Round-Up** & **Round-Down** Models Support
+- [x] Flexible **Round-Up** & **Round-Down** Models (Suitable for Different Use Cases)
+- [x] Custom **Round-Up** & **Round-Down** Models Support
 
 
 ## Internal Changes
@@ -25,5 +25,5 @@
 - [ ] Negative Value Formatting Functionality
     - Version 0.2.5 generates correct representations only when positive monetary values are used.
 - [x] Basic Custom Formatting Functionality
-- [ ] Predefined Custom Formatting Functionality
+- [x] Predefined Custom Formatting Functionality
 

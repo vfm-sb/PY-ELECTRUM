@@ -31,6 +31,7 @@ pip install electrum
 ```
 electrum
 │
+├── FMoney
 ├── Money
 ├── Currency
 │
@@ -58,11 +59,16 @@ from electrum import Money, Currency
 from electrum import Money, Coin, Note, Cash
 ```
 
-### Creating `Money` Instance
+```python
+from electrum import FMoney
+```
+
+
+### Creating `Money` Instances
 
 [Detailed Version Money Instance Creation](https://github.com/vfm-sb/PY-ELECTRUM/blob/main/docs/Creating-Money-Instance.md)
 
-A Money instance can be instantiated in various ways.
+A `Money` instance can be instantiated in various ways.
 
 `Money` Class accepts two arguments; `amount` and `currency`.
 
@@ -72,8 +78,24 @@ The `currency` value can be either a valid currency identifier code or a valid `
 
 **Recommended Way**:
 
+- Use Integer or Float as the `amount` value ([See Other Valid Amount Values](https://github.com/vfm-sb/PY-ELECTRUM/blob/main/docs/Valid-Amount-Values.md))
+- Use ISO Alphabetic Code (String) as the `currency` value ([See Other Valid Currency Values](https://github.com/vfm-sb/PY-ELECTRUM/blob/main/docs/Valid-Currency-Values.md))
+
 ```python
 money = Money(2, "EUR")
+another = Money(2.2, "EUR")
+```
+
+### Creating `FMoney` Instance
+
+An `FMoney` instance can be instantiated as the same way as `Money` type objects. The only difference is the `amount` value doesn't adhere to the Currency-based decimal precision limit.
+
+> The default precision limit is **6** but not enforced during instantiation.
+> The default rounding model is `None`
+
+```python
+fmoney = FMoney(2.999, "USD")
+another = FMoney(1.9515, "BGN")
 ```
 
 

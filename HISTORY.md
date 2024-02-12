@@ -2,6 +2,14 @@
 
 <br>
 
+## 0.3.0 (2024/02/11)
+
+- Added `FMoney`
+    - Represents Financial Money Module
+    - Adjustable Rounding
+    - Adjustable Precision
+- Class-Based Rounding Added to `Money`
+
 ## 0.2.5 (2024/02/07)
 
 - Added Formatted Output Support to Money Objects.

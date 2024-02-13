@@ -72,7 +72,7 @@ class Money:
     def __repr__(self) -> str:
         return (
             f'{self.__class__.__name__}'
-            f'({self.amount:.{self.currency.precision}}, "{self.currency.alphabetic_code}")'
+            f'({self.amount}, "{self.currency.alphabetic_code}")'
         )
 
     def __str__(self) -> str:

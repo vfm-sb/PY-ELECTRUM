@@ -7,6 +7,7 @@ from decimal import Decimal
 from typing import Self
 
 # Local Modules
+from electrum.money.money import Money
 from electrum.currency.currency import Currency
 from electrum.currency.currency_formatter import CurrencyFormatter
 
@@ -171,14 +172,12 @@ class FMoney:
         self.assert_instance_match(other)
         return self.amount >= other.amount
 
-    def mround(self, value: Decimal) -> Decimal:
-        if self.rounding == "default":
-            return round(value, self.precision)
+    def mround(self, amount: Decimal) -> Decimal:
         if self.rounding == "down":
-            return round_down(value, self.precision)
+            return round_down(amount, self.precision)
         if self.rounding == "up":
-            return round_up(value, self.precision)
-        return value
+            return round_up(amount, self.precision)
+        return round(amount, self.precision)
 
     def assert_instance_match(self, other: Self) -> None:
         if not self.valid_instance(other):
@@ -205,3 +204,12 @@ class FMoney:
         currency: str | int | Currency
     ) -> Self:
         return cls(amount, currency)
+
+    def to_money(
+        self,
+        rounding: str | None = None
+    ) -> Money:
+        if rounding is not None:
+            self.rounding = rounding
+        self.precision = self.currency.precision
+        return Money(self.mround(self._amount), self.currency)

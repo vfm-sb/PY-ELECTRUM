@@ -17,12 +17,12 @@
 - [ ] Move `data/currencies` into `electrum` Folder
 - [x] Formatting Money based on Currencies
 - [x] Default Formatting
-- [ ] Custom Formatting
+- [x] Custom Formatting
 
 
 ## TODO
 
-- [ ] Negative Value Formatting Functionality
+- [x] Negative Value Formatting Functionality
     - Version 0.2.5 generates correct representations only when positive monetary values are used.
 - [x] Basic Custom Formatting Functionality
 - [x] Predefined Custom Formatting Functionality

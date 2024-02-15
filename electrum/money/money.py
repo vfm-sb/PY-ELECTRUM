@@ -228,7 +228,7 @@ class Money:
         return any(isinstance(other, instance) for instance in (Money, Coin, Note, Banknote, Cash))
 
     def custom_format(self, unit_format: str, subunit_format: str) -> str:
-        if self.amount >= 1 and unit_format is not None:
+        if abs(self.amount) >= 1 and unit_format is not None:
             match unit_format:
                 case "name":
                     return self.formatter.unit_name_format()
@@ -238,7 +238,7 @@ class Money:
                     return self.formatter.unit_abbr_format()
                 case _:
                     raise ValueError("Invalid Unit Format Value")
-        elif self.amount < 1 and subunit_format is not None:
+        elif abs(self.amount) < 1 and subunit_format is not None:
             match subunit_format:
                 case "name":
                     return self.formatter.subunit_name_format()

@@ -227,29 +227,6 @@ class Money:
         from electrum.money.cash import Cash # pylint: disable=import-outside-toplevel
         return any(isinstance(other, instance) for instance in (Money, Coin, Note, Banknote, Cash))
 
-    def custom_format(self, unit_format: str, subunit_format: str) -> str:
-        if abs(self.amount) >= 1 and unit_format is not None:
-            match unit_format:
-                case "name":
-                    return self.formatter.unit_name_format()
-                case "symbol":
-                    return self.formatter.unit_symbol_format()
-                case "abbr":
-                    return self.formatter.unit_abbr_format()
-                case _:
-                    raise ValueError("Invalid Unit Format Value")
-        elif abs(self.amount) < 1 and subunit_format is not None:
-            match subunit_format:
-                case "name":
-                    return self.formatter.subunit_name_format()
-                case "symbol":
-                    return self.formatter.subunit_symbol_format()
-                case "abbr":
-                    return self.formatter.subunit_abbr_format()
-                case _:
-                    raise ValueError("Invalid Unit Format Value")
-        return self.formatter.default_format()
-
     def name_format(self) -> str:
         return self.formatter.name_format()
 

@@ -17,7 +17,7 @@
 - [ ] Move `data/currencies` into `electrum` Folder
 - [x] Formatting Money based on Currencies
 - [x] Default Formatting
-- [x] Custom Formatting
+- [ ] Custom Formatting
 - [ ] Refactor `Money` & `FMoney` for Future Improvements
 
 
@@ -25,6 +25,6 @@
 
 - [x] Negative Value Formatting Functionality
     - Version 0.2.5 generates correct representations only when positive monetary values are used.
-- [x] Basic Custom Formatting Functionality
-- [x] Predefined Custom Formatting Functionality
+- [ ] Basic Custom Formatting Functionality
+- [ ] Predefined Custom Formatting Functionality
 

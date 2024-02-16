@@ -18,6 +18,7 @@
 - [x] Formatting Money based on Currencies
 - [x] Default Formatting
 - [x] Custom Formatting
+- [ ] Refactor `Money` & `FMoney` for Future Improvements
 
 
 ## TODO

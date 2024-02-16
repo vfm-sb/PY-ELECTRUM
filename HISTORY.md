@@ -2,6 +2,12 @@
 
 <br>
 
+## 0.3.1 (2024/02/16)
+
+- Various Bugfixes and Improvements
+    - Negative Value Formatting
+    - Fixed Wrong Assertion Orders
+
 ## 0.3.0 (2024/02/11)
 
 - Added `FMoney`

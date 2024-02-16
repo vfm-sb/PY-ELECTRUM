@@ -27,6 +27,7 @@ class FMoney:
 
     rounding: str | None = None
     precision: int = 6
+    formatter: str = "financial-ltr"
 
     def __init__(
         self,
@@ -69,7 +70,10 @@ class FMoney:
         )
 
     def __str__(self) -> str:
-        return CurrencyFormatter(self.amount, self.currency).financial_ltr()
+        formatter = CurrencyFormatter(self.amount, self.currency)
+        if self.formatter in ["financial-rtl", "rtl"]:
+            return formatter.financial_rtl()
+        return formatter.financial_ltr()
 
     def __add__(self, other) -> Self:
         self.assert_instance_match(other)

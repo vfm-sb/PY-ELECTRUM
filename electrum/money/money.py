@@ -164,8 +164,8 @@ class Money:
         return Money(abs(self.amount), self.currency.alphabetic_code)
 
     def __eq__(self, other: Union[Money, Coin, Note, Banknote, Cash]) -> bool:
-        self.assert_currency_match(other)
         self.assert_instance_match(other)
+        self.assert_currency_match(other)
         return self.amount == other.amount
 
     def __ne__(self, other: Union[Money, Coin, Note, Banknote, Cash]) -> bool:

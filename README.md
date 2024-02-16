@@ -1,6 +1,6 @@
 # PY-ELECTRUM README
 
-> For **Py-Electrum v0.2.x**
+> For **Py-Electrum v0.3.x**
 
 The **Py-Electrum** is a Monetary Operations Library for Python Users and Developers.
 
@@ -31,15 +31,15 @@ pip install electrum
 ```
 electrum
 │
-├── FMoney
 ├── Money
-├── Currency
+├── FMoney
 │
 ├── Coin
 ├── Note
 ├── Banknote
 ├── Cash
 │
+├── Currency
 └── CurrencyBuilderCLI
 ```
 

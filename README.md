@@ -88,7 +88,7 @@ another = Money(2.2, "EUR")
 
 ### Creating `FMoney` Instance
 
-An `FMoney` instance can be instantiated as the same way as `Money` type objects. The only difference is the `amount` value doesn't adhere to the Currency-based decimal precision limit.
+An `FMoney` instance can be instantiated the same way as `Money` type objects. The only difference is the `amount` value doesn't adhere to the Currency-based decimal precision limit.
 
 > The default precision limit is **6** but not enforced during instantiation.
 > The default rounding model is `None`

@@ -47,14 +47,12 @@ class CurrencyFormatter:
         return self.unit_name_format()
 
     def symbol_format(self) -> str:
-        if self.currency.unit_symbol is None:
-            return self.abbr_format()
-        if abs(self.amount) >= 1:
+        if self.currency.unit_symbol and abs(self.amount) >= 1:
             return self.unit_symbol_format()
-        if self.currency.subunit_abbr and self.currency.subunit_symbol is None:
-            return self.abbr_format()
-        if self.currency.subunit_symbol:
+        if self.currency.subunit_symbol and abs(self.amount) < 1:
             return self.subunit_symbol_format()
+        if self.currency.unit_abbr or self.currency.subunit_abbr:
+            return self.abbr_format()
         return self.name_format()
 
     def unit_symbol_format(self) -> str:

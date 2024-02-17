@@ -116,6 +116,24 @@ class TestMoneyFormatter:
         lira_ln = Money(-0.42, "try")
         assert lira_ln.symbolize == "-42kr."
 
+    def test_usd_symbol_format(self):
+        dollar_sp = Money(1, "usd")
+        assert dollar_sp.symbolize == "$1"
+        dollar_sn = Money(-1, "usd")
+        assert dollar_sn.symbolize == "-$1"
+        dollar_hp = Money(100, "usd")
+        assert dollar_hp.symbolize == "$100"
+        dollar_hn = Money(-20, "usd")
+        assert dollar_hn.symbolize == "-$20"
+        dollar_bp = Money(0.01, "usd")
+        assert dollar_bp.symbolize == "1¢"
+        dollar_bn = Money(-0.01, "usd")
+        assert dollar_bn.symbolize == "-1¢"
+        dollar_lp = Money(0.42, "usd")
+        assert dollar_lp.symbolize == "42¢"
+        dollar_ln = Money(-0.42, "usd")
+        assert dollar_ln.symbolize == "-42¢"
+
     def test_eur_abbr_format(self):
         euro_sp = Money(1, "eur")
         assert euro_sp.abbreviate == "€1"
@@ -133,3 +151,219 @@ class TestMoneyFormatter:
         assert euro_lp.abbreviate == "42c"
         euro_ln = Money(-0.42, "eur")
         assert euro_ln.abbreviate == "-42c"
+
+    def test_bgn_abbr_format(self):
+        leva_sp = Money(1, "bgn")
+        assert leva_sp.abbreviate == "1lv."
+        leva_sn = Money(-1, "bgn")
+        assert leva_sn.abbreviate == "-1lv."
+        leva_hp = Money(100, "bgn")
+        assert leva_hp.abbreviate == "100lv."
+        leva_hn = Money(-20, "bgn")
+        assert leva_hn.abbreviate == "-20lv."
+        leva_bp = Money(0.01, "bgn")
+        assert leva_bp.abbreviate == "1st."
+        leva_bn = Money(-0.01, "bgn")
+        assert leva_bn.abbreviate == "-1st."
+        leva_lp = Money(0.42, "bgn")
+        assert leva_lp.abbreviate == "42st."
+        leva_ln = Money(-0.42, "bgn")
+        assert leva_ln.abbreviate == "-42st."
+
+    def test_try_abbr_format(self):
+        lira_sp = Money(1, "try")
+        assert lira_sp.abbreviate == "1 TL"
+        lira_sn = Money(-1, "try")
+        assert lira_sn.abbreviate == "-1 TL"
+        lira_hp = Money(100, "try")
+        assert lira_hp.abbreviate == "100 TL"
+        lira_hn = Money(-20, "try")
+        assert lira_hn.abbreviate == "-20 TL"
+        lira_bp = Money(0.01, "try")
+        assert lira_bp.abbreviate == "1kr."
+        lira_bn = Money(-0.01, "try")
+        assert lira_bn.abbreviate == "-1kr."
+        lira_lp = Money(0.42, "try")
+        assert lira_lp.abbreviate == "42kr."
+        lira_ln = Money(-0.42, "try")
+        assert lira_ln.abbreviate == "-42kr."
+
+    def test_usd_abbr_format(self):
+        dollar_sp = Money(1, "usd")
+        assert dollar_sp.abbreviate == "$1"
+        dollar_sn = Money(-1, "usd")
+        assert dollar_sn.abbreviate == "-$1"
+        dollar_hp = Money(100, "usd")
+        assert dollar_hp.abbreviate == "$100"
+        dollar_hn = Money(-20, "usd")
+        assert dollar_hn.abbreviate == "-$20"
+        dollar_bp = Money(0.01, "usd")
+        assert dollar_bp.abbreviate == "1¢"
+        dollar_bn = Money(-0.01, "usd")
+        assert dollar_bn.abbreviate == "-1¢"
+        dollar_lp = Money(0.42, "usd")
+        assert dollar_lp.abbreviate == "42¢"
+        dollar_ln = Money(-0.42, "usd")
+        assert dollar_ln.abbreviate == "-42¢"
+
+    def test_chf_name_format(self):
+        franc_sp = Money(1, "chf")
+        assert franc_sp.name_format() == "1 Franc"
+        franc_sn = Money(-1, "chf")
+        assert franc_sn.name_format() == "-1 Franc"
+        franc_hp = Money(100, "chf")
+        assert franc_hp.name_format() == "100 Francs"
+        franc_hn = Money(-20, "chf")
+        assert franc_hn.name_format() == "-20 Francs"
+        franc_bp = Money(0.01, "chf")
+        assert franc_bp.name_format() == "1 Centime"
+        franc_bn = Money(-0.01, "chf")
+        assert franc_bn.name_format() == "-1 Centime"
+        franc_lp = Money(0.42, "chf")
+        assert franc_lp.name_format() == "42 Centimes"
+        franc_ln = Money(-0.42, "chf")
+        assert franc_ln.name_format() == "-42 Centimes"
+
+    def test_chf_symbol_format(self):
+        franc_sp = Money(1, "chf")
+        assert franc_sp.symbolize == "1 Franc"
+        franc_sn = Money(-1, "chf")
+        assert franc_sn.symbolize == "-1 Franc"
+        franc_hp = Money(100, "chf")
+        assert franc_hp.symbolize == "100 Francs"
+        franc_hn = Money(-20, "chf")
+        assert franc_hn.symbolize == "-20 Francs"
+        franc_bp = Money(0.01, "chf")
+        assert franc_bp.symbolize == "1 Centime"
+        franc_bn = Money(-0.01, "chf")
+        assert franc_bn.symbolize == "-1 Centime"
+        franc_lp = Money(0.42, "chf")
+        assert franc_lp.symbolize == "42 Centimes"
+        franc_ln = Money(-0.42, "chf")
+        assert franc_ln.symbolize == "-42 Centimes"
+
+    def test_chf_abbr_format(self):
+        franc_sp = Money(1, "chf")
+        assert franc_sp.abbreviate == "1 Franc"
+        franc_sn = Money(-1, "chf")
+        assert franc_sn.abbreviate == "-1 Franc"
+        franc_hp = Money(100, "chf")
+        assert franc_hp.abbreviate == "100 Francs"
+        franc_hn = Money(-20, "chf")
+        assert franc_hn.abbreviate == "-20 Francs"
+        franc_bp = Money(0.01, "chf")
+        assert franc_bp.abbreviate == "1 Centime"
+        franc_bn = Money(-0.01, "chf")
+        assert franc_bn.abbreviate == "-1 Centime"
+        franc_lp = Money(0.42, "chf")
+        assert franc_lp.abbreviate == "42 Centimes"
+        franc_ln = Money(-0.42, "chf")
+        assert franc_ln.abbreviate == "-42 Centimes"
+
+    def test_jpy_name_format(self):
+        yen_scp = Money(1, "jpy")
+        assert yen_scp.name_format() == "1 Yen"
+        yen_scn = Money(-1, "jpy")
+        assert yen_scn.name_format() == "-1 Yen"
+        yen_hcp = Money(500, "jpy")
+        assert yen_hcp.name_format() == "500 Yen"
+        yen_hcn = Money(-500, "jpy")
+        assert yen_hcn.name_format() == "-500 Yen"
+        yen_snp = Money(1000, "jpy")
+        assert yen_snp.name_format() == "1000 Yen"
+        yen_snn = Money(-1000, "jpy")
+        assert yen_snn.name_format() == "-1000 Yen"
+        yen_hnp = Money(20000, "jpy")
+        assert yen_hnp.name_format() == "20000 Yen"
+        yen_hnn = Money(-20000, "jpy")
+        assert yen_hnn.name_format() == "-20000 Yen"
+
+    def test_jpy_symbol_format(self):
+        yen_scp = Money(1, "jpy")
+        assert yen_scp.symbolize == "¥1"
+        yen_scn = Money(-1, "jpy")
+        assert yen_scn.symbolize == "-¥1"
+        yen_hcp = Money(500, "jpy")
+        assert yen_hcp.symbolize == "¥500"
+        yen_hcn = Money(-500, "jpy")
+        assert yen_hcn.symbolize == "-¥500"
+        yen_snp = Money(1000, "jpy")
+        assert yen_snp.symbolize == "¥1000"
+        yen_snn = Money(-1000, "jpy")
+        assert yen_snn.symbolize == "-¥1000"
+        yen_hnp = Money(20000, "jpy")
+        assert yen_hnp.symbolize == "¥20000"
+        yen_hnn = Money(-20000, "jpy")
+        assert yen_hnn.symbolize == "-¥20000"
+
+    def test_jpy_abbr_format(self):
+        yen_scp = Money(1, "jpy")
+        assert yen_scp.abbreviate == "¥1"
+        yen_scn = Money(-1, "jpy")
+        assert yen_scn.abbreviate == "-¥1"
+        yen_hcp = Money(500, "jpy")
+        assert yen_hcp.abbreviate == "¥500"
+        yen_hcn = Money(-500, "jpy")
+        assert yen_hcn.abbreviate == "-¥500"
+        yen_snp = Money(1000, "jpy")
+        assert yen_snp.abbreviate == "¥1000"
+        yen_snn = Money(-1000, "jpy")
+        assert yen_snn.abbreviate == "-¥1000"
+        yen_hnp = Money(20000, "jpy")
+        assert yen_hnp.abbreviate == "¥20000"
+        yen_hnn = Money(-20000, "jpy")
+        assert yen_hnn.abbreviate == "-¥20000"
+
+    def test_ron_name_format(self):
+        franc_sp = Money(1, "ron")
+        assert franc_sp.name_format() == "1 Leu"
+        franc_sn = Money(-1, "ron")
+        assert franc_sn.name_format() == "-1 Leu"
+        franc_hp = Money(100, "ron")
+        assert franc_hp.name_format() == "100 Lei"
+        franc_hn = Money(-20, "ron")
+        assert franc_hn.name_format() == "-20 Lei"
+        franc_bp = Money(0.01, "ron")
+        assert franc_bp.name_format() == "1 Ban"
+        franc_bn = Money(-0.01, "ron")
+        assert franc_bn.name_format() == "-1 Ban"
+        franc_lp = Money(0.42, "ron")
+        assert franc_lp.name_format() == "42 Bani"
+        franc_ln = Money(-0.42, "ron")
+        assert franc_ln.name_format() == "-42 Bani"
+
+    def test_ron_symbol_format(self):
+        ron_sp = Money(1, "ron")
+        assert ron_sp.symbolize == "1 Leu"
+        ron_sn = Money(-1, "ron")
+        assert ron_sn.symbolize == "-1 Leu"
+        ron_hp = Money(100, "ron")
+        assert ron_hp.symbolize == "100 Lei"
+        ron_hn = Money(-20, "ron")
+        assert ron_hn.symbolize == "-20 Lei"
+        ron_bp = Money(0.01, "ron")
+        assert ron_bp.symbolize == "1 Ban"
+        ron_bn = Money(-0.01, "ron")
+        assert ron_bn.symbolize == "-1 Ban"
+        ron_lp = Money(0.42, "ron")
+        assert ron_lp.symbolize == "42 Bani"
+        ron_ln = Money(-0.42, "ron")
+        assert ron_ln.symbolize == "-42 Bani"
+
+    def test_ron_abbr_format(self):
+        ron_sp = Money(1, "ron")
+        assert ron_sp.abbreviate == "1 Leu"
+        ron_sn = Money(-1, "ron")
+        assert ron_sn.abbreviate == "-1 Leu"
+        ron_hp = Money(100, "ron")
+        assert ron_hp.abbreviate == "100 Lei"
+        ron_hn = Money(-20, "ron")
+        assert ron_hn.abbreviate == "-20 Lei"
+        ron_bp = Money(0.01, "ron")
+        assert ron_bp.abbreviate == "1 Ban"
+        ron_bn = Money(-0.01, "ron")
+        assert ron_bn.abbreviate == "-1 Ban"
+        ron_lp = Money(0.42, "ron")
+        assert ron_lp.abbreviate == "42 Bani"
+        ron_ln = Money(-0.42, "ron")
+        assert ron_ln.abbreviate == "-42 Bani"

@@ -23,7 +23,10 @@ class CurrencyFormatter:
         return self.name_format()
 
     def financial_ltr(self) -> str:
-        return f"{self.currency.alphabetic_code} {self.amount}"
+        code_repr = f"{self.currency.alphabetic_code} {self.amount}"
+        if "-" in code_repr:
+            code_repr = "-" + code_repr.replace("-", "")
+        return code_repr
 
     def financial_rtl(self) -> str:
         return f"{self.amount} {self.currency.alphabetic_code}"

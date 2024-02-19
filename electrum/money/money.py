@@ -7,7 +7,7 @@ from typing import Self
 from decimal import Decimal
 
 # Local Modules
-from electrum.money._money import _Money
+from electrum.money.base import BaseMoney
 from electrum.currency.currency import Currency
 from electrum.currency.currency_formatter import CurrencyFormatter
 
@@ -18,7 +18,7 @@ from electrum.utils import round_up, round_down
 from electrum.exceptions import ExcessAmountError
 
 
-class Money(_Money):
+class Money(BaseMoney):
 
     rounding: str | None = None
 

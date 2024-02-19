@@ -17,7 +17,7 @@ from electrum.exceptions import InvalidOperandError
 from electrum.exceptions import CurrencyMismatchError
 
 
-class _Money:
+class BaseMoney:
 
     def __init__(
         self,
@@ -152,7 +152,7 @@ class _Money:
         return self.amount >= other.amount
 
     def valid_instance(self, other: Self) -> bool:
-        return isinstance(other, _Money)
+        return isinstance(other, BaseMoney)
 
     def assert_instance_match(self, other: Self) -> None:
         if not self.valid_instance(other):

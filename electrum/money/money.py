@@ -3,71 +3,41 @@ Electrum Money Module
 """
 
 # Built-in Module
-from __future__ import annotations
-from typing import Union, TYPE_CHECKING
+from typing import Self
 from decimal import Decimal
 
 # Local Modules
+from electrum.money._money import _Money
 from electrum.currency.currency import Currency
 from electrum.currency.currency_formatter import CurrencyFormatter
 
 # Utilities
 from electrum.utils import round_up, round_down
-from electrum.utils import parse_numeric_value
-from electrum.utils import convert_decimal
-from electrum.utils import valid_numeric
 
 # Custom Exceptions
-from electrum.exceptions import InvalidAmountError
 from electrum.exceptions import ExcessAmountError
-from electrum.exceptions import InvalidOperandError
-from electrum.exceptions import CurrencyMismatchError
-
-if TYPE_CHECKING:
-    from electrum.money.coin import Coin
-    from electrum.money.note import Note, Banknote
-    from electrum.money.cash import Cash
 
 
-class Money:
+class Money(_Money):
 
     rounding: str | None = None
 
     def __init__(
         self,
-        amount: Union[int, float, str, Decimal],
-        currency: Union[str, int, Currency]
+        amount: int | float | str | Decimal,
+        currency: str | int | Currency
     ) -> None:
-        self.currency = currency
-        self.amount = amount
+        super().__init__(amount, currency)
         self.formatter = CurrencyFormatter(self.amount, self.currency)
 
     @property
-    def currency(self) -> Currency:
-        return self._currency
-
-    @currency.setter
-    def currency(self, currency: Union[str, int, Currency]) -> None:
-        if isinstance(currency, (str, int)):
-            self._currency = Currency(currency)
-        elif isinstance(currency, Currency):
-            self._currency = currency
-
-    @property
-    def amount(self) -> int | float:
-        return convert_decimal(self._amount)
+    def amount(self):
+        return super().amount
 
     @amount.setter
-    def amount(self, amount: Union[int, float, str, Decimal]) -> None:
-        try:
-            amount = parse_numeric_value(amount)
-        except ValueError as exception:
-            raise InvalidAmountError(value=amount) from exception
-        self.assert_amount_precision(amount)
-        self._amount = Decimal(str(amount))
-
-    def __hash__(self) -> int:
-        return hash((self.amount, self.currency.alphabetic_code))
+    def amount(self, amount: int | float | str | Decimal) -> None:
+        super(Money, type(self)).amount.fset(self, amount)
+        self.assert_amount_precision(self._amount)
 
     def __repr__(self) -> str:
         return (
@@ -78,164 +48,50 @@ class Money:
     def __str__(self) -> str:
         return self.formatter.default_format()
 
-    def __add__(self, other: Union[Money, Coin, Note, Banknote, Cash]) -> Money:
-        self.assert_instance_match(other)
-        self.assert_currency_match(other)
-        result = self.mround(self._amount + other._amount)
-        return Money.construct(amount=result, currency=self.currency)
-
-    def __radd__(self, other: Union[Money, Coin, Note, Banknote, Cash]) -> Money:
-        return self.__add__(other)
-
-    def __sub__(self, other: Union[Money, Coin, Note, Banknote, Cash]) -> Money:
-        self.assert_instance_match(other)
-        self.assert_currency_match(other)
-        result = self.mround(self._amount - other._amount)
-        return Money.construct(amount=result, currency=self.currency)
-
-    def __rsub__(self, other: Union[Money, Coin, Note, Banknote, Cash]) -> Money:
-        return self.__sub__(other)
-
-    def __mul__(self, multiplier: Union[int, float, str, Decimal]) -> Money:
-        if not valid_numeric(multiplier):
-            raise InvalidOperandError
-        multiplier = parse_numeric_value(multiplier)
-        result = self.mround(self._amount * Decimal(str(multiplier)))
-        return Money.construct(amount=result, currency=self.currency)
-
-    def __rmul__(self, multiplier: Union[int, float, str, Decimal]) -> Money:
-        return self.__mul__(multiplier)
-
-    def __truediv__(
-        self,
-        other: Union[int, float, str, Decimal, Money, Coin, Note, Banknote, Cash]
-    ) -> Union[Money, float]:
-        if self.valid_instance(other):
-            self.assert_currency_match(other)
-            self.assert_division(other.amount)
-            return convert_decimal(self._amount / other._amount)
-        if not valid_numeric(other):
-            raise InvalidOperandError
-        other = parse_numeric_value(other)
-        result = self.mround(self._amount / Decimal(str(other)))
-        return Money.construct(amount=result, currency=self.currency)
-
-    def __div__(
-        self,
-        other: Union[int, float, str, Decimal, Money, Coin, Note, Banknote, Cash]
-    ) -> Union[Money, float]:
-        return self.__truediv__(other)
-
-    def __floordiv__(
-        self,
-        other: Union[int, float, str, Decimal, Money, Coin, Note, Banknote, Cash]
-    ) -> Union[Money, int]:
-        if self.valid_instance(other):
-            self.assert_currency_match(other)
-            self.assert_division(other.amount)
-            return convert_decimal(self._amount // other._amount)
-        if not valid_numeric(other):
-            raise InvalidOperandError
-        other = parse_numeric_value(other)
-        result = self.mround(self._amount // Decimal(str(other)))
-        return Money.construct(amount=result, currency=self.currency)
-
-    def __mod__(
-        self,
-        other: Union[int, float, str, Decimal, Money, Coin, Note, Banknote, Cash]
-    ) -> Union[Money, int, float]:
-        if self.valid_instance(other):
-            self.assert_currency_match(other)
-            self.assert_division(other.amount)
-            return convert_decimal(self._amount % other._amount)
-        if not valid_numeric(other):
-            raise InvalidOperandError
-        other = parse_numeric_value(other)
-        result = self.mround(self._amount % Decimal(str(other)))
-        return Money.construct(amount=result, currency=self.currency)
-
-    def __pos__(self) -> Money:
+    def __pos__(self) -> 'Money':
         return Money(+self.amount, self.currency.alphabetic_code)
 
-    def __neg__(self) -> Money:
+    def __neg__(self) -> 'Money':
         return Money(-self.amount, self.currency.alphabetic_code)
 
-    def __abs__(self) -> Money:
+    def __abs__(self) -> 'Money':
         return Money(abs(self.amount), self.currency.alphabetic_code)
 
-    def __eq__(self, other: Union[Money, Coin, Note, Banknote, Cash]) -> bool:
-        self.assert_instance_match(other)
-        self.assert_currency_match(other)
-        return self.amount == other.amount
+    def valid_instance(self, other: Self) -> bool:
+        from electrum.money.coin import Coin # pylint: disable=import-outside-toplevel
+        from electrum.money.note import Note, Banknote # pylint: disable=import-outside-toplevel
+        from electrum.money.cash import Cash # pylint: disable=import-outside-toplevel
+        return any(isinstance(other, instance) for instance in (Money, Coin, Note, Banknote, Cash))
 
-    def __ne__(self, other: Union[Money, Coin, Note, Banknote, Cash]) -> bool:
-        return not self == other
-
-    def __lt__(self, other: Union[Money, Coin, Note, Banknote, Cash]) -> bool:
-        self.assert_instance_match(other)
-        self.assert_currency_match(other)
-        return self.amount < other.amount
-
-    def __le__(self, other: Union[Money, Coin, Note, Banknote, Cash]) -> bool:
-        self.assert_instance_match(other)
-        self.assert_currency_match(other)
-        return self.amount <= other.amount
-
-    def __gt__(self, other: Union[Money, Coin, Note, Banknote, Cash]) -> bool:
-        self.assert_instance_match(other)
-        self.assert_currency_match(other)
-        return self.amount > other.amount
-
-    def __ge__(self, other: Union[Money, Coin, Note, Banknote, Cash]) -> bool:
-        self.assert_instance_match(other)
-        self.assert_currency_match(other)
-        return self.amount >= other.amount
+    def assert_amount_precision(self, value: int | float) -> None:
+        if value % 1 != 0 and value.as_tuple().exponent < -self.currency.precision:
+            raise ExcessAmountError(value=value, limit=self.currency.denominator)
 
     def mround(self, value: Decimal) -> Decimal:
-        """
-        Rounds Monetary Value to the Precision of the Currency.
-        """
         if self.rounding == "down":
             return round_down(value, self.currency.precision)
         if self.rounding == "up":
             return round_up(value, self.currency.precision)
         return round(value, self.currency.precision)
 
-    def assert_instance_match(self, other: Union[Money, Coin, Note, Banknote, Cash]) -> None:
-        if not self.valid_instance(other):
-            raise InvalidOperandError
+    @classmethod
+    def construct(
+        cls,
+        amount: int | float | str | Decimal,
+        currency: str | int | Currency
+    ) -> 'Money':
+        return Money(amount, currency)
 
-    def assert_currency_match(self, other: Union[Money, Coin, Note, Banknote, Cash]) -> None:
-        if self.currency != other.currency:
-            raise CurrencyMismatchError(
-                expected = self.currency.alphabetic_code,
-                received = other.currency.alphabetic_code
-            )
-
-    def assert_amount_precision(self, value: int | float) -> None:
-        decimal_value = Decimal(str(value))
-        if decimal_value % 1 != 0 and decimal_value.as_tuple().exponent < -self.currency.precision:
-            raise ExcessAmountError(value=value, limit=self.currency.denominator)
-
-    def assert_division(self, divisor: int | float) -> None:
-        if divisor == 0:
-            raise ZeroDivisionError
-
-    def valid_instance(self, other: Union[Money, Coin, Note, Banknote, Cash]) -> bool:
-        from electrum.money.coin import Coin # pylint: disable=import-outside-toplevel
-        from electrum.money.note import Note, Banknote # pylint: disable=import-outside-toplevel
-        from electrum.money.cash import Cash # pylint: disable=import-outside-toplevel
-        return any(isinstance(other, instance) for instance in (Money, Coin, Note, Banknote, Cash))
-
-    def name_format(self) -> str:
-        return self.formatter.name_format()
-
+    # Formatters
     def financialize(self, direction: str = "ltr") -> str:
         if direction == "ltr":
             return self.formatter.financial_ltr()
         if direction == "rtl":
             return self.formatter.financial_rtl()
         raise ValueError("Invalid Direction Argument")
+
+    def name_format(self) -> str:
+        return self.formatter.name_format()
 
     @property
     def symbolize(self) -> str:
@@ -244,14 +100,6 @@ class Money:
     @property
     def abbreviate(self) -> str:
         return self.formatter.abbr_format()
-
-    @classmethod
-    def construct(
-        cls,
-        amount: Union[int, float, str, Decimal],
-        currency: Union[str, int, Currency]
-    ) -> Money:
-        return cls(amount, currency)
 
 
 # Testing

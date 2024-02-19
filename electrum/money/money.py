@@ -63,8 +63,8 @@ class Money:
             amount = parse_numeric_value(amount)
         except ValueError as exception:
             raise InvalidAmountError(value=amount) from exception
-        self.assert_amount_precision(amount)
         self._amount = Decimal(str(amount))
+        self.assert_amount_precision(self._amount)
 
     def __hash__(self) -> int:
         return hash((self.amount, self.currency.alphabetic_code))
@@ -212,9 +212,8 @@ class Money:
                 received = other.currency.alphabetic_code
             )
 
-    def assert_amount_precision(self, value: int | float) -> None:
-        decimal_value = Decimal(str(value))
-        if decimal_value % 1 != 0 and decimal_value.as_tuple().exponent < -self.currency.precision:
+    def assert_amount_precision(self, value: Decimal) -> None:
+        if value % 1 != 0 and value.as_tuple().exponent < -self.currency.precision:
             raise ExcessAmountError(value=value, limit=self.currency.denominator)
 
     def assert_division(self, divisor: int | float) -> None:

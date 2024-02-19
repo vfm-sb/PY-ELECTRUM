@@ -173,12 +173,8 @@ class FMoney:
         self.assert_currency_match(other)
         return self.amount >= other.amount
 
-    def mround(self, amount: Decimal) -> Decimal:
-        if self.rounding == "down":
-            return round_down(amount, self.precision)
-        if self.rounding == "up":
-            return round_up(amount, self.precision)
-        return round(amount, self.precision)
+    def valid_instance(self, other: Self) -> bool:
+        return isinstance(other, FMoney)
 
     def assert_instance_match(self, other: Self) -> None:
         if not self.valid_instance(other):
@@ -195,8 +191,12 @@ class FMoney:
         if divisor == 0:
             raise ZeroDivisionError
 
-    def valid_instance(self, other: Self) -> bool:
-        return isinstance(other, FMoney)
+    def mround(self, amount: Decimal) -> Decimal:
+        if self.rounding == "down":
+            return round_down(amount, self.precision)
+        if self.rounding == "up":
+            return round_up(amount, self.precision)
+        return round(amount, self.precision)
 
     @classmethod
     def construct(

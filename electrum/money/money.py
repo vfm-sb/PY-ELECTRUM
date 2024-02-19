@@ -180,15 +180,11 @@ class Money:
         self.assert_currency_match(other)
         return self.amount >= other.amount
 
-    def mround(self, value: Decimal) -> Decimal:
-        """
-        Rounds Monetary Value to the Precision of the Currency.
-        """
-        if self.rounding == "down":
-            return round_down(value, self.currency.precision)
-        if self.rounding == "up":
-            return round_up(value, self.currency.precision)
-        return round(value, self.currency.precision)
+    def valid_instance(self, other: Type[Money]) -> bool:
+        from electrum.money.coin import Coin # pylint: disable=import-outside-toplevel
+        from electrum.money.note import Note, Banknote # pylint: disable=import-outside-toplevel
+        from electrum.money.cash import Cash # pylint: disable=import-outside-toplevel
+        return any(isinstance(other, instance) for instance in (Money, Coin, Note, Banknote, Cash))
 
     def assert_instance_match(self, other: Type[Money]) -> None:
         if not self.valid_instance(other):
@@ -209,11 +205,20 @@ class Money:
         if divisor == 0:
             raise ZeroDivisionError
 
-    def valid_instance(self, other: Type[Money]) -> bool:
-        from electrum.money.coin import Coin # pylint: disable=import-outside-toplevel
-        from electrum.money.note import Note, Banknote # pylint: disable=import-outside-toplevel
-        from electrum.money.cash import Cash # pylint: disable=import-outside-toplevel
-        return any(isinstance(other, instance) for instance in (Money, Coin, Note, Banknote, Cash))
+    def mround(self, value: Decimal) -> Decimal:
+        if self.rounding == "down":
+            return round_down(value, self.currency.precision)
+        if self.rounding == "up":
+            return round_up(value, self.currency.precision)
+        return round(value, self.currency.precision)
+
+    @classmethod
+    def construct(
+        cls,
+        amount: int | float | str | Decimal,
+        currency: str | int | Currency
+    ) -> Self:
+        return Money(amount, currency)
 
     def name_format(self) -> str:
         return self.formatter.name_format()
@@ -232,14 +237,6 @@ class Money:
     @property
     def abbreviate(self) -> str:
         return self.formatter.abbr_format()
-
-    @classmethod
-    def construct(
-        cls,
-        amount: int | float | str | Decimal,
-        currency: str | int | Currency
-    ) -> Money:
-        return Money(amount, currency)
 
 
 # Testing

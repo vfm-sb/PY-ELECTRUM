@@ -75,22 +75,22 @@ class FMoney:
             return formatter.financial_rtl()
         return formatter.financial_ltr()
 
-    def __add__(self, other) -> Self:
+    def __add__(self, other: Self) -> Self:
         self.assert_instance_match(other)
         self.assert_currency_match(other)
         result = self.mround(self._amount + other._amount)
-        return self.construct(amount=result, currency=self.currency)
+        return self.construct(result, self.currency)
 
-    def __radd__(self, other) -> Self:
+    def __radd__(self, other: Self) -> Self:
         return self.__add__(other)
 
-    def __sub__(self, other) -> Self:
+    def __sub__(self, other: Self) -> Self:
         self.assert_instance_match(other)
         self.assert_currency_match(other)
         result = self.mround(self._amount - other._amount)
-        return self.construct(amount=result, currency=self.currency)
+        return self.construct(result, self.currency)
 
-    def __rsub__(self, other) -> Self:
+    def __rsub__(self, other: Self) -> Self:
         return self.__sub__(other)
 
     def __mul__(self, multiplier: int | float | str | Decimal) -> Self:
@@ -98,7 +98,7 @@ class FMoney:
             raise InvalidOperandError
         multiplier = parse_numeric_value(multiplier)
         result = self.mround(self._amount * Decimal(str(multiplier)))
-        return self.construct(amount=result, currency=self.currency)
+        return self.construct(result, self.currency)
 
     def __rmul__(self, multiplier: int | float | str | Decimal) -> Self:
         return self.__mul__(multiplier)
@@ -112,10 +112,7 @@ class FMoney:
             raise InvalidOperandError
         other = parse_numeric_value(other)
         result = self.mround(self._amount / Decimal(str(other)))
-        return self.construct(amount=result, currency=self.currency)
-
-    def __div__(self, other: int | float | str | Decimal | Self) -> Self | float | int:
-        return self.__truediv__(other)
+        return self.construct(result, self.currency)
 
     def __floordiv__(self, other: int | float | str | Decimal | Self) -> Self | int:
         if self.valid_instance(other):
@@ -126,7 +123,7 @@ class FMoney:
             raise InvalidOperandError
         other = parse_numeric_value(other)
         result = self.mround(self._amount // Decimal(str(other)))
-        return self.construct(amount=result, currency=self.currency)
+        return self.construct(result, self.currency)
 
     def __mod__(self, other: int | float | str | Decimal | Self) -> Self | float | int:
         if self.valid_instance(other):
@@ -137,7 +134,7 @@ class FMoney:
             raise InvalidOperandError
         other = parse_numeric_value(other)
         result = self.mround(self._amount % Decimal(str(other)))
-        return self.construct(amount=result, currency=self.currency)
+        return self.construct(result, self.currency)
 
     def __pos__(self) -> Self:
         return FMoney(+self.amount, self.currency.alphabetic_code)
@@ -207,7 +204,7 @@ class FMoney:
         amount: int | float | str | Decimal,
         currency: str | int | Currency
     ) -> Self:
-        return cls(amount, currency)
+        return FMoney(amount, currency)
 
     def to_money(
         self,

@@ -53,35 +53,29 @@ class _Money:
     def __hash__(self) -> int:
         return hash((self.amount, self.currency.alphabetic_code))
 
-    def __repr__(self) -> str:
-        return (
-            f'{self.__class__.__name__}'
-            f'({self.amount}, "{self.currency.alphabetic_code}")'
-        )
-
-    def __add__(self, other) -> str:
+    def __add__(self, other: Self) -> Self:
         self.assert_instance_match(other)
         self.assert_currency_match(other)
-        result = self._amount + other._amount
+        result = self.mround(self._amount + other._amount)
         return self.construct(result, self.currency)
 
-    def __radd__(self, other) -> Self:
+    def __radd__(self, other: Self) -> Self:
         return self.__add__(other)
 
-    def __sub__(self, other) -> Self:
+    def __sub__(self, other: Self) -> Self:
         self.assert_instance_match(other)
         self.assert_currency_match(other)
-        result = self._amount - other._amount
+        result = self.mround(self._amount - other._amount)
         return self.construct(result, self.currency)
 
-    def __rsub__(self, other) -> Self:
+    def __rsub__(self, other: Self) -> Self:
         return self.__sub__(other)
 
     def __mul__(self, multiplier: int | float | str | Decimal) -> Self:
         if not valid_numeric(multiplier):
             raise InvalidOperandError
         multiplier = parse_numeric_value(multiplier)
-        result = self._amount * Decimal(str(multiplier))
+        result = self.mround(self._amount * Decimal(str(multiplier)))
         return self.construct(result, self.currency)
 
     def __rmul__(self, multiplier: int | float | str | Decimal) -> Self:
@@ -95,7 +89,7 @@ class _Money:
         if not valid_numeric(other):
             raise InvalidOperandError
         other = parse_numeric_value(other)
-        result = self._amount / Decimal(str(other))
+        result = self.mround(self._amount / Decimal(str(other)))
         return self.construct(result, self.currency)
 
     def __floordiv__(self, other: int | float | str | Decimal | Self) -> Self | int:
@@ -106,7 +100,7 @@ class _Money:
         if not valid_numeric(other):
             raise InvalidOperandError
         other = parse_numeric_value(other)
-        result = self._amount // Decimal(str(other))
+        result = self.mround(self._amount // Decimal(str(other)))
         return self.construct(result, self.currency)
 
     def __mod__(self, other: int | float | str | Decimal | Self) -> Self | float | int:
@@ -117,7 +111,7 @@ class _Money:
         if not valid_numeric(other):
             raise InvalidOperandError
         other = parse_numeric_value(other)
-        result = self._amount % Decimal(str(other))
+        result = self.mround(self._amount % Decimal(str(other)))
         return self.construct(result, self.currency)
 
     def __pos__(self) -> Self:
@@ -157,6 +151,9 @@ class _Money:
         self.assert_currency_match(other)
         return self.amount >= other.amount
 
+    def valid_instance(self, other: Self) -> bool:
+        return isinstance(other, _Money)
+
     def assert_instance_match(self, other: Self) -> None:
         if not self.valid_instance(other):
             raise InvalidOperandError
@@ -172,8 +169,8 @@ class _Money:
         if divisor == 0:
             raise ZeroDivisionError
 
-    def valid_instance(self, other: Self) -> bool:
-        return isinstance(other, _Money)
+    def mround(self, value: Decimal) -> Decimal:
+        return value
 
     @classmethod
     def construct(

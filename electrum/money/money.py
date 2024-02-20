@@ -4,7 +4,7 @@ Electrum Money Module
 
 # Built-in Module
 from __future__ import annotations
-from typing import Self, Type
+from typing import Self, Type, Optional
 from decimal import Decimal
 
 # Local Modules
@@ -26,7 +26,7 @@ from electrum.exceptions import CurrencyMismatchError
 
 class Money:
 
-    rounding: str | None = None
+    rounding: Optional[str] = None
 
     def __init__(
         self,
@@ -220,22 +220,16 @@ class Money:
     ) -> Self:
         return Money(amount, currency)
 
+    def code_format(self, direction: str | None = None) -> str:
+        return self.formatter.code_format(direction)
+
     def name_format(self) -> str:
         return self.formatter.name_format()
 
-    def financialize(self, direction: str = "ltr") -> str:
-        if direction == "ltr":
-            return self.formatter.financial_ltr()
-        if direction == "rtl":
-            return self.formatter.financial_rtl()
-        raise ValueError("Invalid Direction Argument")
-
-    @property
-    def symbolize(self) -> str:
+    def symbol_format(self) -> str:
         return self.formatter.symbol_format()
 
-    @property
-    def abbreviate(self) -> str:
+    def abbr_format(self) -> str:
         return self.formatter.abbr_format()
 
 

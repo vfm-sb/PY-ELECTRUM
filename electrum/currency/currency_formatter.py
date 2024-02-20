@@ -15,21 +15,18 @@ class CurrencyFormatter:
 
     def default_format(self):
         if self.currency.default_format == "code":
-            return self.financial_ltr()
+            return self.code_format()
         if self.currency.default_format == "symbol":
             return self.symbol_format()
         if self.currency.default_format == "abbr":
             return self.abbr_format()
         return self.name_format()
 
-    def financial_ltr(self) -> str:
-        code_repr = f"{self.currency.alphabetic_code} {self.amount}"
-        if "-" in code_repr:
-            code_repr = "-" + code_repr.replace("-", "")
-        return code_repr
-
-    def financial_rtl(self) -> str:
-        return f"{self.amount} {self.currency.alphabetic_code}"
+    def code_format(self, direction: str = "ltr") -> str:
+        if direction == "rtl":
+            return f"{self.amount} {self.currency.alphabetic_code}"
+        ltr_repr = f"{self.currency.alphabetic_code} {self.amount}"
+        return self.normalize_output(ltr_repr)
 
     def name_format(self) -> str:
         if abs(self.amount) >= 1:
@@ -60,16 +57,12 @@ class CurrencyFormatter:
 
     def _unit_symbol_format(self) -> str:
         unit_repr = f'{self.currency.unit_symbol_format.replace("value", str(self.amount))}'
-        if "-" in unit_repr:
-            unit_repr = "-" + unit_repr.replace("-", "")
-        return unit_repr
+        return self.normalize_output(unit_repr)
 
     def _subunit_symbol_format(self) -> str:
         if self.currency.subunit_symbol:
             subunit_repr = f'{self.currency.subunit_symbol_format.replace("value", str(self.base_amount))}'
-            if "-" in subunit_repr:
-                subunit_repr = "-" + subunit_repr.replace("-", "")
-            return subunit_repr
+            return self.normalize_output(subunit_repr)
         return self._unit_symbol_format()
 
     def abbr_format(self) -> str:
@@ -86,3 +79,9 @@ class CurrencyFormatter:
         if self.currency.subunit_abbr:
             return f'{self.currency.subunit_abbr_format.replace("value", str(self.base_amount))}'
         return self._unit_abbr_format()
+
+    @staticmethod
+    def normalize_output(value_repr: str) -> str:
+        if "-" in value_repr:
+            value_repr = "-" + value_repr.replace("-", "")
+        return value_repr

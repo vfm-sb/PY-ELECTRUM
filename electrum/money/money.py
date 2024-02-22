@@ -8,6 +8,7 @@ from typing import Self, Type, Optional
 from decimal import Decimal
 
 # Local Modules
+from electrum.money.base import BaseMoney
 from electrum.currency.currency import Currency
 from electrum.currency.currency_formatter import CurrencyFormatter
 
@@ -24,7 +25,7 @@ from electrum.exceptions import InvalidOperandError
 from electrum.exceptions import CurrencyMismatchError
 
 
-class Money:
+class Money(BaseMoney):
 
     rounding: Optional[str] = None
 

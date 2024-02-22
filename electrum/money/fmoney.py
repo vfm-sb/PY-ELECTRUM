@@ -7,6 +7,7 @@ from decimal import Decimal
 from typing import Self
 
 # Local Modules
+from electrum.money.base import BaseMoney
 from electrum.money.money import Money
 from electrum.currency.currency import Currency
 from electrum.currency.currency_formatter import CurrencyFormatter
@@ -23,7 +24,7 @@ from electrum.exceptions import InvalidOperandError
 from electrum.exceptions import CurrencyMismatchError
 
 
-class FMoney:
+class FMoney(BaseMoney):
 
     rounding: str | None = None
     precision: int = 6
@@ -60,8 +61,8 @@ class FMoney:
             raise InvalidAmountError(value=amount) from exception
         self._amount = Decimal(str(amount))
 
-    def __hash__(self) -> int:
-        return hash((self.amount, self.currency.alphabetic_code))
+    # def __hash__(self) -> int:
+    #     return hash((self.amount, self.currency.alphabetic_code))
 
     def __repr__(self) -> str:
         return (
@@ -188,12 +189,12 @@ class FMoney:
         if divisor == 0:
             raise ZeroDivisionError
 
-    def mround(self, amount: Decimal) -> Decimal:
+    def mround(self, value: Decimal) -> Decimal:
         if self.rounding == "down":
-            return round_down(amount, self.precision)
+            return round_down(value, self.precision)
         if self.rounding == "up":
-            return round_up(amount, self.precision)
-        return round(amount, self.precision)
+            return round_up(value, self.precision)
+        return round(value, self.precision)
 
     @classmethod
     def construct(

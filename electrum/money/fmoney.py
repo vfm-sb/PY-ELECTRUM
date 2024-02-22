@@ -61,8 +61,8 @@ class FMoney(BaseMoney):
             raise InvalidAmountError(value=amount) from exception
         self._amount = Decimal(str(amount))
 
-    # def __hash__(self) -> int:
-    #     return hash((self.amount, self.currency.alphabetic_code))
+    def __hash__(self) -> int:
+        return hash((self.amount, self.currency.alphabetic_code))
 
     def __repr__(self) -> str:
         return (

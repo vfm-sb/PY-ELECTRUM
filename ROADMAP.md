@@ -30,7 +30,7 @@
 - [ ] Custom Formatting
     - [ ] Basic Custom Formatting Functionality
     - [ ] Predefined Custom Formatting Functionality
-- [ ] Refactor `Money` & `FMoney` for Future Improvements
+- [x] Refactor `Money` & `FMoney` for Future Improvements
 
 
 ### Testing Tasks

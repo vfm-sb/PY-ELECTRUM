@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "electrum"
-version = "0.3.1"
+version = "0.3.5"
 requires-python = ">=3.11.6,<3.12"
 dependencies = []
 authors = [{ name = "vfm-sb", email = "vfm-sb@proton.me" }]
@@ -13,8 +13,7 @@ readme = "README.md"
 license = { file = "LICENCE" }
 keywords = ["electrum", "money", "fmoney", "coin", "note", "banknote", "cash", "currency", "exchange"]
 classifiers = [
-    "Development Status :: 1 - Planning",
-    "Development Status :: 3 - Alpha",
+    "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",
     "Intended Audience :: Information Technology",
     "Intended Audience :: Financial and Insurance Industry",

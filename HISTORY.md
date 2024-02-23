@@ -2,6 +2,11 @@
 
 <br>
 
+## 0.3.5 (2024/02/23)
+
+- Initial Beta Checkpoint
+- Re-Designed Currency Formatting for `Money`
+
 ## 0.3.1 (2024/02/16)
 
 - Various Bugfixes and Improvements

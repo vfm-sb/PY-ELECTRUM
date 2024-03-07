@@ -7,16 +7,11 @@ from decimal import Decimal
 from typing import Self
 
 # Local Modules
+import pyvutils
 from electrum.money.base import BaseMoney
 from electrum.money.money import Money
 from electrum.currency.currency import Currency
 from electrum.currency.currency_formatter import CurrencyFormatter
-
-# Utilities
-from electrum.utils import round_up, round_down
-from electrum.utils import parse_numeric_value
-from electrum.utils import convert_decimal
-from electrum.utils import valid_numeric
 
 # Custom Exceptions
 from electrum.exceptions import InvalidAmountError
@@ -51,12 +46,12 @@ class FMoney(BaseMoney):
 
     @property
     def amount(self) -> int | float:
-        return convert_decimal(self._amount)
+        return pyvutils.convert_decimal_to_numeric(self._amount)
 
     @amount.setter
     def amount(self, amount: int | float | str | Decimal) -> None:
         try:
-            amount = parse_numeric_value(amount)
+            amount = pyvutils.normalize_numeric_value(amount)
         except ValueError as exception:
             raise InvalidAmountError(value=amount) from exception
         self._amount = Decimal(str(amount))
@@ -92,9 +87,9 @@ class FMoney(BaseMoney):
         return self.__sub__(other)
 
     def __mul__(self, multiplier: int | float | str | Decimal) -> Self:
-        if not valid_numeric(multiplier):
+        if not pyvutils.valid_numeric_value(multiplier):
             raise InvalidOperandError
-        multiplier = parse_numeric_value(multiplier)
+        multiplier = pyvutils.normalize_numeric_value(multiplier)
         result = self.mround(self._amount * Decimal(str(multiplier)))
         return self.construct(result, self.currency)
 
@@ -105,10 +100,10 @@ class FMoney(BaseMoney):
         if self.valid_instance(other):
             self.assert_currency_match(other)
             self.assert_division(other.amount)
-            return convert_decimal(self._amount / other._amount)
-        if not valid_numeric(other):
+            return pyvutils.convert_decimal_to_numeric(self._amount / other._amount)
+        if not pyvutils.valid_numeric_value(other):
             raise InvalidOperandError
-        other = parse_numeric_value(other)
+        other = pyvutils.normalize_numeric_value(other)
         result = self.mround(self._amount / Decimal(str(other)))
         return self.construct(result, self.currency)
 
@@ -116,10 +111,10 @@ class FMoney(BaseMoney):
         if self.valid_instance(other):
             self.assert_currency_match(other)
             self.assert_division(other.amount)
-            return convert_decimal(self._amount // other._amount)
-        if not valid_numeric(other):
+            return pyvutils.convert_decimal_to_numeric(self._amount // other._amount)
+        if not pyvutils.valid_numeric_value(other):
             raise InvalidOperandError
-        other = parse_numeric_value(other)
+        other = pyvutils.normalize_numeric_value(other)
         result = self.mround(self._amount // Decimal(str(other)))
         return self.construct(result, self.currency)
 
@@ -127,10 +122,10 @@ class FMoney(BaseMoney):
         if self.valid_instance(other):
             self.assert_currency_match(other)
             self.assert_division(other.amount)
-            return convert_decimal(self._amount % other._amount)
-        if not valid_numeric(other):
+            return pyvutils.convert_decimal_to_numeric(self._amount % other._amount)
+        if not pyvutils.valid_numeric_value(other):
             raise InvalidOperandError
-        other = parse_numeric_value(other)
+        other = pyvutils.normalize_numeric_value(other)
         result = self.mround(self._amount % Decimal(str(other)))
         return self.construct(result, self.currency)
 
@@ -191,9 +186,9 @@ class FMoney(BaseMoney):
 
     def mround(self, value: Decimal) -> Decimal:
         if self.rounding == "down":
-            return round_down(value, self.precision)
+            return pyvutils.decimal_round_down(value, self.precision)
         if self.rounding == "up":
-            return round_up(value, self.precision)
+            return pyvutils.decimal_round_up(value, self.precision)
         return round(value, self.precision)
 
     @classmethod

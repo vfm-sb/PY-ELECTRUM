@@ -1,7 +1,7 @@
 # Local Modules
 import pyvutils
+from ihandler import ihandler
 from electrum.currency.currency_helper import CurrencyHelper
-from electrum.handler.input_handler import InputHandler
 
 
 class CurrencyBuilderCLI(CurrencyHelper):
@@ -76,7 +76,7 @@ class CurrencyBuilderCLI(CurrencyHelper):
         if current_code:
             print(f'Current Alphabetic Code is "{current_code}"')
         try:
-            alphabetic_code = InputHandler(input_type="iso-alphabetic").output
+            alphabetic_code = ihandler(input_type="alphabetic-currency-code")
         except ValueError as error_message:
             print(error_message)
             print()
@@ -88,7 +88,7 @@ class CurrencyBuilderCLI(CurrencyHelper):
         if current_code:
             print(f'Current Numeric Code is {current_code}')
         try:
-            numeric_code = InputHandler(input_type="iso-numeric").output
+            numeric_code = ihandler(input_type="numeric-currency-code")
         except ValueError as error_message:
             print(error_message)
             print()
@@ -100,7 +100,7 @@ class CurrencyBuilderCLI(CurrencyHelper):
         if current_name:
             print(f'Current Currency Name is {current_name}')
         try:
-            currency_name = InputHandler(input_type="lower-string").output
+            currency_name = ihandler(input_type="strict-lowercase")
         except ValueError as error_message:
             print(error_message)
             print()
@@ -112,7 +112,7 @@ class CurrencyBuilderCLI(CurrencyHelper):
         if current_base_unit:
             print(f'Current Currency Base Unit is {current_base_unit}')
         try:
-            base_unit = InputHandler(input_type="numeric").output
+            base_unit = ihandler(input_type="strict-numeric")
         except ValueError as error_message:
             print(error_message)
             print()
@@ -124,7 +124,7 @@ class CurrencyBuilderCLI(CurrencyHelper):
         if current_denominator:
             print(f'Current Denominator Value is {current_denominator}')
         try:
-            denominator = InputHandler(input_type="integer").output
+            denominator = ihandler(input_type="strict-integer")
         except ValueError as error_message:
             print(error_message)
             print()
@@ -136,7 +136,7 @@ class CurrencyBuilderCLI(CurrencyHelper):
         if current_precision:
             print(f'Current Precision Value is {current_precision}')
         try:
-            precision = InputHandler(input_type="integer").output
+            precision = ihandler(input_type="strict-integer")
         except ValueError as error_message:
             print(error_message)
             print()
@@ -148,7 +148,7 @@ class CurrencyBuilderCLI(CurrencyHelper):
         if current_name:
             print(f'Current Unit Name is "{current_name}"')
         try:
-            unit_name = InputHandler(input_type="lower-string").output
+            unit_name = ihandler(input_type="strict-lowercase")
         except ValueError as error_message:
             print(error_message)
             print()
@@ -159,7 +159,7 @@ class CurrencyBuilderCLI(CurrencyHelper):
         print(f"{'Enter' if not current_plural else 'Change'} Unit Plural:")
         if current_plural:
             print(f'Current Unit Plural is "{current_plural}"')
-        unit_plural = InputHandler(input_type="loose-string").output
+        unit_plural = ihandler(input_type="loose-lowercase")
         if unit_plural == "":
             return None
         return unit_plural
@@ -168,7 +168,7 @@ class CurrencyBuilderCLI(CurrencyHelper):
         print(f"{'Enter' if not current_symbol else 'Change'} Unit Symbol:")
         if current_symbol:
             print(f'Current Unit Symbol is "{current_symbol}"')
-        unit_symbol = InputHandler(input_type="unrestricted-string").output
+        unit_symbol = ihandler(input_type="unrestricted-string")
         if unit_symbol == "":
             return None
         return unit_symbol
@@ -184,7 +184,7 @@ class CurrencyBuilderCLI(CurrencyHelper):
         choices = [f"{symbol}value", f"{symbol} value", f"value{symbol}", f"value {symbol}"]
         CurrencyBuilderCLI.print_format_choices(choices)
         try:
-            unit_symbol_format = InputHandler(input_type="choice", choices=choices).output
+            unit_symbol_format = ihandler(input_type="alphanumeric-choice", choices=choices)
         except ValueError as error_message:
             print(error_message)
             print()
@@ -195,7 +195,7 @@ class CurrencyBuilderCLI(CurrencyHelper):
         print(f"{'Enter' if not current_abbreviation else 'Change'} Unit Abbreviation:")
         if current_abbreviation:
             print(f'Current Unit Abbreviation is "{current_abbreviation}"')
-        unit_abbreviation = InputHandler(input_type="unrestricted-string").output
+        unit_abbreviation = ihandler(input_type="unrestricted-string")
         if unit_abbreviation == "":
             return None
         return unit_abbreviation
@@ -211,7 +211,7 @@ class CurrencyBuilderCLI(CurrencyHelper):
         choices = [f"{abbr}value", f"{abbr} value", f"value{abbr}", f"value {abbr}"]
         CurrencyBuilderCLI.print_format_choices(choices)
         try:
-            unit_abbreviation_format = InputHandler(input_type="choice", choices=choices).output
+            unit_abbreviation_format = ihandler(input_type="alphanumeric-choice", choices=choices)
         except ValueError as error_message:
             print(error_message)
             print()
@@ -223,7 +223,7 @@ class CurrencyBuilderCLI(CurrencyHelper):
         if current_name:
             print(f'Current Subunit Name is "{current_name}"')
         try:
-            subunit_name = InputHandler(input_type="loose-string").output
+            subunit_name = ihandler(input_type="loose-lowercase")
         except ValueError as error_message:
             print(error_message)
             print()
@@ -240,7 +240,7 @@ class CurrencyBuilderCLI(CurrencyHelper):
         print(f"{'Enter' if not current_plural else 'Change'} Subunit Plural:")
         if current_plural:
             print(f'Current Subunit Plural is "{current_plural}"')
-        subunit_plural = InputHandler(input_type="loose-string").output
+        subunit_plural = ihandler(input_type="loose-lowercase")
         if subunit_plural == "":
             return None
         return subunit_plural
@@ -249,7 +249,7 @@ class CurrencyBuilderCLI(CurrencyHelper):
         print(f"{'Enter' if not current_symbol else 'Change'} Subunit Symbol:")
         if current_symbol:
             print(f'Current Subunit Symbol is "{current_symbol}"')
-        subunit_symbol = InputHandler(input_type="unrestricted-string").output
+        subunit_symbol = ihandler(input_type="unrestricted-string")
         if subunit_symbol == "":
             return None
         return subunit_symbol
@@ -265,7 +265,7 @@ class CurrencyBuilderCLI(CurrencyHelper):
         choices = [f"{symbol}value", f"{symbol} value", f"value{symbol}", f"value {symbol}"]
         CurrencyBuilderCLI.print_format_choices(choices)
         try:
-            subunit_symbol_format = InputHandler(input_type="choice", choices=choices).output
+            subunit_symbol_format = ihandler(input_type="alphanumeric-choice", choices=choices)
         except ValueError as error_message:
             print(error_message)
             print()
@@ -276,7 +276,7 @@ class CurrencyBuilderCLI(CurrencyHelper):
         print(f"{'Enter' if not current_abbreviation else 'Change'} Subunit Abbreviation:")
         if current_abbreviation:
             print(f'Current Subunit Abbreviation is "{current_abbreviation}"')
-        subunit_abbreviation = InputHandler(input_type="unrestricted-string").output
+        subunit_abbreviation = ihandler(input_type="unrestricted-string")
         if subunit_abbreviation == "":
             return None
         return subunit_abbreviation
@@ -292,7 +292,7 @@ class CurrencyBuilderCLI(CurrencyHelper):
         choices = [f"{abbr}value", f"{abbr} value", f"value{abbr}", f"value {abbr}"]
         CurrencyBuilderCLI.print_format_choices(choices)
         try:
-            subunit_abbreviation_format = InputHandler(input_type="choice", choices=choices).output
+            subunit_abbreviation_format = ihandler(input_type="alphanumeric-choice", choices=choices)
         except ValueError as error_message:
             print(error_message)
             print()
@@ -306,7 +306,7 @@ class CurrencyBuilderCLI(CurrencyHelper):
         choices = ["code", "name", "symbol", "abbr"]
         CurrencyBuilderCLI.print_format_choices(choices)
         try:
-            default_format = InputHandler(input_type="choice", choices=choices).output
+            default_format = ihandler(input_type="alphanumeric-choice", choices=choices)
         except ValueError as error_message:
             print(error_message)
             print()
@@ -318,7 +318,7 @@ class CurrencyBuilderCLI(CurrencyHelper):
         if current_banknotes:
             print(f'Current Banknotes are {", ".join([str(note) for note in current_banknotes])}')
         try:
-            banknotes = InputHandler(input_type="multiple-numerics", duplicates=False).output
+            banknotes = ihandler(input_type="multiple-numerics", duplicates=False)
         except ValueError as error_message:
             print(error_message)
             print()
@@ -330,7 +330,7 @@ class CurrencyBuilderCLI(CurrencyHelper):
         if current_coins:
             print(f'Current Coins are {", ".join([str(coin) for coin in current_coins])}')
         try:
-            coins = InputHandler(input_type="multiple-numerics", duplicates=False).output
+            coins = ihandler(input_type="multiple-numerics", duplicates=False)
         except ValueError as error_message:
             print(error_message)
             print()
@@ -343,7 +343,7 @@ class CurrencyBuilderCLI(CurrencyHelper):
             text = "Users are" if len(current_users) > 1 else "User is"
             print(f'Current Currency {text} {", ".join(current_users)}')
         try:
-            users = InputHandler(input_type="multiple-strings").output
+            users = ihandler(input_type="multiple-strings", duplicates=False)
         except ValueError as error_message:
             print(error_message)
             print()

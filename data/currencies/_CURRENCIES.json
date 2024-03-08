@@ -1,4 +1,9 @@
 {
+    "AUD": {
+        "iso-alphabetic": "AUD",
+        "iso-numeric": "036",
+        "update-date": "2024/03"
+    },
     "BGN": {
         "iso-alphabetic": "BGN",
         "iso-numeric": "975",
@@ -43,6 +48,11 @@
         "iso-alphabetic": "RON",
         "iso-numeric": "946",
         "update-date": "2024/01"
+    },
+    "RUB": {
+        "iso-alphabetic": "RUB",
+        "iso-numeric": "643",
+        "update-date": "2024/03"
     },
     "TRY": {
         "iso-alphabetic": "TRY",

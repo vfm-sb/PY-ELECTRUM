@@ -1,0 +1,41 @@
+{
+    "iso-alphabetic": "RUB",
+    "iso-numeric": "643",
+    "name": "russian ruble",
+    "base": 1,
+    "denominator": 1,
+    "precision": 0,
+    "unit-name": "ruble",
+    "unit-plural": null,
+    "unit-symbol": "\u20bd",
+    "unit-symbol-format": "value \u20bd",
+    "unit-abbreviation": null,
+    "unit-abbreviation-format": null,
+    "subunit-name": null,
+    "subunit-plural": null,
+    "subunit-symbol": null,
+    "subunit-symbol-format": null,
+    "subunit-abbreviation": null,
+    "subunit-abbreviation-format": null,
+    "default-format": "symbol",
+    "banknotes": [
+        5,
+        10,
+        50,
+        100,
+        200,
+        500,
+        1000,
+        2000,
+        5000
+    ],
+    "coins": [
+        1,
+        2,
+        5,
+        10
+    ],
+    "users": [
+        "russia"
+    ]
+}

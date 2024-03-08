@@ -2,6 +2,12 @@
 
 <br>
 
+## 0.3.6 (2024/03/08)
+
+- Replaced Local Utilities with `pyvutils` Equivalents
+- Replaced Local Input Handlers with `ihandler` Equivalents
+
+
 ## 0.3.5 (2024/02/23)
 
 - Initial Beta Checkpoint

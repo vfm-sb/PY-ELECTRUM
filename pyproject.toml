@@ -4,9 +4,13 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "electrum"
-version = "0.3.5"
-requires-python = ">=3.11.6,<3.12"
-dependencies = []
+version = "0.3.6"
+requires-python = ">=3.11.8"
+dependencies = [
+    "pyvutils>0.1.4",
+    "ihandler>0.1.3",
+    "pytest>=7.4.3"
+]
 authors = [{ name = "vfm-sb", email = "vfm-sb@proton.me" }]
 description = "Py-Electrum Module to Work with Money, Coin, Note/Banknote, Cash, Currency, Exchange Classes and More..."
 readme = "README.md"
@@ -29,3 +33,8 @@ classifiers = [
 packages = [
     "electrum", "electrum.money", "electrum.currency",
 ]
+
+[project.urls]
+Repository = "https://github.com/vfm-sb/PY-ELECTRUM"
+Documentation = "https://github.com/vfm-sb/PY-ELECTRUM/tree/main/docs"
+Changelog = "https://github.com/vfm-sb/PY-ELECTRUM/blob/main/HISTORY.md"

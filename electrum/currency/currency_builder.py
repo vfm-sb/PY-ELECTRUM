@@ -1,9 +1,7 @@
 # Local Modules
+import pyvutils
 from electrum.currency.currency_helper import CurrencyHelper
 from electrum.handler.input_handler import InputHandler
-
-# Utilities
-from electrum.utils import get_timestamp
 
 
 class CurrencyBuilderCLI(CurrencyHelper):
@@ -43,7 +41,7 @@ class CurrencyBuilderCLI(CurrencyHelper):
         self.currencies[self.currency_id] = {
             "iso-alphabetic": self.currency_data["iso-alphabetic"],
             "iso-numeric": self.currency_data["iso-numeric"],
-            "update-date": get_timestamp()
+            "update-date": pyvutils.current_month_timestamp()
         }
         self.save_currencies()
 

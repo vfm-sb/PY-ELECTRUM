@@ -1,5 +1,5 @@
-# Utilities
-from electrum.utils import get_json_file, save_json_file
+# Local Modules
+import pyvutils
 
 # Custom Exceptions
 from electrum.exceptions import InvalidCurrencyCodeError
@@ -16,16 +16,16 @@ class CurrencyHelper:
         self.currencies = self.load_currencies()
 
     def load_currencies(self) -> dict:
-        return get_json_file(filename=AVAILABLE_CURRENCIES, path=PATH)
+        return pyvutils.get_json_file(AVAILABLE_CURRENCIES, PATH)
 
     def save_currencies(self) -> None:
         self.currencies = dict(sorted(self.currencies.items()))
-        save_json_file(filename=AVAILABLE_CURRENCIES, path=PATH, data=self.currencies)
+        pyvutils.save_json_file(AVAILABLE_CURRENCIES, PATH, self.currencies)
 
     def retrieve_currency_data(self, code: str | int) -> dict:
         currency_id = self.get_currency_id(code)
         filename = currency_id + ".json"
-        return get_json_file(filename, path=PATH)
+        return pyvutils.get_json_file(filename, PATH)
 
     def load_currency_data(self, currency_id: str) -> dict:
         if not self.currency_exists(currency_id):
@@ -34,7 +34,7 @@ class CurrencyHelper:
 
     def save_currency_data(self, currency_id: str, currency_data: dict) -> None:
         filename = currency_id + ".json"
-        save_json_file(filename, PATH, data=currency_data)
+        pyvutils.save_json_file(filename, PATH, currency_data)
 
     def get_currency_id(self, code: str | int) -> str | None:
         code = str(code).upper()

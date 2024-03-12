@@ -1,8 +1,7 @@
 
-
-from .generic_exceptions import (
+from cerrlib import (
     ObjectMismatchError,
-    InvalidOperandError,
+    InvalidOperandError
 )
 
 from .money_exceptions import (
@@ -17,10 +16,4 @@ from .currency_exceptions import (
     InvalidCurrencyCodeError,
     CurrencyNotFoundError,
     CurrencyMismatchError,
-)
-
-from .input_exceptions import (
-    MissingInputError,
-    InvalidInputTypeError,
-    InvalidNumericInputError,
 )

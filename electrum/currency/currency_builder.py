@@ -41,7 +41,7 @@ class CurrencyBuilderCLI(CurrencyHelper):
         self.currencies[self.currency_id] = {
             "iso-alphabetic": self.currency_data["iso-alphabetic"],
             "iso-numeric": self.currency_data["iso-numeric"],
-            "update-date": pyvutils.current_month_timestamp()
+            "update-date": pyvutils.current_month_stamp()
         }
         self.save_currencies()
 

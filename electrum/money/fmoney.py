@@ -46,12 +46,12 @@ class FMoney(BaseMoney):
 
     @property
     def amount(self) -> int | float:
-        return pyvutils.convert_decimal_to_numeric(self._amount)
+        return pyvutils.decimal_to_numeric(self._amount)
 
     @amount.setter
     def amount(self, amount: int | float | str | Decimal) -> None:
         try:
-            amount = pyvutils.normalize_numeric_value(amount)
+            amount = pyvutils.normalize_numeric(amount)
         except ValueError as exception:
             raise InvalidAmountError(value=amount) from exception
         self._amount = Decimal(str(amount))
@@ -87,9 +87,9 @@ class FMoney(BaseMoney):
         return self.__sub__(other)
 
     def __mul__(self, multiplier: int | float | str | Decimal) -> Self:
-        if not pyvutils.valid_numeric_value(multiplier):
+        if not pyvutils.valid_numeric(multiplier):
             raise InvalidOperandError
-        multiplier = pyvutils.normalize_numeric_value(multiplier)
+        multiplier = pyvutils.normalize_numeric(multiplier)
         result = self.mround(self._amount * Decimal(str(multiplier)))
         return self.construct(result, self.currency)
 
@@ -100,10 +100,10 @@ class FMoney(BaseMoney):
         if self.valid_instance(other):
             self.assert_currency_match(other)
             self.assert_division(other.amount)
-            return pyvutils.convert_decimal_to_numeric(self._amount / other._amount)
-        if not pyvutils.valid_numeric_value(other):
+            return pyvutils.decimal_to_numeric(self._amount / other._amount)
+        if not pyvutils.valid_numeric(other):
             raise InvalidOperandError
-        other = pyvutils.normalize_numeric_value(other)
+        other = pyvutils.normalize_numeric(other)
         result = self.mround(self._amount / Decimal(str(other)))
         return self.construct(result, self.currency)
 
@@ -111,10 +111,10 @@ class FMoney(BaseMoney):
         if self.valid_instance(other):
             self.assert_currency_match(other)
             self.assert_division(other.amount)
-            return pyvutils.convert_decimal_to_numeric(self._amount // other._amount)
-        if not pyvutils.valid_numeric_value(other):
+            return pyvutils.decimal_to_numeric(self._amount // other._amount)
+        if not pyvutils.valid_numeric(other):
             raise InvalidOperandError
-        other = pyvutils.normalize_numeric_value(other)
+        other = pyvutils.normalize_numeric(other)
         result = self.mround(self._amount // Decimal(str(other)))
         return self.construct(result, self.currency)
 
@@ -122,10 +122,10 @@ class FMoney(BaseMoney):
         if self.valid_instance(other):
             self.assert_currency_match(other)
             self.assert_division(other.amount)
-            return pyvutils.convert_decimal_to_numeric(self._amount % other._amount)
-        if not pyvutils.valid_numeric_value(other):
+            return pyvutils.decimal_to_numeric(self._amount % other._amount)
+        if not pyvutils.valid_numeric(other):
             raise InvalidOperandError
-        other = pyvutils.normalize_numeric_value(other)
+        other = pyvutils.normalize_numeric(other)
         result = self.mround(self._amount % Decimal(str(other)))
         return self.construct(result, self.currency)
 
@@ -186,9 +186,9 @@ class FMoney(BaseMoney):
 
     def mround(self, value: Decimal) -> Decimal:
         if self.rounding == "down":
-            return pyvutils.decimal_round_down(value, self.precision)
+            return pyvutils.decimalkit.round_down(value, self.precision)
         if self.rounding == "up":
-            return pyvutils.decimal_round_up(value, self.precision)
+            return pyvutils.decimalkit.round_up(value, self.precision)
         return round(value, self.precision)
 
     @classmethod

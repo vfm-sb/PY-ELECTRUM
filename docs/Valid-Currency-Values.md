@@ -164,12 +164,3 @@ If Currency's ISO Numeric Code Starts with *0* or *00*, The Argument Must Be `st
 >>> Money(1, eur)
 ```
 
-```python
->>> Money(1, Currency.EUR)
-```
-
-```python
->>> eur = Currency.EUR
->>> Money(1, eur)
-```
-

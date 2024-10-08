@@ -42,10 +42,6 @@ The `currency` represents the `Currency` of a money instance.
 >>> money = Money(1, eur)
 ```
 
-```python
->>> money = Money(1, Currency.EUR)
-```
-
 ### `Money(amount, iso_alphabetic_code)`
 
 ```python
@@ -268,15 +264,6 @@ If Currency's ISO Numeric Code Starts with *0* or *00*, The Argument Must Be `st
 
 ```python
 >>> eur = Currency("978")
->>> Money(1, eur)
-```
-
-```python
->>> Money(1, Currency.EUR)
-```
-
-```python
->>> eur = Currency.EUR
 >>> Money(1, eur)
 ```
 
